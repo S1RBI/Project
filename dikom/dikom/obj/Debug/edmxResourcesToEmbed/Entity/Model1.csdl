@@ -1,0 +1,1205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dicomModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Color_object">
+    <Key>
+      <PropertyRef Name="color_id" />
+    </Key>
+    <Property Name="color_id" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="color_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Product" Relationship="Self.FK__Product__color_i__5CD6CB2B" FromRole="Color_object" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Contractor">
+    <Key>
+      <PropertyRef Name="contractor_id" />
+    </Key>
+    <Property Name="contractor_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="legal_contractor_address" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="account_contractor_supplier_account" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="surname_contractor" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="contractor_name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="contractor_middle_name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="name_organization_contractor" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="contractor_phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="type_contractor" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Delivery_Contract" Relationship="Self.Delivery_ContractFK" FromRole="Contractor" ToRole="Delivery_Contract" />
+    <NavigationProperty Name="Price_Reception" Relationship="Self.FK__Price_Rec__contr__6D0D32F4" FromRole="Contractor" ToRole="Price_Reception" />
+  </EntityType>
+  <EntityType Name="Delivery_Contract">
+    <Key>
+      <PropertyRef Name="delivery_contract_id" />
+    </Key>
+    <Property Name="delivery_contract_id" Type="Int32" Nullable="false" />
+    <Property Name="contractor_id" Type="Int32" Nullable="false" />
+    <Property Name="contract_start_date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="contract_end_date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="contract_cost" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="validity" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="number_of_contract_instances" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Contractor" Relationship="Self.Delivery_ContractFK" FromRole="Delivery_Contract" ToRole="Contractor" />
+    <NavigationProperty Name="Reception_Invoice" Relationship="Self.FK__Reception__deliv__628FA481" FromRole="Delivery_Contract" ToRole="Reception_Invoice" />
+    <NavigationProperty Name="Shipping_Invoice" Relationship="Self.FK__Shipping___deliv__656C112C" FromRole="Delivery_Contract" ToRole="Shipping_Invoice" />
+  </EntityType>
+  <EntityType Name="Discount">
+    <Key>
+      <PropertyRef Name="discount_id" />
+    </Key>
+    <Property Name="discount_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="start_discounts_date" Type="DateTime" Precision="3" />
+    <Property Name="end_discounts_date" Type="DateTime" Precision="3" />
+    <Property Name="discounts_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="discount_value" Type="Single" Nullable="false" />
+    <NavigationProperty Name="Shipping_Specification" Relationship="Self.FK__Shipping___disco__6B24EA82" FromRole="Discount" ToRole="Shipping_Specification" />
+  </EntityType>
+  <EntityType Name="Materials">
+    <Key>
+      <PropertyRef Name="materials_id" />
+    </Key>
+    <Property Name="materials_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="materials_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Product" Relationship="Self.ProductFK" FromRole="Materials" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Measurement">
+    <Key>
+      <PropertyRef Name="measurement_unit_id" />
+    </Key>
+    <Property Name="measurement_unit_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="units_measurements_name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Product" Relationship="Self.FK__Product__measure__5DCAEF64" FromRole="Measurement" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Price_Reception">
+    <Key>
+      <PropertyRef Name="reception_price_id" />
+    </Key>
+    <Property Name="reception_price_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="acceptance_price_values" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="reception_price_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="product_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="contractor_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Contractor" Relationship="Self.FK__Price_Rec__contr__6D0D32F4" FromRole="Price_Reception" ToRole="Contractor" />
+    <NavigationProperty Name="Product" Relationship="Self.Price_ReceptionFK" FromRole="Price_Reception" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Price_Sendings">
+    <Key>
+      <PropertyRef Name="shipment_price_id" />
+    </Key>
+    <Property Name="shipment_price_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="shipment_price_values" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="send_price_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="product_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Product" Relationship="Self.Price_SendingsFK" FromRole="Price_Sendings" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="product_id" />
+    </Key>
+    <Property Name="product_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="measurement_unit_id" Type="Int32" Nullable="false" />
+    <Property Name="product_type_id" Type="Int32" Nullable="false" />
+    <Property Name="cell_id" Type="Int32" Nullable="false" />
+    <Property Name="materials_id" Type="Int32" Nullable="false" />
+    <Property Name="color_id" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="name_of_product" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="quantity_of_goods" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Color_object" Relationship="Self.FK__Product__color_i__5CD6CB2B" FromRole="Product" ToRole="Color_object" />
+    <NavigationProperty Name="Materials" Relationship="Self.ProductFK" FromRole="Product" ToRole="Materials" />
+    <NavigationProperty Name="Measurement" Relationship="Self.FK__Product__measure__5DCAEF64" FromRole="Product" ToRole="Measurement" />
+    <NavigationProperty Name="Price_Reception" Relationship="Self.Price_ReceptionFK" FromRole="Product" ToRole="Price_Reception" />
+    <NavigationProperty Name="Price_Sendings" Relationship="Self.Price_SendingsFK" FromRole="Product" ToRole="Price_Sendings" />
+    <NavigationProperty Name="Product_Location_Cell" Relationship="Self.FK__Product__cell_id__5FB337D6" FromRole="Product" ToRole="Product_Location_Cell" />
+    <NavigationProperty Name="Product_type" Relationship="Self.FK__Product__product__5EBF139D" FromRole="Product" ToRole="Product_type" />
+    <NavigationProperty Name="Reception_Specification" Relationship="Self.Reception_SpecificationFK" FromRole="Product" ToRole="Reception_Specification" />
+    <NavigationProperty Name="Shipping_Specification" Relationship="Self.Shipping_SpecificationFK" FromRole="Product" ToRole="Shipping_Specification" />
+  </EntityType>
+  <EntityType Name="Product_Location_Cell">
+    <Key>
+      <PropertyRef Name="cell_id" />
+    </Key>
+    <Property Name="cell_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tier_cells" Type="Int32" Nullable="false" />
+    <Property Name="cell_section" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Product" Relationship="Self.FK__Product__cell_id__5FB337D6" FromRole="Product_Location_Cell" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Product_type">
+    <Key>
+      <PropertyRef Name="product_type_id" />
+    </Key>
+    <Property Name="product_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="types_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Product" Relationship="Self.FK__Product__product__5EBF139D" FromRole="Product_type" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Reception_Invoice">
+    <Key>
+      <PropertyRef Name="receipt_id" />
+      <PropertyRef Name="receipt_date" />
+    </Key>
+    <Property Name="receipt_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="vat_id" Type="Int32" />
+    <Property Name="delivery_contract_id" Type="Int32" Nullable="false" />
+    <Property Name="login_id" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="receipt_date" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Delivery_Contract" Relationship="Self.FK__Reception__deliv__628FA481" FromRole="Reception_Invoice" ToRole="Delivery_Contract" />
+    <NavigationProperty Name="Storekeeper" Relationship="Self.FK__Reception__login__6383C8BA" FromRole="Reception_Invoice" ToRole="Storekeeper" />
+    <NavigationProperty Name="Reception_Specification" Relationship="Self.FK__Reception_Specif__68487DD7" FromRole="Reception_Invoice" ToRole="Reception_Specification" />
+    <NavigationProperty Name="VAT" Relationship="Self.Reception_InvoiceFK" FromRole="Reception_Invoice" ToRole="VAT" />
+    <NavigationProperty Name="Reception_Specification1" Relationship="Self.Reception_Specification_CASCADE" FromRole="Reception_Invoice" ToRole="Reception_Specification" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="role_id" />
+    </Key>
+    <Property Name="role_id" Type="Int32" Nullable="false" />
+    <Property Name="role_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Storekeeper" Relationship="Self.StorekeeperFK" FromRole="Roles" ToRole="Storekeeper" />
+  </EntityType>
+  <EntityType Name="Shipping_Invoice">
+    <Key>
+      <PropertyRef Name="shipping_invoice_id" />
+      <PropertyRef Name="departure_date" />
+    </Key>
+    <Property Name="shipping_invoice_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="vat_id" Type="Int32" />
+    <Property Name="delivery_contract_id" Type="Int32" Nullable="false" />
+    <Property Name="login_id" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="departure_date" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Delivery_Contract" Relationship="Self.FK__Shipping___deliv__656C112C" FromRole="Shipping_Invoice" ToRole="Delivery_Contract" />
+    <NavigationProperty Name="Storekeeper" Relationship="Self.FK__Shipping___login__66603565" FromRole="Shipping_Invoice" ToRole="Storekeeper" />
+    <NavigationProperty Name="Shipping_Specification" Relationship="Self.FK__Shipping_Specifi__6A30C649" FromRole="Shipping_Invoice" ToRole="Shipping_Specification" />
+    <NavigationProperty Name="VAT" Relationship="Self.Shipping_InvoiceFK" FromRole="Shipping_Invoice" ToRole="VAT" />
+    <NavigationProperty Name="Shipping_Specification1" Relationship="Self.Shipping_Specification_CASCADE" FromRole="Shipping_Invoice" ToRole="Shipping_Specification" />
+  </EntityType>
+  <EntityType Name="Storekeeper">
+    <Key>
+      <PropertyRef Name="login_id" />
+    </Key>
+    <Property Name="login_id" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="password_id" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="surname_stores" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="warehouse_name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="patron_name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="address_ru" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="images" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="role_id" Type="Int32" Nullable="false" />
+    <Property Name="IsDelite" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Reception_Invoice" Relationship="Self.FK__Reception__login__6383C8BA" FromRole="Storekeeper" ToRole="Reception_Invoice" />
+    <NavigationProperty Name="Roles" Relationship="Self.StorekeeperFK" FromRole="Storekeeper" ToRole="Roles" />
+    <NavigationProperty Name="Shipping_Invoice" Relationship="Self.FK__Shipping___login__66603565" FromRole="Storekeeper" ToRole="Shipping_Invoice" />
+  </EntityType>
+  <EntityType Name="VAT">
+    <Key>
+      <PropertyRef Name="vat_id" />
+    </Key>
+    <Property Name="vat_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="vat_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="vat_value" Type="Single" Nullable="false" />
+    <NavigationProperty Name="Reception_Invoice" Relationship="Self.Reception_InvoiceFK" FromRole="VAT" ToRole="Reception_Invoice" />
+    <NavigationProperty Name="Shipping_Invoice" Relationship="Self.Shipping_InvoiceFK" FromRole="VAT" ToRole="Shipping_Invoice" />
+  </EntityType>
+  <EntityType Name="Reception_Specification">
+    <Key>
+      <PropertyRef Name="product_id" />
+      <PropertyRef Name="receipt_id" />
+      <PropertyRef Name="receipt_date" />
+      <PropertyRef Name="quantity_accepted_goods" />
+    </Key>
+    <Property Name="product_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="receipt_id" Type="Int32" Nullable="false" />
+    <Property Name="receipt_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="quantity_accepted_goods" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Product" Relationship="Self.Reception_SpecificationFK" FromRole="Reception_Specification" ToRole="Product" />
+    <NavigationProperty Name="Reception_Invoice" Relationship="Self.FK__Reception_Specif__68487DD7" FromRole="Reception_Specification" ToRole="Reception_Invoice" />
+    <NavigationProperty Name="Reception_Invoice1" Relationship="Self.Reception_Specification_CASCADE" FromRole="Reception_Specification" ToRole="Reception_Invoice" />
+  </EntityType>
+  <EntityType Name="Shipping_Specification">
+    <Key>
+      <PropertyRef Name="product_id" />
+      <PropertyRef Name="shipping_invoice_id" />
+      <PropertyRef Name="departure_date" />
+      <PropertyRef Name="quantity_sent_goods" />
+    </Key>
+    <Property Name="discount_id" Type="Int32" />
+    <Property Name="product_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="shipping_invoice_id" Type="Int32" Nullable="false" />
+    <Property Name="departure_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="quantity_sent_goods" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Discount" Relationship="Self.FK__Shipping___disco__6B24EA82" FromRole="Shipping_Specification" ToRole="Discount" />
+    <NavigationProperty Name="Product" Relationship="Self.Shipping_SpecificationFK" FromRole="Shipping_Specification" ToRole="Product" />
+    <NavigationProperty Name="Shipping_Invoice" Relationship="Self.FK__Shipping_Specifi__6A30C649" FromRole="Shipping_Specification" ToRole="Shipping_Invoice" />
+    <NavigationProperty Name="Shipping_Invoice1" Relationship="Self.Shipping_Specification_CASCADE" FromRole="Shipping_Specification" ToRole="Shipping_Invoice" />
+  </EntityType>
+  <EntityType Name="VIEWColor_object">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Наименование" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Наименование" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VIEWContractor">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Фамилия" />
+      <PropertyRef Name="Имя" />
+      <PropertyRef Name="Отчество" />
+      <PropertyRef Name="Юридический_адрес" />
+      <PropertyRef Name="Расчетный_счет" />
+      <PropertyRef Name="Наименование_организации" />
+      <PropertyRef Name="Телефон" />
+      <PropertyRef Name="Тип_контрагента" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Фамилия" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Имя" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Отчество" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Юридический_адрес" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Расчетный_счет" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Наименование_организации" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Телефон" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Тип_контрагента" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VIEWDelivery_Contract">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Расчетный_счет" />
+      <PropertyRef Name="Наименование_организации" />
+      <PropertyRef Name="Заказчик_Поставщик" />
+      <PropertyRef Name="Дата_начала" />
+      <PropertyRef Name="Дата_окончания" />
+      <PropertyRef Name="Стоимость_договора" />
+      <PropertyRef Name="Количество_экземпляров" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Расчетный_счет" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Наименование_организации" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Заказчик_Поставщик" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Дата_начала" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Дата_окончания" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Стоимость_договора" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Количество_экземпляров" Type="Int32" Nullable="false" />
+    <Property Name="Валидность" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="VIEWDelivery_Contract_P">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Наименование_организации" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Наименование_организации" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VIEWDelivery_Contract_Z">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Наименование_организации" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Наименование_организации" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VIEWDiscount">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Наименование" />
+      <PropertyRef Name="Значение_скидки" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Наименование" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Значение_скидки" Type="Single" Nullable="false" />
+    <Property Name="Начало_скидки" Type="DateTime" Precision="3" />
+    <Property Name="Окончание_скидки" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="VIEWMaterials">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Наименование" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Наименование" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VIEWMeasurement">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Наименование" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Наименование" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VIEWProduct">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Наименование" />
+      <PropertyRef Name="Тип" />
+      <PropertyRef Name="Материал" />
+      <PropertyRef Name="Цвет" />
+      <PropertyRef Name="Количество" />
+      <PropertyRef Name="ед_из" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Наименование" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Тип" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Материал" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Цвет" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Количество" Type="Int32" Nullable="false" />
+    <Property Name="ед_из" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Секция_Ярус" Type="String" MaxLength="34" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="VIEWProduct_Location_Cell">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Секция_Ярус" Type="String" MaxLength="34" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="VIEWProduct_type">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Наименование" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Наименование" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VIEWProduct2">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="ед_из" />
+      <PropertyRef Name="Наименование" />
+      <PropertyRef Name="Тип" />
+      <PropertyRef Name="Материал" />
+      <PropertyRef Name="Цвет" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ед_из" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Наименование" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Тип" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Материал" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Цвет" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VIEWReception_Invoice">
+    <Key>
+      <PropertyRef Name="Номер_накладной" />
+      <PropertyRef Name="Дата_накладной" />
+      <PropertyRef Name="Наименование_организации" />
+      <PropertyRef Name="НДС_на_товар" />
+      <PropertyRef Name="Принял_накладную" />
+    </Key>
+    <Property Name="Номер_накладной" Type="Int32" Nullable="false" />
+    <Property Name="Дата_накладной" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Наименование_организации" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="НДС_на_товар" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Принял_накладную" Type="String" MaxLength="62" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VIEWRoles">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Наименование" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Наименование" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VIEWShipping_Invoice">
+    <Key>
+      <PropertyRef Name="Номер_накладной" />
+      <PropertyRef Name="Дата_накладной" />
+      <PropertyRef Name="Наименование_организации" />
+      <PropertyRef Name="НДС_на_товар" />
+      <PropertyRef Name="Принял_накладную" />
+    </Key>
+    <Property Name="Номер_накладной" Type="Int32" Nullable="false" />
+    <Property Name="Дата_накладной" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Наименование_организации" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="НДС_на_товар" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Принял_накладную" Type="String" MaxLength="62" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VIEWStorekeeper">
+    <Key>
+      <PropertyRef Name="Логин" />
+      <PropertyRef Name="Пароль" />
+      <PropertyRef Name="Фамилия" />
+      <PropertyRef Name="Имя" />
+      <PropertyRef Name="Отчество" />
+      <PropertyRef Name="Адрес_электронной_почты" />
+      <PropertyRef Name="Роль" />
+    </Key>
+    <Property Name="Логин" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Пароль" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Фамилия" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Имя" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Отчество" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Адрес_электронной_почты" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Фото" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Роль" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VIEWStorekeeper2">
+    <Key>
+      <PropertyRef Name="Логин" />
+      <PropertyRef Name="Принял_накладную" />
+    </Key>
+    <Property Name="Логин" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Принял_накладную" Type="String" MaxLength="62" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VIEWVAT">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Наименование" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Наименование" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Product__color_i__5CD6CB2B">
+    <End Role="Color_object" Type="Self.Color_object" Multiplicity="1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Color_object">
+        <PropertyRef Name="color_id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="color_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Delivery_ContractFK">
+    <End Role="Contractor" Type="Self.Contractor" Multiplicity="1" />
+    <End Role="Delivery_Contract" Type="Self.Delivery_Contract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Contractor">
+        <PropertyRef Name="contractor_id" />
+      </Principal>
+      <Dependent Role="Delivery_Contract">
+        <PropertyRef Name="contractor_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Price_Rec__contr__6D0D32F4">
+    <End Role="Contractor" Type="Self.Contractor" Multiplicity="1" />
+    <End Role="Price_Reception" Type="Self.Price_Reception" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Contractor">
+        <PropertyRef Name="contractor_id" />
+      </Principal>
+      <Dependent Role="Price_Reception">
+        <PropertyRef Name="contractor_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Reception__deliv__628FA481">
+    <End Role="Delivery_Contract" Type="Self.Delivery_Contract" Multiplicity="1" />
+    <End Role="Reception_Invoice" Type="Self.Reception_Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Delivery_Contract">
+        <PropertyRef Name="delivery_contract_id" />
+      </Principal>
+      <Dependent Role="Reception_Invoice">
+        <PropertyRef Name="delivery_contract_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Shipping___deliv__656C112C">
+    <End Role="Delivery_Contract" Type="Self.Delivery_Contract" Multiplicity="1" />
+    <End Role="Shipping_Invoice" Type="Self.Shipping_Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Delivery_Contract">
+        <PropertyRef Name="delivery_contract_id" />
+      </Principal>
+      <Dependent Role="Shipping_Invoice">
+        <PropertyRef Name="delivery_contract_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Shipping___disco__6B24EA82">
+    <End Role="Discount" Type="Self.Discount" Multiplicity="0..1" />
+    <End Role="Shipping_Specification" Type="Self.Shipping_Specification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Discount">
+        <PropertyRef Name="discount_id" />
+      </Principal>
+      <Dependent Role="Shipping_Specification">
+        <PropertyRef Name="discount_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProductFK">
+    <End Role="Materials" Type="Self.Materials" Multiplicity="1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Materials">
+        <PropertyRef Name="materials_id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="materials_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Product__measure__5DCAEF64">
+    <End Role="Measurement" Type="Self.Measurement" Multiplicity="1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Measurement">
+        <PropertyRef Name="measurement_unit_id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="measurement_unit_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Price_ReceptionFK">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="Price_Reception" Type="Self.Price_Reception" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="product_id" />
+      </Principal>
+      <Dependent Role="Price_Reception">
+        <PropertyRef Name="product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Price_SendingsFK">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="Price_Sendings" Type="Self.Price_Sendings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="product_id" />
+      </Principal>
+      <Dependent Role="Price_Sendings">
+        <PropertyRef Name="product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Product__cell_id__5FB337D6">
+    <End Role="Product_Location_Cell" Type="Self.Product_Location_Cell" Multiplicity="1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product_Location_Cell">
+        <PropertyRef Name="cell_id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="cell_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Product__product__5EBF139D">
+    <End Role="Product_type" Type="Self.Product_type" Multiplicity="1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product_type">
+        <PropertyRef Name="product_type_id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="product_type_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Reception_SpecificationFK">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="Reception_Specification" Type="Self.Reception_Specification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="product_id" />
+      </Principal>
+      <Dependent Role="Reception_Specification">
+        <PropertyRef Name="product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Shipping_SpecificationFK">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="Shipping_Specification" Type="Self.Shipping_Specification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="product_id" />
+      </Principal>
+      <Dependent Role="Shipping_Specification">
+        <PropertyRef Name="product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Reception__login__6383C8BA">
+    <End Role="Storekeeper" Type="Self.Storekeeper" Multiplicity="1" />
+    <End Role="Reception_Invoice" Type="Self.Reception_Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Storekeeper">
+        <PropertyRef Name="login_id" />
+      </Principal>
+      <Dependent Role="Reception_Invoice">
+        <PropertyRef Name="login_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Reception_Specif__68487DD7">
+    <End Role="Reception_Invoice" Type="Self.Reception_Invoice" Multiplicity="1" />
+    <End Role="Reception_Specification" Type="Self.Reception_Specification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Reception_Invoice">
+        <PropertyRef Name="receipt_id" />
+        <PropertyRef Name="receipt_date" />
+      </Principal>
+      <Dependent Role="Reception_Specification">
+        <PropertyRef Name="receipt_id" />
+        <PropertyRef Name="receipt_date" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Reception_InvoiceFK">
+    <End Role="VAT" Type="Self.VAT" Multiplicity="0..1" />
+    <End Role="Reception_Invoice" Type="Self.Reception_Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VAT">
+        <PropertyRef Name="vat_id" />
+      </Principal>
+      <Dependent Role="Reception_Invoice">
+        <PropertyRef Name="vat_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Reception_Specification_CASCADE">
+    <End Role="Reception_Invoice" Type="Self.Reception_Invoice" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Reception_Specification" Type="Self.Reception_Specification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Reception_Invoice">
+        <PropertyRef Name="receipt_id" />
+        <PropertyRef Name="receipt_date" />
+      </Principal>
+      <Dependent Role="Reception_Specification">
+        <PropertyRef Name="receipt_id" />
+        <PropertyRef Name="receipt_date" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StorekeeperFK">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+    <End Role="Storekeeper" Type="Self.Storekeeper" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="role_id" />
+      </Principal>
+      <Dependent Role="Storekeeper">
+        <PropertyRef Name="role_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Shipping___login__66603565">
+    <End Role="Storekeeper" Type="Self.Storekeeper" Multiplicity="1" />
+    <End Role="Shipping_Invoice" Type="Self.Shipping_Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Storekeeper">
+        <PropertyRef Name="login_id" />
+      </Principal>
+      <Dependent Role="Shipping_Invoice">
+        <PropertyRef Name="login_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Shipping_Specifi__6A30C649">
+    <End Role="Shipping_Invoice" Type="Self.Shipping_Invoice" Multiplicity="1" />
+    <End Role="Shipping_Specification" Type="Self.Shipping_Specification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shipping_Invoice">
+        <PropertyRef Name="shipping_invoice_id" />
+        <PropertyRef Name="departure_date" />
+      </Principal>
+      <Dependent Role="Shipping_Specification">
+        <PropertyRef Name="shipping_invoice_id" />
+        <PropertyRef Name="departure_date" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Shipping_InvoiceFK">
+    <End Role="VAT" Type="Self.VAT" Multiplicity="0..1" />
+    <End Role="Shipping_Invoice" Type="Self.Shipping_Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VAT">
+        <PropertyRef Name="vat_id" />
+      </Principal>
+      <Dependent Role="Shipping_Invoice">
+        <PropertyRef Name="vat_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Shipping_Specification_CASCADE">
+    <End Role="Shipping_Invoice" Type="Self.Shipping_Invoice" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Shipping_Specification" Type="Self.Shipping_Specification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shipping_Invoice">
+        <PropertyRef Name="shipping_invoice_id" />
+        <PropertyRef Name="departure_date" />
+      </Principal>
+      <Dependent Role="Shipping_Specification">
+        <PropertyRef Name="shipping_invoice_id" />
+        <PropertyRef Name="departure_date" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dicomEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Color_object" EntityType="Self.Color_object" />
+    <EntitySet Name="Contractor" EntityType="Self.Contractor" />
+    <EntitySet Name="Delivery_Contract" EntityType="Self.Delivery_Contract" />
+    <EntitySet Name="Discount" EntityType="Self.Discount" />
+    <EntitySet Name="Materials" EntityType="Self.Materials" />
+    <EntitySet Name="Measurement" EntityType="Self.Measurement" />
+    <EntitySet Name="Price_Reception" EntityType="Self.Price_Reception" />
+    <EntitySet Name="Price_Sendings" EntityType="Self.Price_Sendings" />
+    <EntitySet Name="Product" EntityType="Self.Product" />
+    <EntitySet Name="Product_Location_Cell" EntityType="Self.Product_Location_Cell" />
+    <EntitySet Name="Product_type" EntityType="Self.Product_type" />
+    <EntitySet Name="Reception_Invoice" EntityType="Self.Reception_Invoice" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" />
+    <EntitySet Name="Shipping_Invoice" EntityType="Self.Shipping_Invoice" />
+    <EntitySet Name="Storekeeper" EntityType="Self.Storekeeper" />
+    <EntitySet Name="VAT" EntityType="Self.VAT" />
+    <EntitySet Name="Reception_Specification" EntityType="Self.Reception_Specification" />
+    <EntitySet Name="Shipping_Specification" EntityType="Self.Shipping_Specification" />
+    <EntitySet Name="VIEWColor_object" EntityType="Self.VIEWColor_object" />
+    <EntitySet Name="VIEWContractor" EntityType="Self.VIEWContractor" />
+    <EntitySet Name="VIEWDelivery_Contract" EntityType="Self.VIEWDelivery_Contract" />
+    <EntitySet Name="VIEWDelivery_Contract_P" EntityType="Self.VIEWDelivery_Contract_P" />
+    <EntitySet Name="VIEWDelivery_Contract_Z" EntityType="Self.VIEWDelivery_Contract_Z" />
+    <EntitySet Name="VIEWDiscount" EntityType="Self.VIEWDiscount" />
+    <EntitySet Name="VIEWMaterials" EntityType="Self.VIEWMaterials" />
+    <EntitySet Name="VIEWMeasurement" EntityType="Self.VIEWMeasurement" />
+    <EntitySet Name="VIEWProduct" EntityType="Self.VIEWProduct" />
+    <EntitySet Name="VIEWProduct_Location_Cell" EntityType="Self.VIEWProduct_Location_Cell" />
+    <EntitySet Name="VIEWProduct_type" EntityType="Self.VIEWProduct_type" />
+    <EntitySet Name="VIEWProduct2" EntityType="Self.VIEWProduct2" />
+    <EntitySet Name="VIEWReception_Invoice" EntityType="Self.VIEWReception_Invoice" />
+    <EntitySet Name="VIEWRoles" EntityType="Self.VIEWRoles" />
+    <EntitySet Name="VIEWShipping_Invoice" EntityType="Self.VIEWShipping_Invoice" />
+    <EntitySet Name="VIEWStorekeeper" EntityType="Self.VIEWStorekeeper" />
+    <EntitySet Name="VIEWStorekeeper2" EntityType="Self.VIEWStorekeeper2" />
+    <EntitySet Name="VIEWVAT" EntityType="Self.VIEWVAT" />
+    <AssociationSet Name="FK__Product__color_i__5CD6CB2B" Association="Self.FK__Product__color_i__5CD6CB2B">
+      <End Role="Color_object" EntitySet="Color_object" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="Delivery_ContractFK" Association="Self.Delivery_ContractFK">
+      <End Role="Contractor" EntitySet="Contractor" />
+      <End Role="Delivery_Contract" EntitySet="Delivery_Contract" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Price_Rec__contr__6D0D32F4" Association="Self.FK__Price_Rec__contr__6D0D32F4">
+      <End Role="Contractor" EntitySet="Contractor" />
+      <End Role="Price_Reception" EntitySet="Price_Reception" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Reception__deliv__628FA481" Association="Self.FK__Reception__deliv__628FA481">
+      <End Role="Delivery_Contract" EntitySet="Delivery_Contract" />
+      <End Role="Reception_Invoice" EntitySet="Reception_Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Shipping___deliv__656C112C" Association="Self.FK__Shipping___deliv__656C112C">
+      <End Role="Delivery_Contract" EntitySet="Delivery_Contract" />
+      <End Role="Shipping_Invoice" EntitySet="Shipping_Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Shipping___disco__6B24EA82" Association="Self.FK__Shipping___disco__6B24EA82">
+      <End Role="Discount" EntitySet="Discount" />
+      <End Role="Shipping_Specification" EntitySet="Shipping_Specification" />
+    </AssociationSet>
+    <AssociationSet Name="ProductFK" Association="Self.ProductFK">
+      <End Role="Materials" EntitySet="Materials" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Product__measure__5DCAEF64" Association="Self.FK__Product__measure__5DCAEF64">
+      <End Role="Measurement" EntitySet="Measurement" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="Price_ReceptionFK" Association="Self.Price_ReceptionFK">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="Price_Reception" EntitySet="Price_Reception" />
+    </AssociationSet>
+    <AssociationSet Name="Price_SendingsFK" Association="Self.Price_SendingsFK">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="Price_Sendings" EntitySet="Price_Sendings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Product__cell_id__5FB337D6" Association="Self.FK__Product__cell_id__5FB337D6">
+      <End Role="Product_Location_Cell" EntitySet="Product_Location_Cell" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Product__product__5EBF139D" Association="Self.FK__Product__product__5EBF139D">
+      <End Role="Product_type" EntitySet="Product_type" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="Reception_SpecificationFK" Association="Self.Reception_SpecificationFK">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="Reception_Specification" EntitySet="Reception_Specification" />
+    </AssociationSet>
+    <AssociationSet Name="Shipping_SpecificationFK" Association="Self.Shipping_SpecificationFK">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="Shipping_Specification" EntitySet="Shipping_Specification" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Reception__login__6383C8BA" Association="Self.FK__Reception__login__6383C8BA">
+      <End Role="Storekeeper" EntitySet="Storekeeper" />
+      <End Role="Reception_Invoice" EntitySet="Reception_Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Reception_Specif__68487DD7" Association="Self.FK__Reception_Specif__68487DD7">
+      <End Role="Reception_Invoice" EntitySet="Reception_Invoice" />
+      <End Role="Reception_Specification" EntitySet="Reception_Specification" />
+    </AssociationSet>
+    <AssociationSet Name="Reception_InvoiceFK" Association="Self.Reception_InvoiceFK">
+      <End Role="VAT" EntitySet="VAT" />
+      <End Role="Reception_Invoice" EntitySet="Reception_Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="Reception_Specification_CASCADE" Association="Self.Reception_Specification_CASCADE">
+      <End Role="Reception_Invoice" EntitySet="Reception_Invoice" />
+      <End Role="Reception_Specification" EntitySet="Reception_Specification" />
+    </AssociationSet>
+    <AssociationSet Name="StorekeeperFK" Association="Self.StorekeeperFK">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Storekeeper" EntitySet="Storekeeper" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Shipping___login__66603565" Association="Self.FK__Shipping___login__66603565">
+      <End Role="Storekeeper" EntitySet="Storekeeper" />
+      <End Role="Shipping_Invoice" EntitySet="Shipping_Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Shipping_Specifi__6A30C649" Association="Self.FK__Shipping_Specifi__6A30C649">
+      <End Role="Shipping_Invoice" EntitySet="Shipping_Invoice" />
+      <End Role="Shipping_Specification" EntitySet="Shipping_Specification" />
+    </AssociationSet>
+    <AssociationSet Name="Shipping_InvoiceFK" Association="Self.Shipping_InvoiceFK">
+      <End Role="VAT" EntitySet="VAT" />
+      <End Role="Shipping_Invoice" EntitySet="Shipping_Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="Shipping_Specification_CASCADE" Association="Self.Shipping_Specification_CASCADE">
+      <End Role="Shipping_Invoice" EntitySet="Shipping_Invoice" />
+      <End Role="Shipping_Specification" EntitySet="Shipping_Specification" />
+    </AssociationSet>
+    <FunctionImport Name="AddContractor">
+      <Parameter Name="legal_contractor_address" Mode="In" Type="String" />
+      <Parameter Name="account_contractor_supplier_account" Mode="In" Type="String" />
+      <Parameter Name="surname_contractor" Mode="In" Type="String" />
+      <Parameter Name="contractor_name" Mode="In" Type="String" />
+      <Parameter Name="contractor_middle_name" Mode="In" Type="String" />
+      <Parameter Name="name_organization_contractor" Mode="In" Type="String" />
+      <Parameter Name="contractor_phone" Mode="In" Type="String" />
+      <Parameter Name="type_contractor" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="AddDelivery_Contract">
+      <Parameter Name="delivery_contract_id" Mode="In" Type="Int32" />
+      <Parameter Name="contractor_id" Mode="In" Type="Int32" />
+      <Parameter Name="contract_start_date" Mode="In" Type="DateTime" />
+      <Parameter Name="contract_end_date" Mode="In" Type="DateTime" />
+      <Parameter Name="contract_cost" Mode="In" Type="Decimal" />
+      <Parameter Name="number_of_contract_instances" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="AddProduct">
+      <Parameter Name="product_id" Mode="In" Type="String" />
+      <Parameter Name="measurement_unit_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_type_id" Mode="In" Type="Int32" />
+      <Parameter Name="cell_id" Mode="In" Type="Int32" />
+      <Parameter Name="materials_id" Mode="In" Type="Int32" />
+      <Parameter Name="color_id" Mode="In" Type="String" />
+      <Parameter Name="name_of_product" Mode="In" Type="String" />
+      <Parameter Name="quantity_of_goods" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="AddReception_Invoice">
+      <Parameter Name="vat_id" Mode="In" Type="Int32" />
+      <Parameter Name="delivery_contract_id" Mode="In" Type="Int32" />
+      <Parameter Name="login_id" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="AddReception_Specification">
+      <Parameter Name="product_id" Mode="In" Type="String" />
+      <Parameter Name="receipt_id" Mode="In" Type="Int32" />
+      <Parameter Name="receipt_date" Mode="In" Type="DateTime" />
+      <Parameter Name="quantity_accepted_goods" Mode="In" Type="Int32" />
+      <Parameter Name="acceptance_price_values" Mode="In" Type="Decimal" />
+      <Parameter Name="contractor_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="AddShipping_Invoice">
+      <Parameter Name="vat_id" Mode="In" Type="Int32" />
+      <Parameter Name="delivery_contract_id" Mode="In" Type="Int32" />
+      <Parameter Name="login_id" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="AddShipping_Specification">
+      <Parameter Name="product_id" Mode="In" Type="String" />
+      <Parameter Name="shipping_invoice_id" Mode="In" Type="Int32" />
+      <Parameter Name="departure_date" Mode="In" Type="DateTime" />
+      <Parameter Name="quantity_sent_goods" Mode="In" Type="Int32" />
+      <Parameter Name="shipment_price_values" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="AddStorekeeper">
+      <Parameter Name="login_id" Mode="In" Type="String" />
+      <Parameter Name="password_id" Mode="In" Type="String" />
+      <Parameter Name="surname_stores" Mode="In" Type="String" />
+      <Parameter Name="warehouse_name" Mode="In" Type="String" />
+      <Parameter Name="patron_name" Mode="In" Type="String" />
+      <Parameter Name="address_ru" Mode="In" Type="String" />
+      <Parameter Name="images" Mode="In" Type="Binary" />
+      <Parameter Name="role_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="CostPrice_Reception" ReturnType="Collection(Decimal)">
+      <Parameter Name="Contractor" Mode="In" Type="Int32" />
+      <Parameter Name="Product" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CostPrice_Sendings" ReturnType="Collection(Decimal)">
+      <Parameter Name="Product" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteContractor">
+      <Parameter Name="contractor_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteDelivery_Contract">
+      <Parameter Name="delivery_contract_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteProduct">
+      <Parameter Name="product_id" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteReception_Invoice">
+      <Parameter Name="receipt_id" Mode="In" Type="Int32" />
+      <Parameter Name="receipt_date" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteReception_Specification">
+      <Parameter Name="id_price" Mode="In" Type="Int32" />
+      <Parameter Name="product_id" Mode="In" Type="String" />
+      <Parameter Name="receipt_id" Mode="In" Type="Int32" />
+      <Parameter Name="receipt_date" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteShipping_Invoice">
+      <Parameter Name="shipping_invoice_id" Mode="In" Type="Int32" />
+      <Parameter Name="departure_date" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteShipping_Specification">
+      <Parameter Name="id_price" Mode="In" Type="Int32" />
+      <Parameter Name="product_id" Mode="In" Type="String" />
+      <Parameter Name="shipping_invoice_id" Mode="In" Type="Int32" />
+      <Parameter Name="departure_date" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteStorekeeper">
+      <Parameter Name="login_id" Mode="In" Type="String" />
+      <Parameter Name="IsDelite" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="FilterContractor" ReturnType="Collection(dicomModel.FilterContractor_Result)">
+      <Parameter Name="type_contractor" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="FilterProduct" ReturnType="Collection(dicomModel.FilterProduct_Result)">
+      <Parameter Name="New" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GraphAnalytics" ReturnType="Collection(dicomModel.GraphAnalytics_Result)">
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GraphAnalytics2" ReturnType="Collection(dicomModel.GraphAnalytics2_Result)">
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="ProcExportData">
+      <Parameter Name="tableName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ProcImportData">
+      <Parameter Name="tableName" Mode="In" Type="String" />
+      <Parameter Name="filePath" Mode="In" Type="String" />
+      <Parameter Name="fileFormat" Mode="In" Type="String" />
+      <Parameter Name="fieldTerminator" Mode="In" Type="String" />
+      <Parameter Name="rowTerminator" Mode="In" Type="String" />
+      <Parameter Name="firstRow" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SortrContractor" ReturnType="Collection(dicomModel.SortrContractor_Result)">
+      <Parameter Name="orderby" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SortrDelivery_Contract" ReturnType="Collection(dicomModel.SortrDelivery_Contract_Result)">
+      <Parameter Name="orderby" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SortrProduct" ReturnType="Collection(dicomModel.SortrProduct_Result)">
+      <Parameter Name="orderby" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SortrReception_Invoice" ReturnType="Collection(dicomModel.SortrReception_Invoice_Result)">
+      <Parameter Name="orderby" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SortrShipping_Invoice" ReturnType="Collection(dicomModel.SortrShipping_Invoice_Result)">
+      <Parameter Name="orderby" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SortrStorekeeper" ReturnType="Collection(dicomModel.SortrStorekeeper_Result)">
+      <Parameter Name="orderby" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="UPDATE_Delivery_Contract" />
+    <FunctionImport Name="UPDATE_Discount" />
+    <FunctionImport Name="UpdateContractor">
+      <Parameter Name="contractor_id" Mode="In" Type="Int32" />
+      <Parameter Name="legal_contractor_address" Mode="In" Type="String" />
+      <Parameter Name="account_contractor_supplier_account" Mode="In" Type="String" />
+      <Parameter Name="surname_contractor" Mode="In" Type="String" />
+      <Parameter Name="contractor_name" Mode="In" Type="String" />
+      <Parameter Name="contractor_middle_name" Mode="In" Type="String" />
+      <Parameter Name="name_organization_contractor" Mode="In" Type="String" />
+      <Parameter Name="contractor_phone" Mode="In" Type="String" />
+      <Parameter Name="type_contractor" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateDelivery_Contract">
+      <Parameter Name="delivery_contract_id" Mode="In" Type="Int32" />
+      <Parameter Name="contractor_id" Mode="In" Type="Int32" />
+      <Parameter Name="contract_start_date" Mode="In" Type="DateTime" />
+      <Parameter Name="contract_end_date" Mode="In" Type="DateTime" />
+      <Parameter Name="contract_cost" Mode="In" Type="Decimal" />
+      <Parameter Name="number_of_contract_instances" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateProduct">
+      <Parameter Name="product_id" Mode="In" Type="String" />
+      <Parameter Name="materials_id" Mode="In" Type="Int32" />
+      <Parameter Name="color_id" Mode="In" Type="String" />
+      <Parameter Name="measurement_unit_id" Mode="In" Type="Int32" />
+      <Parameter Name="product_type_id" Mode="In" Type="Int32" />
+      <Parameter Name="cell_id" Mode="In" Type="Int32" />
+      <Parameter Name="name_of_product" Mode="In" Type="String" />
+      <Parameter Name="quantity_of_goods" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateReception_Invoice">
+      <Parameter Name="receipt_id" Mode="In" Type="Int32" />
+      <Parameter Name="vat_id" Mode="In" Type="Int32" />
+      <Parameter Name="delivery_contract_id" Mode="In" Type="Int32" />
+      <Parameter Name="login_id" Mode="In" Type="String" />
+      <Parameter Name="receipt_date" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateReception_Specification">
+      <Parameter Name="product_id" Mode="In" Type="String" />
+      <Parameter Name="receipt_id" Mode="In" Type="Int32" />
+      <Parameter Name="receipt_date" Mode="In" Type="DateTime" />
+      <Parameter Name="quantity_accepted_goods" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateShipping_Invoice">
+      <Parameter Name="shipping_invoice_id" Mode="In" Type="Int32" />
+      <Parameter Name="vat_id" Mode="In" Type="Int32" />
+      <Parameter Name="delivery_contract_id" Mode="In" Type="Int32" />
+      <Parameter Name="login_id" Mode="In" Type="String" />
+      <Parameter Name="departure_date" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateShipping_Specification">
+      <Parameter Name="product_id" Mode="In" Type="String" />
+      <Parameter Name="shipping_invoice_id" Mode="In" Type="Int32" />
+      <Parameter Name="departure_date" Mode="In" Type="DateTime" />
+      <Parameter Name="quantity_sent_goods" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateStorekeeper">
+      <Parameter Name="login_id" Mode="In" Type="String" />
+      <Parameter Name="password_id" Mode="In" Type="String" />
+      <Parameter Name="surname_stores" Mode="In" Type="String" />
+      <Parameter Name="warehouse_name" Mode="In" Type="String" />
+      <Parameter Name="patron_name" Mode="In" Type="String" />
+      <Parameter Name="address_ru" Mode="In" Type="String" />
+      <Parameter Name="images" Mode="In" Type="Binary" />
+      <Parameter Name="role_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="VIEWContractor_id" ReturnType="Collection(Int32)">
+      <Parameter Name="ID" Mode="In" Type="Int32" />
+      <Parameter Name="ID2" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="VIEWMail" ReturnType="Collection(String)">
+      <Parameter Name="login" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="VIEWReception_Specification" ReturnType="Collection(dicomModel.VIEWReception_Specification_Result)">
+      <Parameter Name="ID" Mode="In" Type="Int32" />
+      <Parameter Name="ID2" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="VIEWRole" ReturnType="Collection(Int32)">
+      <Parameter Name="login_id" Mode="In" Type="String" />
+      <Parameter Name="password" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="VIEWShipping_Specification" ReturnType="Collection(dicomModel.VIEWShipping_Specification_Result)">
+      <Parameter Name="ID" Mode="In" Type="Int32" />
+      <Parameter Name="ID2" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="ValueProduct" ReturnType="Collection(Int32)">
+      <Parameter Name="Product" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="FilterContractor_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Фамилия" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Имя" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Отчество" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Юридический_адрес" Nullable="false" MaxLength="60" />
+    <Property Type="String" Name="Расчетный_счет" Nullable="false" MaxLength="60" />
+    <Property Type="String" Name="Наименование_организации" Nullable="false" MaxLength="200" />
+    <Property Type="String" Name="Телефон" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Тип_контрагента" Nullable="false" MaxLength="20" />
+  </ComplexType>
+  <ComplexType Name="FilterProduct_Result">
+    <Property Type="String" Name="ID" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="Тип_товара" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="Материал" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="Цвет" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="Наименование" Nullable="false" MaxLength="100" />
+    <Property Type="Int32" Name="Количество" Nullable="false" />
+    <Property Type="String" Name="ед_из_" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Секция" Nullable="false" MaxLength="3" />
+    <Property Type="Int32" Name="Ярус" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="GraphAnalytics_Result">
+    <Property Type="Int32" Name="Год" Nullable="true" />
+    <Property Type="Int32" Name="Месяц" Nullable="true" />
+    <Property Type="String" Name="Название_месяца" Nullable="true" MaxLength="30" />
+    <Property Type="Int32" Name="Количество" Nullable="true" />
+    <Property Type="Double" Name="Сумма" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="GraphAnalytics2_Result">
+    <Property Type="Int32" Name="Год" Nullable="true" />
+    <Property Type="Int32" Name="Месяц" Nullable="true" />
+    <Property Type="String" Name="Название_месяца" Nullable="true" MaxLength="30" />
+    <Property Type="Int32" Name="Количество" Nullable="true" />
+    <Property Type="Double" Name="Сумма" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SortrContractor_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Фамилия" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Имя" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Отчество" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Юридический_адрес" Nullable="false" MaxLength="60" />
+    <Property Type="String" Name="Расчетный_счет" Nullable="false" MaxLength="60" />
+    <Property Type="String" Name="Наименование_организации" Nullable="false" MaxLength="200" />
+    <Property Type="String" Name="Телефон" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Тип_контрагента" Nullable="false" MaxLength="20" />
+  </ComplexType>
+  <ComplexType Name="SortrDelivery_Contract_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Наименование_организации" Nullable="false" MaxLength="200" />
+    <Property Type="String" Name="Заказчик_Поставщик" Nullable="false" MaxLength="20" />
+    <Property Type="DateTime" Name="Дата_начала" Nullable="false" />
+    <Property Type="DateTime" Name="Дата_окончания" Nullable="false" />
+    <Property Type="Decimal" Name="Стоимость_договора" Nullable="false" Precision="19" />
+    <Property Type="Int32" Name="Количество_экземпляров" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="SortrProduct_Result">
+    <Property Type="String" Name="ID" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="Тип_товара" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="Материал" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="Цвет" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="Наименование" Nullable="false" MaxLength="100" />
+    <Property Type="Int32" Name="Количество" Nullable="false" />
+    <Property Type="String" Name="ед_из_" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Секция" Nullable="false" MaxLength="3" />
+    <Property Type="Int32" Name="Ярус" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="SortrReception_Invoice_Result">
+    <Property Type="Int32" Name="Номер_накладной" Nullable="false" />
+    <Property Type="DateTime" Name="Дата_накладной" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="Номер_договора" Nullable="false" />
+    <Property Type="String" Name="НДС_на_товар" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="Принял_накладную" Nullable="false" MaxLength="62" />
+  </ComplexType>
+  <ComplexType Name="SortrShipping_Invoice_Result">
+    <Property Type="Int32" Name="Номер_накладной" Nullable="false" />
+    <Property Type="DateTime" Name="Дата_накладной" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="Номер_договора" Nullable="false" />
+    <Property Type="String" Name="НДС_на_товар" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="Принял_накладную" Nullable="false" MaxLength="62" />
+  </ComplexType>
+  <ComplexType Name="SortrStorekeeper_Result">
+    <Property Type="String" Name="Логин" Nullable="false" MaxLength="15" />
+    <Property Type="String" Name="Пароль" Nullable="false" MaxLength="15" />
+    <Property Type="String" Name="Фамилия" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Имя" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Отчество" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Адрес_электронной_почты" Nullable="false" MaxLength="20" />
+    <Property Type="Binary" Name="Фото" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="VIEWReception_Specification_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="IDP" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="Наименование" Nullable="false" MaxLength="100" />
+    <Property Type="Int32" Name="Количество" Nullable="false" />
+    <Property Type="String" Name="ед_из" Nullable="false" MaxLength="20" />
+    <Property Type="Decimal" Name="Цена_за_один_товар" Nullable="false" Precision="19" />
+    <Property Type="String" Name="Сумма" Nullable="true" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="VIEWShipping_Specification_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="IDP" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="Наименование" Nullable="false" MaxLength="100" />
+    <Property Type="Int32" Name="Количество" Nullable="false" />
+    <Property Type="String" Name="ед_из" Nullable="false" MaxLength="20" />
+    <Property Type="Decimal" Name="Цена_за_один_товар" Nullable="false" Precision="19" />
+    <Property Type="Single" Name="Скидка" Nullable="false" />
+    <Property Type="String" Name="Сумма" Nullable="true" MaxLength="100" />
+  </ComplexType>
+</Schema>

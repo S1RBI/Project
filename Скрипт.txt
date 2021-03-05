@@ -1,0 +1,1750 @@
+﻿--НДС
+CREATE TABLE VAT(
+vat_id INT NOT NULL IDENTITY(1,1), --ID
+vat_name NVARCHAR(30) NOT NULL,    --Наименование
+vat_value REAL NOT NULL)           --Значение
+--Измерение
+CREATE TABLE Measurement(
+measurement_unit_id INT NOT NULL IDENTITY(1,1),--ID
+units_measurements_name NVARCHAR(20) NOT NULL) --Наименование 
+--Ячейка размещения товара
+CREATE TABLE Product_Location_Cell(
+cell_id INT NOT NULL IDENTITY(1,1),--ID
+tier_cells INT NOT NULL,           --Ярус
+cell_section NVARCHAR(3) NOT NULL) --Секция
+--Сотрудник
+CREATE TABLE Storekeeper(
+login_id NVARCHAR(15) NOT NULL,           --ID
+password_id NVARCHAR(15) NOT NULL,        --Пароль
+surname_stores NVARCHAR(20) NOT NULL,     --Фамилия
+warehouse_name NVARCHAR(20) NOT NULL,     --Имя
+patron_name NVARCHAR(20) NOT NULL,        --Отчество
+address_ru NVARCHAR(20) NOT NULL,         --Электронная почта
+images VARBINARY(MAX) NULL,               --Фото
+role_id INT NOT NULL,                     --Роль
+IsDelite NVARCHAR(MAX) NULL DEFAULT NULL) --Удаление
+--Контрагент
+CREATE TABLE Contractor(
+contractor_id INT NOT NULL IDENTITY(1,1),                 --ID
+legal_contractor_address NVARCHAR(60) NOT NULL,           --Юридический адрес
+account_contractor_supplier_account NVARCHAR(60) NOT NULL,--Расчетный счет
+surname_contractor NVARCHAR(20) NOT NULL,                 --Фамилия
+contractor_name NVARCHAR(20) NOT NULL,                    --Имя
+contractor_middle_name NVARCHAR(20) NOT NULL,             --Отчество
+name_organization_contractor NVARCHAR(200) NOT NULL,      --Наименование организации
+contractor_phone NVARCHAR(20) NOT NULL,                   --Телефон
+type_contractor NVARCHAR(20) NOT NULL)                    --Тип
+--Тип товара
+CREATE TABLE Product_type(
+product_type_id INT NOT NULL IDENTITY(1,1),--ID
+types_name NVARCHAR(30) NOT NULL)          --Наименование 
+--Товар
+CREATE TABLE Product(
+product_id NVARCHAR(10) NOT NULL,      --ID
+measurement_unit_id INT NOT NULL,      --Единица измерения (FK)
+product_type_id INT NOT NULL,          --Тип товара (FK)
+cell_id INT NOT NULL,                  --Ячейка (FK)
+materials_id INT NOT NULL,             --Материал (FK)
+color_id NVARCHAR(6) NOT NULL,         --Цвет (FK)
+name_of_product NVARCHAR(100) NOT NULL,--Наименование
+quantity_of_goods INT NOT NULL)        --Количество
+--Договор Поставки
+CREATE TABLE Delivery_Contract(
+delivery_contract_id INT NOT NULL,                --ID
+contractor_id INT NOT NULL,                       --Контрагент (FK)
+contract_start_date DATE NOT NULL,                --Дата начала
+contract_end_date DATE NOT NULL,                  --Дата окончания
+contract_cost MONEY NOT NULL,                     --Стоимость договора
+validity NVARCHAR(30) NULL DEFAULT 'ДЕЙСТВИТЕЛЕН',--Валидность
+number_of_contract_instances INT NOT NULL)        --Количество экземпляров
+--Накладная приема
+CREATE TABLE Reception_Invoice(
+receipt_id INT NOT NULL IDENTITY(1,1),            --ID
+vat_id INT NULL,                                  --НДС (FK)
+delivery_contract_id INT NOT NULL,                --Номер договора (FK)
+login_id NVARCHAR(15) NOT NULL,                   --Кладовщик (FK)
+receipt_date DATETIME NOT NULL DEFAULT GETDATE()) --ID дата
+--Накладная отправки
+CREATE TABLE Shipping_Invoice(
+shipping_invoice_id INT NOT NULL IDENTITY(1,1),     --ID
+vat_id INT NULL,                                    --НДС (FK)
+delivery_contract_id INT NOT NULL,                  --Номер договора (FK)
+login_id NVARCHAR(15) NOT NULL,                     --Кладовщик (FK)
+departure_date DATETIME NOT NULL DEFAULT GETDATE()) --ID дата
+--Цена приема
+CREATE TABLE Price_Reception(
+reception_price_id INT NOT NULL IDENTITY(1,1),           --ID
+acceptance_price_values MONEY NOT NULL,                  --Значение цены
+reception_price_date DATETIME NOT NULL,                  --Дата цены
+product_id NVARCHAR(10) NOT NULL,                        --Товар (FK)
+contractor_id INT NOT NULL)                              --Котрагент
+--Спецификация приема
+CREATE TABLE Reception_Specification(
+product_id NVARCHAR(10) NOT NULL,    --Товар (FK)
+receipt_id INT NOT NULL,             --Накладная приема (FK)         
+receipt_date DATETIME NOT NULL,      --Дата приема (FK)
+quantity_accepted_goods INT NOT NULL)--Количество принятого товара
+--Скидка
+CREATE TABLE Discount(
+discount_id INT NOT NULL IDENTITY(1,1), --ID
+start_discounts_date DATETIME NULL,     --Начало скидки
+end_discounts_date DATETIME NULL,       --Окончание скидки
+discounts_name NVARCHAR(30) NOT NULL,   --Наименование
+discount_value REAL NOT NULL)           --Значение скидки
+--Цена отправки
+CREATE TABLE Price_Sendings(
+shipment_price_id INT NOT NULL IDENTITY(1,1),       --ID
+shipment_price_values MONEY NOT NULL,               --Значение цены
+send_price_date DATETIME NOT NULL,                  --Дата цены
+product_id NVARCHAR(10) NOT NULL)                   --Товар (FK)
+--Спецификация отправки
+CREATE TABLE Shipping_Specification(
+discount_id INT NULL DEFAULT 1,  --Сидка (FK)
+product_id NVARCHAR(10) NOT NULL,--Товар (FK)
+shipping_invoice_id INT NOT NULL,--Накладная отправки (FK)
+departure_date DATETIME NOT NULL,--Дтата отправки (FK)
+quantity_sent_goods INT NOT NULL)--Количество отправленного товара
+--Материалы
+CREATE TABLE Materials(
+materials_id INT NOT NULL IDENTITY(1,1), --ID
+materials_name NVARCHAR(30) NOT NULL)    --Наименование материала
+--Цвет
+CREATE TABLE Color_object(
+color_id NVARCHAR(6) NOT NULL,   --ID
+color_name NVARCHAR(30) NOT NULL)--Наименование цвета
+--Роль
+CREATE TABLE Roles(
+role_id INT,                     --ID
+role_name NVARCHAR(30) NOT NULL) --Наименование роли
+GO
+
+ALTER TABLE VAT ADD CONSTRAINT VATPK
+PRIMARY KEY(vat_id)
+ALTER TABLE Measurement ADD CONSTRAINT MeasurementPK
+PRIMARY KEY(measurement_unit_id)
+ALTER TABLE Product_Location_Cell ADD CONSTRAINT Product_Location_CellPK
+PRIMARY KEY(cell_id)
+ALTER TABLE Storekeeper ADD CONSTRAINT StorekeeperPK
+PRIMARY KEY(login_id)
+ALTER TABLE Contractor ADD CONSTRAINT ContractorPK
+PRIMARY KEY(contractor_id)
+ALTER TABLE Product_type ADD CONSTRAINT Product_typePK
+PRIMARY KEY(product_type_id)
+ALTER TABLE Product ADD CONSTRAINT ProductPK
+PRIMARY KEY(product_id)
+ALTER TABLE Delivery_Contract ADD CONSTRAINT Delivery_ContractPK
+PRIMARY KEY(delivery_contract_id)
+ALTER TABLE Reception_Invoice ADD CONSTRAINT Reception_InvoicePK
+PRIMARY KEY(receipt_id, receipt_date)
+ALTER TABLE Shipping_Invoice ADD CONSTRAINT Shipping_InvoicePK
+PRIMARY KEY(shipping_invoice_id, departure_date)
+ALTER TABLE Price_Reception ADD CONSTRAINT Price_ReceptionPK
+PRIMARY KEY(reception_price_id)
+ALTER TABLE Discount ADD CONSTRAINT DiscountPK
+PRIMARY KEY(discount_id)
+ALTER TABLE Price_Sendings ADD CONSTRAINT Price_SendingsPK
+PRIMARY KEY(shipment_price_id)
+ALTER TABLE Materials ADD CONSTRAINT MaterialsPK
+PRIMARY KEY(materials_id)
+ALTER TABLE Color_object ADD CONSTRAINT Color_objectPK
+PRIMARY KEY(color_id)
+ALTER TABLE Roles ADD CONSTRAINT RolesPK
+PRIMARY KEY(role_id)
+
+GO
+
+ALTER TABLE Storekeeper ADD CONSTRAINT StorekeeperFK
+FOREIGN KEY (role_id) REFERENCES Roles(role_id)
+ALTER TABLE Product ADD CONSTRAINT ProductFK
+FOREIGN KEY (materials_id) REFERENCES Materials(materials_id),
+FOREIGN KEY (color_id) REFERENCES Color_object(color_id),
+FOREIGN KEY (measurement_unit_id) REFERENCES Measurement(measurement_unit_id),
+FOREIGN KEY (product_type_id) REFERENCES Product_type(product_type_id),
+FOREIGN KEY (cell_id) REFERENCES Product_Location_Cell(cell_id)
+ALTER TABLE Delivery_Contract ADD CONSTRAINT Delivery_ContractFK
+FOREIGN KEY (contractor_id) REFERENCES Contractor(contractor_id)
+ALTER TABLE Reception_Invoice ADD CONSTRAINT Reception_InvoiceFK
+FOREIGN KEY (vat_id) REFERENCES VAT(vat_id),
+FOREIGN KEY (delivery_contract_id) REFERENCES Delivery_Contract(delivery_contract_id),
+FOREIGN KEY (login_id) REFERENCES Storekeeper(login_id)
+ALTER TABLE Shipping_Invoice ADD CONSTRAINT Shipping_InvoiceFK
+FOREIGN KEY (vat_id) REFERENCES VAT(vat_id),
+FOREIGN KEY (delivery_contract_id) REFERENCES Delivery_Contract(delivery_contract_id),
+FOREIGN KEY (login_id) REFERENCES Storekeeper(login_id)
+ALTER TABLE Reception_Specification ADD CONSTRAINT Reception_SpecificationFK
+FOREIGN KEY (product_id) REFERENCES Product(product_id),
+FOREIGN KEY (receipt_id, receipt_date) REFERENCES Reception_invoice(receipt_id, receipt_date)
+ALTER TABLE Shipping_Specification ADD CONSTRAINT Shipping_SpecificationFK
+FOREIGN KEY (product_id) REFERENCES Product(product_id),
+FOREIGN KEY (shipping_invoice_id, departure_date) REFERENCES Shipping_Invoice(shipping_invoice_id, departure_date),
+FOREIGN KEY (discount_id) REFERENCES Discount(discount_id) 
+ALTER TABLE Price_Reception ADD CONSTRAINT Price_ReceptionFK
+FOREIGN KEY (product_id) REFERENCES Product(product_id),
+FOREIGN KEY (contractor_id) REFERENCES Contractor(contractor_id)
+ALTER TABLE Price_Sendings ADD CONSTRAINT Price_SendingsFK
+FOREIGN KEY (product_id) REFERENCES Product(product_id)
+
+GO
+
+ALTER TABLE Contractor ADD CONSTRAINT Contractor_CHECK
+CHECK (contractor_phone LIKE '[8][0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]'),
+CHECK (account_contractor_supplier_account LIKE '[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9][0-9]-[0-9]-[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9][0-9]'),
+CHECK (type_contractor IN('Поставщик','Заказчик'))
+
+GO
+
+ALTER TABLE Reception_Invoice ADD CONSTRAINT Reception_Invoice_DEFAULT
+DEFAULT '1' FOR vat_id
+ALTER TABLE Shipping_Invoice ADD CONSTRAINT Shipping_Invoice_DEFAULT
+DEFAULT '1' FOR vat_id
+
+GO
+
+CREATE UNIQUE NONCLUSTERED INDEX Product_INDEX ON Product(name_of_product)
+CREATE UNIQUE NONCLUSTERED INDEX VAT_INDEX ON VAT(vat_name, vat_value)
+CREATE UNIQUE NONCLUSTERED INDEX Measurement_INDEX ON Measurement(units_measurements_name)
+CREATE NONCLUSTERED INDEX Storekeeper_INDEX ON Storekeeper(surname_stores)
+CREATE NONCLUSTERED INDEX Contractor_INDEX ON Contractor(legal_contractor_address, surname_contractor, name_organization_contractor)
+CREATE UNIQUE NONCLUSTERED INDEX Product_type_INDEX ON Product_type(types_name)
+CREATE UNIQUE NONCLUSTERED INDEX Discount_INDEX ON Discount(discounts_name)
+CREATE NONCLUSTERED INDEX Discount2_INDEX ON Discount(discount_value)
+
+GO
+
+ALTER TABLE Shipping_Specification
+ADD CONSTRAINT Shipping_Specification_CASCADE
+FOREIGN KEY (shipping_invoice_id, departure_date) REFERENCES Shipping_Invoice ON DELETE CASCADE ON UPDATE CASCADE
+GO
+ALTER TABLE Reception_Specification
+ADD CONSTRAINT Reception_Specification_CASCADE
+FOREIGN KEY (receipt_id, receipt_date) REFERENCES Reception_invoice ON DELETE CASCADE ON UPDATE CASCADE
+GO
+
+INSERT INTO Roles VALUES 
+(1, 'Кладовщик'),
+(2, 'Администратор'),
+(3, 'Директор')
+
+INSERT INTO Measurement (units_measurements_name) VALUES 
+('см'),
+('м'),
+('кг'),
+('шт'),
+('л');
+
+INSERT INTO Color_object (color_id, color_name) VALUES 
+('XXXXXX', 'Не покрашено'),
+('FF0000', 'Red'),
+('ADFF2F', 'GreenYellow'),
+('FF69B4', 'HotPink'),
+('FFD700', 'Gold'),
+('00FFFF', 'Aqua'),
+('FFFFFF', 'White'),
+('DEB887', 'BurlyWood'),
+('000000', 'Black'),
+('C0C0C0', 'Silver');
+
+INSERT INTO VAT (vat_name, vat_value) VALUES 
+('10%', 0.1),
+('15%', 0.15),
+('20%', 0.2),
+('25%', 0.25);
+
+INSERT INTO Materials (materials_name) VALUES 
+('Метал'),
+('Алюминий'),
+('Дерево'),
+('Пластик'),
+('Медь'),
+('Чугун');
+
+INSERT INTO Product_Location_Cell (tier_cells, cell_section) VALUES 
+(1, '4Е'),
+(2, '5A'),
+(3, '1C'),
+(1, '7D'),
+(1, '2F');
+
+INSERT INTO Storekeeper (login_id, password_id, surname_stores, Warehouse_Name, Patron_Name, address_ru, role_id) VALUES 
+('login_kravcenco', 'ghoedlcfs32k4', 'Кравченко', 'Юлиан', 'Иванович', 'mail@mail.ru', 1),
+('login_novikov', '234hj4hl4df', 'Новикова', 'Раиса', 'Ильинична', 'dshkjadg32@gmail.com', 1),
+('login_sokolova', 'sadf8796fd3', 'Соколова', 'Генриетта', 'Юрьевна', 'ufnv8c@mail.ru', 1),
+('login_mironova', 'sdfsf7s567', 'Миронова', 'Юлиан', 'Михайловна', 'lxcmcie89@mail.ru', 1),
+('login_dimianova', '4j3gh5g53', 'Демьянова', 'Всеслава', 'Васильевна', 'kokas2@mail.ru', 2),
+('1', '2', 'TEST', 'TEST', 'TEST', 'serp.2001@mail.ru', 2);
+
+INSERT INTO Contractor (Legal_Contractor_Address, Account_Contractor_Supplier_Account, Surname_Contractor, Contractor_Name, Contractor_Middle_Name, Name_Organization_Contractor, Contractor_phone, Type_Contractor) VALUES 
+('143336, г. Урюпинск, ул. Головин М. Переулок, дом 73', '407-02-810-5-0000-0000001', 'Городнова', 'Рената', 'Антоновна', 'ООО "Aurum"', '8904-691-46-42', 'Заказчик'),
+('308596, г. Собинка, ул. Хлебозаводский Проезд, дом 39', '407-02-810-5-0074-0000001', 'Гаврилова', 'Евдокия', 'Игоревна', 'ООО "Милорд"', '8947-927-55-35', 'Заказчик'),
+('422433, г. Знаменка, ул. Брянский 2-й Переулок, дом 7', '407-02-810-5-0000-9649108', 'Дмитриев', 'Иван', 'Богданович', 'ООО "Яхонт"', '8906-825-86-64', 'Заказчик'),
+('404159, г. Сусанино, ул. Казачий 1-й Переулок, дом 67', '407-02-810-5-0937-5193047', 'Куколевский', 'Павел', 'Николаевич', 'ООО "Янтарь"', '8967-567-35-12', 'Поставщик'),
+('198504, г. Солнечногорск, ул. Берсеневский Переулок, дом 39', '407-02-810-5-7394-7650274', 'Сморчкова', 'Руфина', 'Валентиновна', 'ООО "Хризолит"', '8943-373-52-81', 'Поставщик'),
+('603095, г. Инта, ул. Старокачаловская, дом 16', '407-02-810-5-9273-6592740', 'Шашкова', 'Васса', 'Георгиевна', 'ООО "VITM"', '8931-553-42-50', 'Поставщик');
+
+INSERT INTO Product_type (Types_Name) VALUES 
+('Спорт товар'),
+('Материал'),
+('Мебель'),
+('Стеллаж'),
+('Шкафы');
+
+INSERT INTO Product (product_id, materials_id, color_id, measurement_unit_id, product_type_id, cell_id, Name_of_product, Quantity_of_goods) VALUES 
+('T781HRT9UE', 1, 'XXXXXX', 4, 1, 1, 'Тренажер для становой тяги', 43),
+('H78GHRE44E', 1, 'XXXXXX', 4, 1, 2, 'Экран с сеткой 1,5х1', 56),
+('T7813659UE', 1, 'XXXXXX', 4, 1, 3, 'Щит баскетбольный', 39),
+('B5K1HRT33E', 3, 'XXXXXX', 4, 2, 4, 'Трибуна', 73),
+('J3HF92LCD2', 6, 'XXXXXX', 4, 2, 5, 'Столб 60х60', 124);
+
+INSERT INTO Delivery_Contract (delivery_contract_id, contractor_id, Contract_Start_Date, Contract_End_Date, Contract_Cost, Number_of_Contract_Instances) VALUES 
+(2134, 1, '02.09.2017', '02.09.2018', 4000000, 7),
+(2564, 2, '20.07.2020', '20.05.2021', 1000000, 4),
+(7865, 3, '09.01.2020', '01.01.2021', 500000, 4),
+(5463, 4, '17.08.2019', '06.07.2020', 1700000, 3),
+(3467, 5, '03.04.2019', '01.06.2020', 5000000, 4);
+
+INSERT INTO Reception_invoice (vat_id, delivery_contract_id, login_id, receipt_date) VALUES 
+(3, 5463, 'login_novikov', '03.11.2019 09:20'),
+(3, 5463, 'login_kravcenco', '24.03.2020 18:23'),
+(3, 5463, 'login_novikov', '11.12.2019 21:47'),
+(3, 3467, 'login_sokolova', '04.09.2019 01:50'),
+(3, 3467, 'login_dimianova', '19.02.2020 05:59');
+
+INSERT INTO Shipping_Invoice (vat_id, delivery_contract_id, login_id, Departure_date) VALUES 
+(3, 5463, 'login_novikov', '12.09.2019 19:07'),
+(3, 2564, 'login_kravcenco', '22.11.2019 11:20'),
+(3, 2564, 'login_kravcenco', '28.01.2020 22:30'),
+(3, 2564, 'login_dimianova', '01.05.2020 00:20'),
+(3, 7865, 'login_sokolova', '25.06.2019 07:42');
+/*
+INSERT INTO Price_Reception (Acceptance_price_values, Reception_Price_Date, product_id, contractor_id) VALUES 
+(25000, '03.11.2019', 'T781HRT9UE', 1),
+(50000, '03.11.2019', 'H78GHRE44E', 1),
+(10000, '03.11.2019', 'T7813659UE', 1),
+(25000, '24.03.2020', 'T781HRT9UE', 2),
+(50000, '24.03.2020', 'H78GHRE44E', 2);
+
+INSERT INTO Reception_Specification (product_id, receipt_id, receipt_date, Quantity_Accepted_Goods) VALUES 
+('T781HRT9UE', 1, '03.11.2019 09:20', 8),
+('H78GHRE44E', 1, '03.11.2019 09:20', 3),
+('J3HF92LCD2', 1, '03.11.2019 09:20', 7),
+('T781HRT9UE', 2, '24.03.2020 18:23', 4),
+('H78GHRE44E', 2, '24.03.2020 18:23', 4);
+*/
+INSERT INTO Discount (discounts_name, Discount_Value) VALUES ('Нет скидки', 0);
+
+INSERT INTO Discount (start_discounts_date, end_discounts_date, discounts_name, Discount_Value) VALUES 
+('01.02.2019 00:00', '14.02.2019 23:59', 'День святого Валентина', 0.1),
+('14.03.2019 00:00', '14.03.2019 23:59', 'День рождение Фирмы', 0.3),
+('15.10.2019 00:00', '31.10.2019 23:59', 'Хэллоуин', 0.12),
+('11.11.2019 00:00', '11.11.2019 23:59', 'Всемирный День шопинга', 0.5),
+('01.12.2019 00:00', '10.01.2020 23:59', 'Новогодняя распродажа', 0.3);
+/*
+INSERT INTO Price_Sendings (Shipment_Price_Values, send_price_date, product_id) VALUES 
+(30000, '12.09.2019', 'T781HRT9UE'),
+(20000, '12.09.2019', 'T7813659UE'),
+(40000, '12.09.2019', 'B5K1HRT33E'),
+(30000, '22.11.2019', 'J3HF92LCD2'),
+(60000, '22.11.2019', 'H78GHRE44E');
+
+INSERT INTO Shipping_Specification (discount_id, product_id, shipping_invoice_id, Departure_date, Quantity_Sent_Goods) VALUES 
+(1, 'T781HRT9UE', 1, '12.09.2019 19:07', 4),
+(1, 'J3HF92LCD2', 1, '12.09.2019 19:07', 10),
+(1, 'H78GHRE44E', 1, '12.09.2019 19:07', 5),
+(1, 'T781HRT9UE', 2, '22.11.2019 11:20', 9),
+(1, 'J3HF92LCD2', 2, '22.11.2019 11:20', 5);
+*/
+GO
+--exec sp_addmessage 52201,13,'Данная запись уже существует!','us_english'
+--exec sp_addmessage 52202,13,'Нельзя изменить запись, так как ее не существует!','us_english'
+--exec sp_addmessage 52203,13,'Нельзя удалить данную запись, так как она используется!','us_english'
+--exec sp_addmessage 52204,13,'Запись успешно добавлена.','us_english'
+--exec sp_addmessage 52205,13,'Запись успешно изменена.','us_english'
+--exec sp_addmessage 52206,13,'Запись успешно удалена.','us_english'
+--exec sp_addmessage 52215,13,'Такой записи не существует.','us_english'
+--GO
+
+--Хранимые процедуры на добавление--
+CREATE PROC AddStorekeeper
+@login_id NVARCHAR(15),
+@password_id NVARCHAR(15),
+@surname_stores NVARCHAR(20),
+@warehouse_name NVARCHAR(20),
+@patron_name NVARCHAR(20),
+@address_ru NVARCHAR(20),
+@images VARBINARY(MAX),
+@role_id INT
+AS
+BEGIN TRAN
+IF EXISTS (SELECT * FROM Storekeeper 
+WHERE surname_stores=@surname_stores and warehouse_name=@warehouse_name and patron_name=@patron_name 
+and login_id=@login_id and password_id=@password_id OR @password_id=@login_id OR @address_ru=address_ru)
+BEGIN
+RAISERROR(52201,-1,-1)
+ROLLBACK TRAN
+END
+ELSE
+BEGIN
+INSERT INTO Storekeeper values (@login_id,@password_id,@surname_stores,@warehouse_name,@patron_name,@address_ru,@images, @role_id, NULL)
+COMMIT TRAN
+END
+GO 
+
+CREATE PROC AddContractor
+@legal_contractor_address NVARCHAR(60),
+@account_contractor_supplier_account NVARCHAR(60),
+@surname_contractor NVARCHAR(20),
+@contractor_name NVARCHAR(20),
+@contractor_middle_name NVARCHAR(20),
+@name_organization_contractor NVARCHAR(200),
+@contractor_phone NVARCHAR(20),
+@type_contractor NVARCHAR(20)
+AS
+BEGIN TRAN
+IF EXISTS (SELECT * FROM Contractor 
+WHERE legal_contractor_address=@legal_contractor_address and account_contractor_supplier_account=@account_contractor_supplier_account 
+and surname_contractor=@surname_contractor and contractor_name=@contractor_name and contractor_middle_name=@contractor_middle_name 
+and name_organization_contractor=@name_organization_contractor  and contractor_phone=@contractor_phone and type_contractor=@type_contractor)
+BEGIN
+RAISERROR(52201,-1,-1)
+ROLLBACK TRAN
+END
+ELSE
+BEGIN
+INSERT INTO Contractor values (@legal_contractor_address,@account_contractor_supplier_account,@surname_contractor,
+@contractor_name,@contractor_middle_name,@name_organization_contractor,@contractor_phone,@type_contractor)
+COMMIT TRAN
+END
+GO
+
+CREATE PROC AddProduct
+@product_id NVARCHAR(10),
+@measurement_unit_id INT,
+@product_type_id INT,
+@cell_id INT,
+@materials_id INT,
+@color_id NVARCHAR(6),
+@name_of_product NVARCHAR(100),
+@quantity_of_goods INT
+AS
+BEGIN TRAN
+IF EXISTS (SELECT * FROM Product 
+WHERE product_id=@product_id and product_type_id=@product_type_id and
+materials_id=@materials_id and color_id=@color_id and name_of_product=@name_of_product)
+BEGIN
+RAISERROR(52201,-1,-1)
+ROLLBACK TRAN
+END
+ELSE
+BEGIN
+INSERT INTO Product values (@product_id, @measurement_unit_id, @product_type_id, @cell_id, @materials_id, @color_id, @name_of_product, @quantity_of_goods)
+COMMIT TRAN
+END
+GO
+
+CREATE PROC AddDelivery_Contract
+@delivery_contract_id INT,
+@contractor_id INT,
+@contract_start_date DATE,
+@contract_end_date DATE,
+@contract_cost MONEY,
+@number_of_contract_instances INT
+AS
+BEGIN TRAN
+IF EXISTS (SELECT * FROM Delivery_Contract 
+WHERE contractor_id=@contractor_id)
+BEGIN
+RAISERROR(52201,-1,-1)
+ROLLBACK TRAN
+END
+ELSE
+BEGIN
+INSERT INTO Delivery_Contract(delivery_contract_id, contractor_id, Contract_Start_Date, Contract_End_Date, Contract_Cost, Number_of_Contract_Instances) 
+values (@delivery_contract_id, @contractor_id, @contract_start_date, @contract_end_date, @contract_cost, @number_of_contract_instances)
+COMMIT TRAN
+END
+GO
+
+CREATE PROC AddReception_Invoice
+@vat_id INT,
+@delivery_contract_id INT,
+@login_id NVARCHAR(15)
+AS
+BEGIN
+INSERT INTO Reception_Invoice(vat_id, delivery_contract_id, login_id) values (@vat_id, @delivery_contract_id, @login_id)
+END
+GO
+
+CREATE PROC AddShipping_Invoice
+@vat_id INT,
+@delivery_contract_id INT,
+@login_id NVARCHAR(15)
+AS
+BEGIN
+INSERT INTO Shipping_Invoice(vat_id, delivery_contract_id, login_id) values (@vat_id, @delivery_contract_id, @login_id)
+END
+GO
+
+CREATE PROC AddReception_Specification
+@product_id VARCHAR(10),
+@receipt_id INT,
+@receipt_date DATETIME,
+@quantity_accepted_goods INT,
+@acceptance_price_values MONEY,
+@contractor_id INT
+AS
+BEGIN TRAN
+IF EXISTS (SELECT * FROM Reception_Specification 
+WHERE product_id=@product_id and
+receipt_id=@receipt_id and receipt_date=@receipt_date)
+BEGIN
+RAISERROR(52201,-1,-1)
+ROLLBACK TRAN
+END
+ELSE
+BEGIN
+DECLARE @INT INT
+INSERT INTO Price_Reception(acceptance_price_values, product_id, contractor_id, reception_price_date) 
+values (@acceptance_price_values, @product_id, @contractor_id, @receipt_date)
+SET @INT= (SELECT @@IDENTITY)
+INSERT INTO Reception_Specification(product_id, receipt_id, receipt_date, Quantity_Accepted_Goods) 
+values (@product_id,@receipt_id,@receipt_date,@quantity_accepted_goods)
+COMMIT TRAN
+END
+GO
+
+CREATE PROC AddShipping_Specification
+@product_id VARCHAR(10),
+@shipping_invoice_id INT,
+@departure_date DATETIME,
+@quantity_sent_goods INT,
+@shipment_price_values MONEY
+AS
+BEGIN TRAN
+IF EXISTS (SELECT * FROM Shipping_Specification 
+WHERE product_id=@product_id and shipping_invoice_id=@shipping_invoice_id and
+departure_date=@departure_date) 
+BEGIN
+RAISERROR(52201,-1,-1)
+ROLLBACK TRAN
+END
+ELSE
+BEGIN
+DECLARE @INT INT
+INSERT INTO Price_Sendings(shipment_price_values, product_id, send_price_date) values (@shipment_price_values, @product_id, @departure_date)
+SET @INT= (SELECT @@IDENTITY)
+INSERT INTO Shipping_Specification(product_id, shipping_invoice_id, Departure_date, Quantity_Sent_Goods)
+values (@product_id,@shipping_invoice_id,@departure_date,@quantity_sent_goods)
+COMMIT TRAN
+END
+GO
+
+--EXEC AddStorekeeper 'login', 'password', 'Михейкин', 'Юрий', 'Андреевич'
+--EXEC AddContractor '350015, г. Владикавказ, ул. Доброслободская, дом 13', '407-02-810-5-0000-9400001', 'Омарова', 'Фануна', 'Анатольевна', 'ООО "VERTIYM"', '8920-691-27-11', 'Заказчик'
+--EXEC AddProduct 'H78GHRE43E', 1, 2, 5, 2, 'XXXXXX', 'Товар для теста', 1
+--EXEC AddDelivery_Contract 543654, 6, '20.07.2020', '20.04.2020', 34642, 5
+--EXEC AddReception_Invoice 3, 3467, 'login_dimianova'
+--EXEC AddShipping_Invoice 3, 2564, 'login_kravcenco'
+--EXEC AddReception_Specification 'B5K1HRT33E', 2, '24.03.2020 18:23', 5, 4000
+--EXEC AddShipping_Specification 1, 'J3HF92LCD2', 1, '12.09.2019 19:07', 9, 4000
+
+--Хранимые процедуры на удаление--
+CREATE PROC DeleteStorekeeper
+@login_id NVARCHAR(15),
+@IsDelite NVARCHAR(MAX)
+AS
+UPDATE Storekeeper SET IsDelite = @IsDelite
+WHERE login_id=@login_id
+GO
+--EXEC DeleteStorekeeper login_novikov, 'dsadasdasd'
+CREATE PROC DeleteContractor
+@contractor_id INT
+AS
+BEGIN TRAN
+if exists (SELECT contractor_id
+FROM Delivery_Contract
+WHERE contractor_id=@contractor_id)
+BEGIN
+RAISERROR(52203,-1,-1)
+ROLLBACK TRAN
+END
+ELSE
+BEGIN
+DELETE FROM Contractor WHERE contractor_id=@contractor_id
+COMMIT TRAN
+END
+GO
+
+CREATE PROC DeleteProduct
+@product_id NVARCHAR(10)
+AS
+BEGIN TRAN
+if exists (SELECT Shipping_Specification.product_id,Reception_Specification.product_id
+FROM Reception_Specification,Shipping_Specification
+WHERE Reception_Specification.product_id=@product_id OR Shipping_Specification.product_id=@product_id)
+BEGIN
+RAISERROR(52203,-1,-1)
+ROLLBACK TRAN
+END
+ELSE
+BEGIN
+DELETE FROM Product WHERE product_id=@product_id
+COMMIT TRAN
+END
+GO
+
+CREATE PROC DeleteDelivery_Contract
+@delivery_contract_id INT
+AS
+BEGIN TRAN
+if exists (SELECT Reception_invoice.delivery_contract_id,Shipping_Invoice.delivery_contract_id
+FROM Reception_invoice,Shipping_Invoice
+WHERE Reception_invoice.delivery_contract_id=@delivery_contract_id OR Shipping_Invoice.delivery_contract_id=@delivery_contract_id)
+BEGIN
+RAISERROR(52203,-1,-1)
+ROLLBACK TRAN
+END
+ELSE
+BEGIN
+DELETE FROM Delivery_Contract WHERE delivery_contract_id=@delivery_contract_id
+COMMIT TRAN
+END
+GO
+
+CREATE PROC DeleteReception_Invoice
+@receipt_id INT,
+@receipt_date DATETIME
+AS
+BEGIN
+DELETE FROM Reception_Invoice WHERE receipt_id=@receipt_id AND receipt_date=@receipt_date
+END
+GO
+
+CREATE PROC DeleteShipping_Invoice
+@shipping_invoice_id INT,
+@departure_date DATETIME
+AS
+BEGIN
+DELETE FROM Shipping_Invoice WHERE shipping_invoice_id=@shipping_invoice_id AND departure_date=@departure_date
+END
+GO
+
+CREATE PROC DeleteReception_Specification
+@id_price int,
+@product_id NVARCHAR(10),
+@receipt_id INT,
+@receipt_date DATETIME
+AS
+BEGIN
+DELETE FROM Price_Reception WHERE reception_price_id=@id_price
+DELETE FROM Reception_Specification WHERE product_id=@product_id AND
+receipt_id=@receipt_id AND receipt_date=@receipt_date
+END
+GO
+
+CREATE PROC DeleteShipping_Specification
+@id_price int,
+@product_id NVARCHAR(10),
+@shipping_invoice_id INT,
+@departure_date DATETIME
+AS
+BEGIN
+DELETE FROM Price_Sendings WHERE shipment_price_id=@id_price
+DELETE FROM Shipping_Specification WHERE product_id=@product_id AND
+shipping_invoice_id=@shipping_invoice_id AND departure_date=@departure_date
+END
+GO
+
+--EXEC DeleteStorekeeper 'login_novikov'
+--EXEC DeleteContractor 1
+--EXEC DeleteProduct 'H78GHRE43E'
+--EXEC DeleteDelivery_Contract 3467
+--EXEC DeleteReception_Invoice 2, '24.03.2020 18:23' 
+--EXEC DeleteShipping_Invoice 4, '01.05.2017 00:20'
+--EXEC DeleteReception_Specification 'H78GHRE44E', 2, '24.03.2020 18:23', 5, 4
+--EXEC DeleteShipping_Specification 1, 'J3HF92LCD2', 2, '22.11.2019 11:20', 5, 5
+
+--Хранимые процедуры на изменения--
+CREATE PROC UpdateStorekeeper
+@login_id NVARCHAR(15),
+@password_id NVARCHAR(15),
+@surname_stores NVARCHAR(20),
+@warehouse_name NVARCHAR(20),
+@patron_name NVARCHAR(20),
+@address_ru NVARCHAR(20),
+@images VARBINARY(MAX),
+@role_id INT
+AS
+BEGIN TRAN
+IF exists (SELECT * FROM Storekeeper 
+WHERE @address_ru=address_ru AND login_id!=@login_id)
+BEGIN
+RAISERROR(52202,-1,-1)
+ROLLBACK TRAN
+END
+ELSE
+BEGIN
+UPDATE Storekeeper SET password_id=@password_id,surname_stores=@surname_stores,warehouse_name=@warehouse_name,
+patron_name=@patron_name,address_ru=@address_ru,images=@images,role_id=@role_id
+WHERE login_id=@login_id
+COMMIT TRAN
+END
+GO
+
+CREATE PROC UpdateContractor
+@contractor_id INT,
+@legal_contractor_address NVARCHAR(60),
+@account_contractor_supplier_account NVARCHAR(60),
+@surname_contractor NVARCHAR(20),
+@contractor_name NVARCHAR(20),
+@contractor_middle_name NVARCHAR(20),
+@name_organization_contractor NVARCHAR(200),
+@contractor_phone NVARCHAR(20),
+@type_contractor NVARCHAR(20)
+AS
+BEGIN TRAN
+IF not exists (SELECT * FROM Contractor 
+WHERE contractor_id=@contractor_id)
+BEGIN
+RAISERROR(52202,-1,-1)
+ROLLBACK TRAN
+END
+ELSE
+BEGIN
+UPDATE Contractor SET legal_contractor_address=@legal_contractor_address,account_contractor_supplier_account=@account_contractor_supplier_account,
+surname_contractor=@surname_contractor,contractor_name=@contractor_name,contractor_middle_name=@contractor_middle_name,
+name_organization_contractor=@name_organization_contractor,contractor_phone=@contractor_phone,type_contractor=@type_contractor 
+WHERE contractor_id=@contractor_id
+COMMIT TRAN
+END
+GO
+
+CREATE PROC UpdateProduct
+@product_id NVARCHAR(10),
+@materials_id INT,
+@color_id NVARCHAR(6),
+@measurement_unit_id INT,
+@product_type_id INT,
+@cell_id INT,
+@name_of_product NVARCHAR(100),
+@quantity_of_goods INT
+AS
+BEGIN TRAN
+IF not exists (SELECT * FROM Product 
+WHERE product_id=@product_id)
+BEGIN
+RAISERROR(52202,-1,-1)
+ROLLBACK TRAN
+END
+ELSE
+BEGIN
+UPDATE Product SET materials_id=@materials_id,color_id=@color_id,
+measurement_unit_id=@measurement_unit_id,product_type_id=@product_type_id,
+cell_id=@cell_id,name_of_product=@name_of_product,quantity_of_goods=@quantity_of_goods
+WHERE product_id=@product_id
+COMMIT TRAN
+END
+GO
+
+CREATE PROC UpdateDelivery_Contract
+@delivery_contract_id INT,
+@contractor_id INT,
+@contract_start_date DATE,
+@contract_end_date DATE,
+@contract_cost MONEY,
+@number_of_contract_instances INT
+AS
+BEGIN TRAN
+IF not exists (SELECT * FROM Delivery_Contract 
+WHERE delivery_contract_id=@delivery_contract_id)
+BEGIN
+RAISERROR(52202,-1,-1)
+ROLLBACK TRAN
+END
+ELSE
+BEGIN
+UPDATE Delivery_Contract SET contractor_id=@contractor_id,contract_start_date=@contract_start_date,
+contract_end_date=@contract_end_date,contract_cost=@contract_cost,number_of_contract_instances=@number_of_contract_instances
+WHERE delivery_contract_id=@delivery_contract_id
+COMMIT TRAN
+END
+GO
+
+CREATE PROC UpdateReception_Invoice
+@receipt_id INT,
+@vat_id INT,
+@delivery_contract_id INT,
+@login_id NVARCHAR(15),
+@receipt_date DATETIME
+AS
+BEGIN TRAN
+IF not exists (SELECT * FROM Reception_Invoice 
+WHERE receipt_id=@receipt_id AND receipt_date=@receipt_date)
+BEGIN
+RAISERROR(52202,-1,-1)
+ROLLBACK TRAN
+END
+ELSE
+BEGIN
+UPDATE Reception_Invoice SET vat_id=@vat_id,delivery_contract_id=@delivery_contract_id,login_id=@login_id
+WHERE receipt_id=@receipt_id AND receipt_date=@receipt_date
+COMMIT TRAN
+END
+GO
+
+CREATE PROC UpdateShipping_Invoice
+@shipping_invoice_id INT,
+@vat_id INT,
+@delivery_contract_id INT,
+@login_id NVARCHAR(15),
+@departure_date DATETIME
+AS
+BEGIN TRAN
+IF not exists (SELECT * FROM Shipping_Invoice 
+WHERE shipping_invoice_id=@shipping_invoice_id AND departure_date=@departure_date)
+BEGIN
+RAISERROR(52202,-1,-1)
+ROLLBACK TRAN
+END
+ELSE
+BEGIN
+UPDATE Shipping_Invoice SET vat_id=@vat_id,delivery_contract_id=@delivery_contract_id,login_id=@login_id
+WHERE shipping_invoice_id=@shipping_invoice_id AND departure_date=@departure_date
+COMMIT TRAN
+END
+GO
+
+CREATE PROC UpdateReception_Specification
+@product_id NVARCHAR(10),
+@receipt_id INT,
+@receipt_date DATETIME,
+@quantity_accepted_goods INT
+AS
+BEGIN TRAN
+IF not exists (SELECT * FROM Reception_Specification 
+WHERE product_id=@product_id and
+receipt_id=@receipt_id and receipt_date=@receipt_date)
+BEGIN
+RAISERROR(52202,-1,-1)
+ROLLBACK TRAN
+END
+ELSE
+BEGIN
+UPDATE Reception_Specification SET quantity_accepted_goods=@quantity_accepted_goods
+WHERE product_id=@product_id and
+receipt_id=@receipt_id and receipt_date=@receipt_date
+COMMIT TRAN
+END
+GO
+
+CREATE PROC UpdateShipping_Specification
+@product_id NVARCHAR(10),
+@shipping_invoice_id INT,
+@departure_date DATETIME,
+@quantity_sent_goods INT
+AS
+BEGIN TRAN
+IF not exists (SELECT * FROM Shipping_Specification 
+WHERE product_id=@product_id and shipping_invoice_id=@shipping_invoice_id and
+departure_date=@departure_date)
+BEGIN
+RAISERROR(52202,-1,-1)
+ROLLBACK TRAN
+END
+ELSE
+BEGIN
+UPDATE Shipping_Specification SET quantity_sent_goods=@quantity_sent_goods
+WHERE product_id=@product_id and shipping_invoice_id=@shipping_invoice_id and
+departure_date=@departure_date
+COMMIT TRAN
+END
+GO
+
+--EXEC UpdateStorekeeper '1', '2', 'TEST', 'TEST', 'TEST', 'TEST', 5476
+--EXEC UpdateContractor 1, '143336, г. Урюпинск, ул. Головин М. Переулок, дом 73', '407-02-810-5-0000-0000001', 'Городнова', 'Рената', 'Антоновна', 'ООО "Aurum"', '8904-691-46-42', 'Поставщик'
+--EXEC UpdateProduct 'H78GHRE44E', 1, 'XXXXXX', 5, 2, 2, 'Экран с сеткой 1,5х1', 56
+--EXEC UpdateDelivery_Contract 2134, 1, '02.09.2017', '02.09.2021', 8000000, 12
+--EXEC UpdateReception_Invoice 1, 3, 2, 1, '03.11.2017 09:20'
+--EXEC UpdateShipping_Invoice 1, 3, 4, 2, '12.09.2017 19:07'
+--EXEC UpdateReception_Specification 'H78GHRE44E', 1, '03.11.2019 09:20', 2, 4
+--EXEC UpdateShipping_Specification 2, 'J3HF92LCD2', 2, '22.11.2019 11:20', 5, 5
+
+--Хранимые процедуры на сортировку--
+CREATE PROC SortrStorekeeper
+@orderby INT
+AS 
+SELECT login_id AS [Логин],
+password_id AS [Пароль],
+surname_stores AS [Фамилия],
+warehouse_name AS [Имя],
+patron_name AS [Отчество],
+address_ru AS [Адрес электронной почты],
+images AS [Фото]
+FROM Storekeeper 
+ORDER BY 
+CASE @orderby 
+  WHEN 1 then login_id
+  WHEN 2 then surname_stores
+  WHEN 3 then warehouse_name
+  WHEN 4 then patron_name
+  WHEN 5 then password_id
+END,
+CASE @orderby 
+  WHEN 6 then login_id 
+  WHEN 7 then surname_stores
+  WHEN 8 then warehouse_name
+  WHEN 9 then patron_name
+  WHEN 10 then password_id
+END DESC
+GO
+
+CREATE PROC SortrContractor
+@orderby INT
+AS 
+SELECT contractor_id AS ID,
+surname_contractor AS Фамилия,
+contractor_name AS Имя,
+contractor_middle_name AS Отчество,
+legal_contractor_address AS [Юридический адрес],
+account_contractor_supplier_account AS [Расчетный счет],
+name_organization_contractor AS [Наименование организации],
+contractor_phone AS Телефон,
+type_contractor AS [Тип контрагента] 
+FROM Contractor 
+ORDER BY 
+CASE @orderby 
+  WHEN 1 then contractor_id
+END,
+CASE @orderby 
+  WHEN 2 then legal_contractor_address
+  WHEN 3 then account_contractor_supplier_account
+  WHEN 4 then surname_contractor
+  WHEN 5 then contractor_name
+  WHEN 6 then contractor_middle_name
+  WHEN 7 then name_organization_contractor
+  WHEN 8 then contractor_phone
+  WHEN 9 then type_contractor
+END,
+CASE @orderby 
+  WHEN 10 then contractor_id
+END DESC,
+CASE @orderby 
+  WHEN 11 then legal_contractor_address
+  WHEN 12 then account_contractor_supplier_account
+  WHEN 13 then surname_contractor
+  WHEN 14 then contractor_name
+  WHEN 15 then contractor_middle_name
+  WHEN 16 then name_organization_contractor
+  WHEN 17 then contractor_phone
+  WHEN 18 then type_contractor
+END DESC
+GO
+
+CREATE PROC SortrProduct
+@orderby INT
+AS 
+SELECT 
+p.product_id AS ID,
+t.types_name AS [Тип товара],
+n.materials_name AS Материал,
+o.color_name AS Цвет,
+name_of_product AS Наименование,
+quantity_of_goods AS Количество,
+m.units_measurements_name AS [ед.из.],
+c.cell_section AS Секция,
+c.tier_cells AS Ярус
+FROM Product p INNER JOIN Measurement m ON p.measurement_unit_id=m.measurement_unit_id 
+INNER JOIN Product_type t ON p.product_type_id=t.product_type_id
+INNER JOIN Product_Location_Cell c ON p.cell_id=c.cell_id
+INNER JOIN Materials n ON p.materials_id=n.materials_id
+INNER JOIN Color_object o ON p.color_id=o.color_id
+ORDER BY 
+CASE @orderby 
+  WHEN 1 then product_id
+  WHEN 2 then tier_cells
+  WHEN 3 then quantity_of_goods
+END,
+CASE @orderby 
+  WHEN 4 then units_measurements_name
+  WHEN 5 then types_name
+  WHEN 6 then cell_section
+  WHEN 7 then name_of_product
+  WHEN 8 then n.materials_name
+  WHEN 9 then o.color_name
+END,
+CASE @orderby 
+  WHEN 10 then product_id
+  WHEN 11 then tier_cells
+  WHEN 12 then quantity_of_goods
+END DESC,
+CASE @orderby 
+  WHEN 13 then units_measurements_name
+  WHEN 14 then types_name
+  WHEN 15 then cell_section
+  WHEN 16 then name_of_product
+  WHEN 17 then n.materials_name
+  WHEN 18 then o.color_name
+END DESC
+GO
+
+CREATE PROC SortrDelivery_Contract
+@orderby INT
+AS 
+SELECT delivery_contract_id AS [ID],
+name_organization_contractor AS [Наименование организации],
+type_contractor AS [Заказчик/Поставщик],
+contract_start_date AS [Дата начала],
+contract_end_date AS [Дата окончания],
+contract_cost AS [Стоимость договора],
+number_of_contract_instances AS [Количество экземпляров]
+FROM Delivery_Contract d INNER JOIN Contractor c ON d.contractor_id=c.contractor_id 
+ORDER BY 
+CASE @orderby 
+  WHEN 1 then delivery_contract_id
+  WHEN 2 then number_of_contract_instances
+END,
+CASE @orderby 
+  WHEN 3 then name_organization_contractor
+  WHEN 4 then type_contractor
+END,
+CASE @orderby 
+  WHEN 5 then contract_start_date
+  WHEN 6 then contract_end_date
+END,
+CASE @orderby 
+  WHEN 7 then contract_cost
+END,
+CASE @orderby 
+  WHEN 8 then delivery_contract_id
+  WHEN 9 then number_of_contract_instances
+END DESC,
+CASE @orderby 
+  WHEN 10 then name_organization_contractor
+  WHEN 11 then type_contractor
+END DESC,
+CASE @orderby 
+  WHEN 12 then contract_start_date
+  WHEN 13 then contract_end_date
+END DESC,
+CASE @orderby 
+  WHEN 14 then contract_cost
+END DESC
+GO
+
+CREATE PROC SortrReception_Invoice
+@orderby INT
+AS 
+SELECT receipt_id AS [Номер накладной],
+receipt_date AS [Дата накладной],
+delivery_contract_id AS [Номер договора],
+v.vat_name AS [НДС на товар],
+surname_stores+' '+warehouse_name+' '+patron_name AS [Принял накладную]
+FROM Reception_Invoice r INNER JOIN VAT v ON r.vat_id=v.vat_id 
+INNER JOIN Storekeeper s ON r.login_id=s.login_id 
+ORDER BY 
+CASE @orderby 
+  WHEN 1 then receipt_id
+  WHEN 2 then delivery_contract_id
+END,
+CASE @orderby 
+  WHEN 3 then vat_name
+  WHEN 4 then surname_stores
+  WHEN 5 then warehouse_name
+  WHEN 6 then patron_name
+END,
+CASE @orderby 
+  WHEN 7 then receipt_date
+END,
+CASE @orderby 
+  WHEN 8 then receipt_id
+  WHEN 9 then delivery_contract_id
+END DESC,
+CASE @orderby 
+  WHEN 10 then vat_name
+  WHEN 11 then surname_stores
+  WHEN 12 then warehouse_name
+  WHEN 13 then patron_name
+END DESC,
+CASE @orderby 
+  WHEN 14 then receipt_date
+END DESC
+GO
+
+CREATE PROC SortrShipping_Invoice
+@orderby INT
+AS 
+SELECT shipping_invoice_id AS [Номер накладной],
+departure_date AS [Дата накладной],
+delivery_contract_id AS [Номер договора],
+v.vat_name AS [НДС на товар],
+surname_stores+' '+warehouse_name+' '+patron_name AS [Принял накладную]
+FROM Shipping_Invoice r INNER JOIN VAT v ON r.vat_id=v.vat_id 
+INNER JOIN Storekeeper s ON r.login_id=s.login_id 
+ORDER BY 
+CASE @orderby 
+  WHEN 1 then shipping_invoice_id
+  WHEN 2 then delivery_contract_id
+END,
+CASE @orderby 
+  WHEN 3 then vat_name
+  WHEN 4 then surname_stores
+  WHEN 5 then warehouse_name
+  WHEN 6 then patron_name
+END,
+CASE @orderby 
+  WHEN 7 then departure_date
+END,
+CASE @orderby 
+  WHEN 8 then shipping_invoice_id
+  WHEN 9 then delivery_contract_id
+END DESC,
+CASE @orderby 
+  WHEN 10 then vat_name
+  WHEN 11 then surname_stores
+  WHEN 12 then warehouse_name
+  WHEN 13 then patron_name
+END DESC,
+CASE @orderby 
+  WHEN 14 then departure_date
+END DESC
+GO
+
+--EXEC SortrStorekeeper 5
+--EXEC SortrContractor 9
+--EXEC SortrProduct 9
+--EXEC SortrDelivery_Contract 7
+--EXEC SortrReception_Invoice 4
+--EXEC SortrShipping_Invoice 4
+
+--Хранимые процедуры на фильтрацию--
+CREATE PROC FilterContractor
+@type_contractor NVARCHAR(20)
+AS
+BEGIN TRAN
+IF NOT EXISTS (SELECT * FROM Contractor WHERE type_contractor=@type_contractor)
+BEGIN
+RAISERROR(52215,-1,-1)
+ROLLBACK TRAN
+END
+ELSE
+BEGIN
+SELECT contractor_id AS ID,
+surname_contractor AS Фамилия,
+contractor_name AS Имя,
+contractor_middle_name AS Отчество,
+legal_contractor_address AS [Юридический адрес],
+account_contractor_supplier_account AS [Расчетный счет],
+name_organization_contractor AS [Наименование организации],
+contractor_phone AS Телефон,
+type_contractor AS [Тип контрагента] 
+FROM Contractor 
+WHERE type_contractor=@type_contractor
+COMMIT TRAN
+END
+GO
+
+CREATE PROC FilterProduct
+@New NVARCHAR(50)
+AS
+BEGIN TRAN
+IF NOT EXISTS (SELECT * FROM Product_type,Materials,Color_object 
+WHERE  product_type_id=@New OR color_id=@New)
+BEGIN
+RAISERROR(52215,-1,-1)
+ROLLBACK TRAN
+END
+ELSE
+BEGIN
+SELECT p.product_id AS ID,
+t.types_name AS [Тип товара],
+n.materials_name AS Материал,
+o.color_name AS Цвет,
+name_of_product AS Наименование,
+quantity_of_goods AS Количество,
+m.units_measurements_name AS [ед.из.],
+c.cell_section AS Секция,
+c.tier_cells AS Ярус
+FROM Product p INNER JOIN Measurement m ON p.measurement_unit_id=m.measurement_unit_id 
+INNER JOIN Product_type t ON p.product_type_id=t.product_type_id
+INNER JOIN Product_Location_Cell c ON p.cell_id=c.cell_id
+INNER JOIN Materials n ON p.materials_id=n.materials_id
+INNER JOIN Color_object o ON p.color_id=o.color_id
+WHERE p.product_type_id=@New OR p.color_id=@New
+COMMIT TRAN
+END
+GO
+--EXEC FilterContractor 'Заказчик'
+--EXEC FilterProduct 2
+
+--Функции--
+CREATE FUNCTION GetSummShipping_Specification
+(@discount_id INT,
+@product_id NVARCHAR(10),
+@shipping_invoice_id INT,
+@departure_date DATETIME,
+@quantity_sent_goods INT)
+RETURNS NVARCHAR(100)
+BEGIN
+DECLARE @Summ INT
+SELECT @Summ = (pr.shipment_price_values * (1+vat_value) * (1-discount_value))*quantity_sent_goods
+FROM Shipping_Specification s
+INNER JOIN Product p ON s.product_id=p.product_id 
+INNER JOIN Shipping_Invoice r ON s.shipping_invoice_id=r.shipping_invoice_id 
+INNER JOIN Price_Sendings pr ON p.product_id=pr.product_id 
+INNER JOIN Discount d ON s.discount_id=d.discount_id 
+INNER JOIN VAT v ON v.vat_id=r.vat_id 
+WHERE s.discount_id=@discount_id AND pr.product_id=@product_id AND s.shipping_invoice_id=@shipping_invoice_id AND 
+s.departure_date=@departure_date AND quantity_sent_goods=@quantity_sent_goods AND send_price_date = @departure_date
+RETURN @Summ 
+END
+GO
+
+CREATE FUNCTION GetSummReception_Specification
+(@product_id NVARCHAR(10),
+@receipt_id INT,
+@receipt_date DATETIME,
+@quantity_accepted_goods INT)
+RETURNS NVARCHAR(100)
+BEGIN
+DECLARE @Summ INT
+SELECT @Summ = (pr.acceptance_price_values * (1+vat_value))*quantity_accepted_goods
+FROM Reception_Specification s 
+INNER JOIN Product p ON s.product_id=p.product_id 
+INNER JOIN Reception_Invoice r ON s.receipt_id=r.receipt_id 
+INNER JOIN Price_Reception pr ON s.product_id=p.product_id 
+INNER JOIN VAT v ON v.vat_id=r.vat_id 
+WHERE pr.product_id=@product_id AND s.receipt_id=@receipt_id AND s.receipt_date=@receipt_date AND 
+quantity_accepted_goods=@quantity_accepted_goods AND reception_price_date = @receipt_date
+RETURN @Summ 
+END
+GO
+
+--Триггеры--
+CREATE TRIGGER TriggerDelivery_Contract
+ON Delivery_Contract
+FOR INSERT
+AS
+DECLARE @end DATE
+SELECT @end=contract_end_date FROM inserted
+IF GETDATE()>@end
+BEGIN
+PRINT 'Договор ПРОСРОЧЕН'
+ROLLBACK TRANSACTION
+END
+ELSE
+BEGIN
+PRINT 'Договор ДЕЙСТВИТЕЛЕН'
+END
+GO
+--DROP TRIGGER TriggerDelivery_Contract
+
+CREATE TRIGGER TriggerDiscountANDShipping_Specification
+ON Shipping_Specification
+FOR INSERT
+AS
+DECLARE
+@contractId INT,
+@contractDate DATETIME,
+@discountId INT,
+@product_id NVARCHAR(10),
+@colvo INT,
+@colvo2 INT,
+@ID VARCHAR(10)
+SELECT @colvo2=quantity_sent_goods,@colvo=quantity_of_goods, @ID=p.product_id
+FROM Shipping_Specification s JOIN Product p ON p.product_id=(select product_id from inserted)
+UPDATE Product
+SET quantity_of_goods=@colvo-@colvo2
+WHERE @ID=product_id
+SELECT @contractId=shipping_invoice_id,@contractDate=Departure_date, @product_id=product_id FROM inserted
+SELECT @discountId = discount_id FROM Discount
+WHERE start_discounts_date <= @contractDate and end_discounts_date >= @contractDate
+IF not(@discountId is null)
+BEGIN
+UPDATE Shipping_Specification 
+SET discount_id = @discountId
+WHERE @contractId=shipping_invoice_id AND @contractDate=Departure_date AND @product_id=product_id
+END 
+GO
+
+CREATE TRIGGER TriggerReception_Specification
+ON Reception_Specification
+AFTER INSERT
+AS
+DECLARE @colvo INT,
+@colvo2 INT,
+@ID VARCHAR(10)
+BEGIN
+SELECT @colvo2=quantity_accepted_goods,@colvo=quantity_of_goods, @ID=p.product_id
+FROM Reception_Specification s JOIN Product p ON p.product_id=(select product_id from inserted)
+UPDATE Product
+SET quantity_of_goods=@colvo+@colvo2
+WHERE @ID=product_id
+END
+GO
+
+CREATE TRIGGER TrigerDropReception_Specification
+ON Reception_Specification
+AFTER DELETE AS
+DECLARE @colvo INT,
+@colvo2 INT,
+@ID VARCHAR(10)
+BEGIN
+SELECT @colvo2=d.quantity_accepted_goods,@colvo=quantity_of_goods, @ID=p.product_id
+FROM deleted d JOIN Product p ON p.product_id=(select product_id from deleted)
+UPDATE Product
+SET quantity_of_goods=@colvo - @colvo2
+WHERE @ID=product_id
+END
+GO
+
+CREATE TRIGGER TrigerDropShipping_Specification
+ON Shipping_Specification
+AFTER DELETE AS
+DECLARE @colvo INT,
+@colvo2 INT,
+@ID VARCHAR(10)
+BEGIN
+SELECT @colvo2=quantity_sent_goods,@colvo=quantity_of_goods, @ID=p.product_id
+FROM deleted d JOIN Product p ON p.product_id=(select product_id from deleted)
+UPDATE Product
+SET quantity_of_goods=@colvo+@colvo2
+WHERE @ID=product_id
+END
+GO
+
+--Хранимая на обновление контракта ПРОСРОЧЕН ИЛИ ДЕЙСТВИТЕЛЕН
+CREATE PROC UPDATE_Delivery_Contract
+AS
+BEGIN
+UPDATE Delivery_Contract 
+SET validity = 'ПРОСРОЧЕН'
+WHERE contract_end_date<GETDATE() AND validity != 'ПРОСРОЧЕН'
+END
+BEGIN
+UPDATE Delivery_Contract 
+SET validity = 'ДЕЙСТВИТЕЛЕН'
+WHERE contract_end_date>GETDATE() AND validity != 'ДЕЙСТВИТЕЛЕН'
+end
+GO
+--DROP PROC UPDATE_Delivery_Contract
+--EXEC UPDATE_Delivery_Contract
+
+--Хранимая на обновление СКИДКИ
+CREATE PROC UPDATE_Discount
+AS
+BEGIN
+UPDATE Discount
+SET start_discounts_date = start_discounts_date + 365, end_discounts_date = end_discounts_date + 365
+WHERE end_discounts_date<GETDATE()
+END
+GO
+EXEC UPDATE_Discount
+GO
+--EXEC UPDATE_Discount
+
+--Представления
+CREATE VIEW VIEWVAT
+AS
+SELECT 
+vat_id AS ID,
+vat_name AS Наименование
+FROM VAT
+GO
+--SELECT * FROM VIEWVAT
+
+CREATE VIEW VIEWRoles
+AS
+SELECT 
+role_id AS ID,
+role_name AS Наименование
+FROM Roles
+GO
+--SELECT * FROM VIEWRoles
+
+CREATE VIEW VIEWMeasurement
+AS
+SELECT 
+measurement_unit_id AS ID,
+units_measurements_name AS Наименование
+FROM Measurement
+GO
+--SELECT * FROM VIEWMeasurement
+
+CREATE VIEW VIEWProduct_Location_Cell
+AS
+SELECT 
+cell_id AS ID,
+cell_section+'/'+CONVERT(NVARCHAR,tier_cells) AS [Секция/Ярус]
+FROM Product_Location_Cell
+GO
+--SELECT * FROM VIEWProduct_Location_Cell
+
+CREATE VIEW VIEWColor_object
+AS
+SELECT 
+color_id AS ID,
+color_name AS Наименование
+FROM Color_object
+GO
+--SELECT * FROM VIEWColor_object
+
+CREATE VIEW VIEWMaterials
+AS
+SELECT 
+materials_id AS ID,
+materials_name AS Наименование
+FROM Materials
+GO
+--SELECT * FROM VIEWMaterials
+
+CREATE VIEW VIEWStorekeeper
+AS 
+SELECT login_id AS [Логин],
+password_id AS [Пароль],
+surname_stores AS [Фамилия],
+warehouse_name AS [Имя],
+patron_name AS [Отчество],
+address_ru AS [Адрес электронной почты],
+images AS [Фото],
+r.role_name AS [Роль]
+FROM Storekeeper s INNER JOIN Roles r ON r.role_id = s.role_id
+WHERE IsDelite IS NULL
+GO
+--SELECT * FROM VIEWStorekeeper
+
+CREATE VIEW VIEWContractor
+AS
+SELECT 
+contractor_id AS ID,
+surname_contractor AS Фамилия,
+contractor_name AS Имя,
+contractor_middle_name AS Отчество,
+legal_contractor_address AS [Юридический адрес],
+account_contractor_supplier_account AS [Расчетный счет],
+name_organization_contractor AS [Наименование организации],
+contractor_phone AS Телефон,
+type_contractor AS [Тип контрагента]  
+FROM Contractor
+GO
+--SELECT * FROM VIEWContractor
+
+CREATE VIEW VIEWProduct_type
+AS
+SELECT 
+product_type_id AS ID,
+types_name AS Наименование
+FROM Product_type
+GO
+--SELECT * FROM VIEWProduct_type
+
+CREATE VIEW VIEWProduct
+AS
+SELECT 
+product_id AS ID,
+name_of_product AS Наименование,
+types_name AS Тип,
+materials_name AS Материал,
+color_name AS Цвет,
+quantity_of_goods AS Количество,
+units_measurements_name AS [ед.из],
+cell_section+'/'+CONVERT(NVARCHAR,tier_cells) AS [Секция/Ярус]
+FROM Product p INNER JOIN Measurement m ON p.measurement_unit_id=m.measurement_unit_id 
+INNER JOIN Product_type t ON p.product_type_id=t.product_type_id
+INNER JOIN Product_Location_Cell c ON p.cell_id=c.cell_id
+INNER JOIN Materials n ON p.materials_id=n.materials_id
+INNER JOIN Color_object o ON p.color_id=o.color_id 
+GO
+--SELECT * FROM VIEWProduct
+
+CREATE VIEW VIEWProduct2
+AS
+SELECT 
+product_id AS ID,
+units_measurements_name AS [ед.из],
+name_of_product AS Наименование,
+types_name AS Тип,
+materials_name AS Материал,
+color_name AS Цвет
+FROM Product p INNER JOIN Measurement m ON p.measurement_unit_id=m.measurement_unit_id 
+INNER JOIN Product_type t ON p.product_type_id=t.product_type_id
+INNER JOIN Materials n ON p.materials_id=n.materials_id
+INNER JOIN Color_object o ON p.color_id=o.color_id 
+GO
+
+CREATE VIEW VIEWDelivery_Contract
+AS
+SELECT 
+delivery_contract_id AS ID,
+account_contractor_supplier_account AS [Расчетный счет],
+name_organization_contractor AS [Наименование организации],
+type_contractor AS [Заказчик/Поставщик],
+contract_start_date AS [Дата начала],
+contract_end_date AS [Дата окончания],
+contract_cost AS [Стоимость договора],
+number_of_contract_instances AS [Количество экземпляров],
+validity AS Валидность
+FROM Delivery_Contract p INNER JOIN Contractor c ON p.contractor_id=c.contractor_id 
+GO
+--SELECT * FROM VIEWDelivery_Contract
+
+--Заказчики
+CREATE VIEW VIEWDelivery_Contract_Z
+AS
+SELECT 
+delivery_contract_id AS ID,
+name_organization_contractor AS [Наименование организации]
+FROM Delivery_Contract p INNER JOIN Contractor c ON p.contractor_id=c.contractor_id 
+WHERE validity = 'ДЕЙСТВИТЕЛЕН' and type_contractor = 'Заказчик'
+GO
+--SELECT * FROM VIEWDelivery_Contract_Z
+
+--Поставщик
+CREATE VIEW VIEWDelivery_Contract_P
+AS
+SELECT 
+delivery_contract_id AS ID,
+name_organization_contractor AS [Наименование организации]
+FROM Delivery_Contract p INNER JOIN Contractor c ON p.contractor_id=c.contractor_id 
+WHERE validity = 'ДЕЙСТВИТЕЛЕН' and type_contractor = 'Поставщик'
+GO
+--SELECT * FROM VIEWDelivery_Contract_P
+
+CREATE VIEW VIEWReception_Invoice
+AS
+SELECT 
+receipt_id AS [Номер накладной],
+receipt_date AS [Дата накладной],
+name_organization_contractor AS [Наименование организации],
+v.vat_name AS [НДС на товар],
+surname_stores+' '+warehouse_name+' '+patron_name AS [Принял накладную]
+FROM Reception_Invoice r INNER JOIN Storekeeper s ON r.login_id=s.login_id 
+INNER JOIN VAT v ON r.vat_id=v.vat_id 
+INNER JOIN Delivery_Contract d ON r.delivery_contract_id=d.delivery_contract_id 
+INNER JOIN Contractor c ON d.contractor_id=c.contractor_id 
+GO
+--SELECT * FROM VIEWReception_Invoice
+
+CREATE VIEW VIEWStorekeeper2
+AS 
+SELECT login_id AS [Логин],
+surname_stores+' '+warehouse_name+' '+patron_name AS [Принял накладную]
+FROM Storekeeper
+WHERE IsDelite IS NULL AND role_id = 1
+GO 
+--SELECT * FROM VIEWStorekeeper2
+
+CREATE VIEW VIEWShipping_Invoice
+AS
+SELECT 
+shipping_invoice_id AS [Номер накладной],
+departure_date AS [Дата накладной],
+name_organization_contractor AS [Наименование организации],
+v.vat_name AS [НДС на товар],
+surname_stores+' '+warehouse_name+' '+patron_name AS [Принял накладную]
+FROM Shipping_Invoice r INNER JOIN Storekeeper s ON r.login_id=s.login_id 
+INNER JOIN VAT v ON r.vat_id=v.vat_id 
+INNER JOIN Delivery_Contract d ON r.delivery_contract_id=d.delivery_contract_id 
+INNER JOIN Contractor c ON d.contractor_id=c.contractor_id 
+GO
+--SELECT * FROM VIEWShipping_Invoice
+
+CREATE VIEW VIEWDiscount
+AS
+SELECT 
+discount_id AS ID,
+discounts_name AS Наименование,
+discount_value AS [Значение скидки],
+start_discounts_date AS [Начало скидки],
+end_discounts_date AS [Окончание скидки]
+FROM Discount
+GO
+--SELECT * FROM VIEWDiscount
+
+CREATE PROC VIEWReception_Specification
+@ID INT,
+@ID2 DATETIME
+AS
+SELECT
+h.reception_price_id AS [ID],
+p.product_id AS [IDP],
+name_of_product AS Наименование,
+quantity_accepted_goods AS [Количество],
+m.units_measurements_name AS [ед.из],
+acceptance_price_values AS [Цена за один товар],
+dbo.GetSummReception_Specification(r.product_id, r.receipt_id, r.receipt_date, quantity_accepted_goods) AS Сумма
+FROM Reception_Specification r INNER JOIN Product p ON r.product_id=p.product_id 
+INNER JOIN Reception_Invoice w ON r.receipt_id=w.receipt_id AND r.receipt_date=w.receipt_date
+INNER JOIN Price_Reception h ON h.product_id=p.product_id 
+INNER JOIN Measurement m ON p.measurement_unit_id=m.measurement_unit_id
+WHERE @ID = r.receipt_id AND @ID2 = r.receipt_date AND h.reception_price_date = @ID2
+GO
+--DROP PROC VIEWReception_Specification h.acceptance_price_values AS [Цена за один товар], INNER JOIN Price_Reception h ON h.reception_price_date = w.receipt_date
+--EXEC VIEWReception_Specification 1, '03.11.2019 09:20'
+--EXEC VIEWReception_Specification 2, '24.03.2020 18:23'
+--SELECT dbo.GetSummReception_Specification('H78GHRE44E', 1, '03.11.2019 09:20', 2, 3) AS [Сумма]
+
+CREATE PROC VIEWShipping_Specification
+@ID INT,
+@ID2 DATETIME
+AS
+SELECT 
+h.shipment_price_id AS [ID],
+r.product_id AS [IDP],
+name_of_product AS Наименование,
+quantity_sent_goods AS [Количество],
+units_measurements_name AS [ед.из],
+h.shipment_price_values AS [Цена за один товар],
+discount_value AS [Скидка],
+dbo.GetSummShipping_Specification(r.discount_id, r.product_id, r.shipping_invoice_id, r.departure_date, quantity_sent_goods) AS Сумма
+FROM Shipping_Specification r INNER JOIN Product p ON r.product_id=p.product_id 
+INNER JOIN Shipping_Invoice w ON r.shipping_invoice_id=w.shipping_invoice_id AND r.departure_date=w.departure_date
+INNER JOIN Price_Sendings h ON p.product_id=h.product_id 
+INNER JOIN Measurement m ON p.measurement_unit_id=m.measurement_unit_id
+INNER JOIN Discount d ON r.discount_id=d.discount_id
+WHERE @ID = r.shipping_invoice_id AND @ID2 = r.departure_date AND h.send_price_date = @ID2
+GO
+--DROP PROC VIEWShipping_Specification
+--EXEC VIEWShipping_Specification 1, '12.09.2019 19:07'
+
+CREATE PROC ProcImportData
+@tableName NVARCHAR(MAX),
+@filePath NVARCHAR(MAX),
+@fileFormat NVARCHAR(MAX),
+@fieldTerminator NVARCHAR(2),
+@rowTerminator NVARCHAR(2),
+@firstRow INT
+AS
+DECLARE @importScript NVARCHAR(MAX)
+SET @importScript = 
+' BULK INSERT ' + @tableName +
+' FROM ' + CHAR(39) + @filePath + CHAR(39) +
+' WITH (FIRSTROW = ' + CAST(@firstRow AS NVARCHAR) + ', FORMAT = ' + CHAR(39) + @fileFormat + CHAR(39) + ', ' +
+' CODEPAGE = ' + CHAR(39) + '65001' + CHAR(39) + ', ' +
+' FIELDTERMINATOR = ' + CHAR(39) + @fieldterminator + CHAR(39) + ', ' +
+' ROWTERMINATOR = ' + CHAR(39) + @rowterminator + CHAR(39) + ')'
+exec sp_executesql @importScript
+GO
+
+CREATE PROC ProcExportData
+@tableName NVARCHAR(MAX)
+AS
+DECLARE @exportScript NVARCHAR(MAX),
+@headersScript NVARCHAR(MAX),
+@columnName NVARCHAR(MAX)
+SET @headersScript = 'SELECT '
+SET @exportScript = 'UNION ALL SELECT '
+DECLARE cur CURSOR LOCAL
+FOR
+SELECT COLUMN_NAME
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = @tableName
+OPEN cur
+FETCH NEXT FROM cur
+INTO @columnName
+WHILE 1 = 1
+BEGIN
+SET @headersScript += CHAR(39) + '"' + @columnName + '"' + CHAR(39)
+SET @exportScript += 
+CHAR(39) + '"' + CHAR(39) + 
+' + cast(' + @columnName + ' as nvarchar) + ' + 
+CHAR(39) + '"' + CHAR(39)
+FETCH NEXT FROM cur
+INTO @columnName
+IF @@FETCH_STATUS = 0
+BEGIN
+SET @headersScript += ' + ' + char(39) + ';' + char(39) + ' + '
+SET @exportScript += ' + ' + char(39) + ';' + char(39) + ' + '
+END
+ELSE
+BREAK
+END
+CLOSE cur
+DEALLOCATE cur
+SET @headersScript += ' AS CsvString '
+SET @exportScript += ' AS CsvString FROM ' + @tableName
+SET @exportScript = @headersScript + @exportScript
+--select @exportScript
+exec sp_executesql @exportScript
+GO
+
+CREATE PROC VIEWMail
+@login NVARCHAR(20)
+AS
+SELECT 
+address_ru
+FROM Storekeeper
+WHERE @login = login_id AND IsDelite IS NULL
+GO
+
+CREATE PROC VIEWContractor_id
+@ID INT,
+@ID2 DATETIME
+AS
+SELECT
+c.contractor_id AS [ID]
+FROM Contractor c INNER JOIN Delivery_Contract dc ON dc.contractor_id=c.contractor_id 
+INNER JOIN Reception_Invoice w ON w.delivery_contract_id=dc.delivery_contract_id
+WHERE @ID = w.receipt_id AND @ID2 = w.receipt_date
+GO
+
+CREATE PROC VIEWRole
+@login_id NVARCHAR(50),
+@password NVARCHAR(50)
+AS
+SELECT 
+role_id
+FROM Storekeeper
+WHERE @login_id = login_id AND @password = password_id and IsDelite IS NULL
+GO
+--EXEC VIEWRole 1, '2'
+
+CREATE PROC GraphAnalytics
+@Year INT
+AS
+SELECT
+	Year(t.reception_price_date) as [Год], Month(t.reception_price_date) as [Месяц], DATENAME(Month, t.reception_price_date) as [Название месяца],
+	Count(1) as [Количество], ROUND(Sum((r.quantity_accepted_goods * (1+vat_value))* t.acceptance_price_values),0) as [Сумма]
+    FROM Reception_Specification as r 
+	INNER JOIN Price_Reception t ON r.receipt_date = t.reception_price_date AND r.product_id = t.product_id
+	INNER JOIN Reception_Invoice k ON r.receipt_id=k.receipt_id 
+	INNER JOIN VAT v ON v.vat_id=k.vat_id 
+	WHERE Year(t.reception_price_date) = @Year
+Group By Year(t.reception_price_date), Month(t.reception_price_date), DATENAME(Month, t.reception_price_date)
+GO
+
+CREATE PROC GraphAnalytics2
+@Year INT
+AS
+SELECT
+	Year(t.send_price_date) as [Год], Month(t.send_price_date) as [Месяц], DATENAME(Month, t.send_price_date) as [Название месяца],
+	Count(1) as [Количество], ROUND(Sum((r.quantity_sent_goods * (1+vat_value) * (1-discount_value))* t.shipment_price_values),0) as [Сумма]
+    FROM Shipping_Specification as r 
+	INNER JOIN Price_Sendings t ON r.departure_date = t.send_price_date AND r.product_id = t.product_id
+	INNER JOIN Shipping_Invoice k ON r.shipping_invoice_id=k.shipping_invoice_id 
+	INNER JOIN VAT v ON v.vat_id=k.vat_id 
+	INNER JOIN Discount d ON r.discount_id=d.discount_id 
+	WHERE Year(t.send_price_date) = @Year
+Group By Year(t.send_price_date), Month(t.send_price_date), DATENAME(Month, t.send_price_date)
+GO
+
+CREATE PROC CostPrice_Reception
+@Contractor INT,
+@Product VARCHAR(10)
+AS
+SELECT acceptance_price_values FROM Price_Reception a
+WHERE reception_price_date = (SELECT max(reception_price_date) FROM Price_Reception WHERE product_id = @Product AND contractor_id = @Contractor)
+GROUP BY acceptance_price_values
+GO
+
+CREATE PROC CostPrice_Sendings
+@Product VARCHAR(10)
+AS
+SELECT shipment_price_values FROM Price_Sendings a
+WHERE send_price_date = (SELECT max(send_price_date) FROM Price_Sendings WHERE product_id = @Product)
+GROUP BY shipment_price_values
+GO
+
+CREATE PROC ValueProduct
+@Product VARCHAR(10)
+AS
+SELECT quantity_of_goods FROM Product 
+WHERE product_id = @Product

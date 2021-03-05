@@ -1,0 +1,3051 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище dicomModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Color_object">
+          <Key>
+            <PropertyRef Name="color_id" />
+          </Key>
+          <Property Name="color_id" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="color_name" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Contractor">
+          <Key>
+            <PropertyRef Name="contractor_id" />
+          </Key>
+          <Property Name="contractor_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="legal_contractor_address" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="account_contractor_supplier_account" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="surname_contractor" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="contractor_name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="contractor_middle_name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="name_organization_contractor" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="contractor_phone" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="type_contractor" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Delivery_Contract">
+          <Key>
+            <PropertyRef Name="delivery_contract_id" />
+          </Key>
+          <Property Name="delivery_contract_id" Type="int" Nullable="false" />
+          <Property Name="contractor_id" Type="int" Nullable="false" />
+          <Property Name="contract_start_date" Type="date" Nullable="false" />
+          <Property Name="contract_end_date" Type="date" Nullable="false" />
+          <Property Name="contract_cost" Type="money" Nullable="false" />
+          <Property Name="validity" Type="nvarchar" MaxLength="30" />
+          <Property Name="number_of_contract_instances" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Discount">
+          <Key>
+            <PropertyRef Name="discount_id" />
+          </Key>
+          <Property Name="discount_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="start_discounts_date" Type="datetime" />
+          <Property Name="end_discounts_date" Type="datetime" />
+          <Property Name="discounts_name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="discount_value" Type="real" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Materials">
+          <Key>
+            <PropertyRef Name="materials_id" />
+          </Key>
+          <Property Name="materials_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="materials_name" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Measurement">
+          <Key>
+            <PropertyRef Name="measurement_unit_id" />
+          </Key>
+          <Property Name="measurement_unit_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="units_measurements_name" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Price_Reception">
+          <Key>
+            <PropertyRef Name="reception_price_id" />
+          </Key>
+          <Property Name="reception_price_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="acceptance_price_values" Type="money" Nullable="false" />
+          <Property Name="reception_price_date" Type="datetime" Nullable="false" />
+          <Property Name="product_id" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="contractor_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Price_Sendings">
+          <Key>
+            <PropertyRef Name="shipment_price_id" />
+          </Key>
+          <Property Name="shipment_price_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="shipment_price_values" Type="money" Nullable="false" />
+          <Property Name="send_price_date" Type="datetime" Nullable="false" />
+          <Property Name="product_id" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="product_id" />
+          </Key>
+          <Property Name="product_id" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="measurement_unit_id" Type="int" Nullable="false" />
+          <Property Name="product_type_id" Type="int" Nullable="false" />
+          <Property Name="cell_id" Type="int" Nullable="false" />
+          <Property Name="materials_id" Type="int" Nullable="false" />
+          <Property Name="color_id" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="name_of_product" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="quantity_of_goods" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product_Location_Cell">
+          <Key>
+            <PropertyRef Name="cell_id" />
+          </Key>
+          <Property Name="cell_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tier_cells" Type="int" Nullable="false" />
+          <Property Name="cell_section" Type="nvarchar" MaxLength="3" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product_type">
+          <Key>
+            <PropertyRef Name="product_type_id" />
+          </Key>
+          <Property Name="product_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="types_name" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reception_Invoice">
+          <Key>
+            <PropertyRef Name="receipt_id" />
+            <PropertyRef Name="receipt_date" />
+          </Key>
+          <Property Name="receipt_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="vat_id" Type="int" />
+          <Property Name="delivery_contract_id" Type="int" Nullable="false" />
+          <Property Name="login_id" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="receipt_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "dicom.dbo.Reception_Specification" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="Reception_Specification">
+          <Key>
+            <PropertyRef Name="product_id" />
+            <PropertyRef Name="receipt_id" />
+            <PropertyRef Name="receipt_date" />
+            <PropertyRef Name="quantity_accepted_goods" />
+          </Key>
+          <Property Name="product_id" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="receipt_id" Type="int" Nullable="false" />
+          <Property Name="receipt_date" Type="datetime" Nullable="false" />
+          <Property Name="quantity_accepted_goods" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="int" Nullable="false" />
+          <Property Name="role_name" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shipping_Invoice">
+          <Key>
+            <PropertyRef Name="shipping_invoice_id" />
+            <PropertyRef Name="departure_date" />
+          </Key>
+          <Property Name="shipping_invoice_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="vat_id" Type="int" />
+          <Property Name="delivery_contract_id" Type="int" Nullable="false" />
+          <Property Name="login_id" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="departure_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "dicom.dbo.Shipping_Specification" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="Shipping_Specification">
+          <Key>
+            <PropertyRef Name="product_id" />
+            <PropertyRef Name="shipping_invoice_id" />
+            <PropertyRef Name="departure_date" />
+            <PropertyRef Name="quantity_sent_goods" />
+          </Key>
+          <Property Name="discount_id" Type="int" />
+          <Property Name="product_id" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="shipping_invoice_id" Type="int" Nullable="false" />
+          <Property Name="departure_date" Type="datetime" Nullable="false" />
+          <Property Name="quantity_sent_goods" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Storekeeper">
+          <Key>
+            <PropertyRef Name="login_id" />
+          </Key>
+          <Property Name="login_id" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="password_id" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="surname_stores" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="warehouse_name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="patron_name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="address_ru" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="images" Type="varbinary(max)" />
+          <Property Name="role_id" Type="int" Nullable="false" />
+          <Property Name="IsDelite" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="VAT">
+          <Key>
+            <PropertyRef Name="vat_id" />
+          </Key>
+          <Property Name="vat_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="vat_name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="vat_value" Type="real" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "dicom.dbo.VIEWColor_object" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="VIEWColor_object">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Наименование" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="Наименование" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "dicom.dbo.VIEWContractor" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="VIEWContractor">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Фамилия" />
+            <PropertyRef Name="Имя" />
+            <PropertyRef Name="Отчество" />
+            <PropertyRef Name="Юридический адрес" />
+            <PropertyRef Name="Расчетный счет" />
+            <PropertyRef Name="Наименование организации" />
+            <PropertyRef Name="Телефон" />
+            <PropertyRef Name="Тип контрагента" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Фамилия" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Имя" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Отчество" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Юридический адрес" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Расчетный счет" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Наименование организации" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Телефон" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Тип контрагента" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "dicom.dbo.VIEWDelivery_Contract" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="VIEWDelivery_Contract">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Расчетный счет" />
+            <PropertyRef Name="Наименование организации" />
+            <PropertyRef Name="Заказчик/Поставщик" />
+            <PropertyRef Name="Дата начала" />
+            <PropertyRef Name="Дата окончания" />
+            <PropertyRef Name="Стоимость договора" />
+            <PropertyRef Name="Количество экземпляров" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Расчетный счет" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Наименование организации" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Заказчик/Поставщик" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Дата начала" Type="date" Nullable="false" />
+          <Property Name="Дата окончания" Type="date" Nullable="false" />
+          <Property Name="Стоимость договора" Type="money" Nullable="false" />
+          <Property Name="Количество экземпляров" Type="int" Nullable="false" />
+          <Property Name="Валидность" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "dicom.dbo.VIEWDelivery_Contract_P" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="VIEWDelivery_Contract_P">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Наименование организации" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Наименование организации" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "dicom.dbo.VIEWDelivery_Contract_Z" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="VIEWDelivery_Contract_Z">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Наименование организации" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Наименование организации" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "dicom.dbo.VIEWDiscount" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="VIEWDiscount">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Наименование" />
+            <PropertyRef Name="Значение скидки" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Наименование" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Значение скидки" Type="real" Nullable="false" />
+          <Property Name="Начало скидки" Type="datetime" />
+          <Property Name="Окончание скидки" Type="datetime" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "dicom.dbo.VIEWMaterials" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="VIEWMaterials">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Наименование" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Наименование" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "dicom.dbo.VIEWMeasurement" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="VIEWMeasurement">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Наименование" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Наименование" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "dicom.dbo.VIEWProduct" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="VIEWProduct">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Наименование" />
+            <PropertyRef Name="Тип" />
+            <PropertyRef Name="Материал" />
+            <PropertyRef Name="Цвет" />
+            <PropertyRef Name="Количество" />
+            <PropertyRef Name="ед.из" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Наименование" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Тип" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Материал" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Цвет" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Количество" Type="int" Nullable="false" />
+          <Property Name="ед.из" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Секция/Ярус" Type="nvarchar" MaxLength="34" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "dicom.dbo.VIEWProduct_Location_Cell" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="VIEWProduct_Location_Cell">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Секция/Ярус" Type="nvarchar" MaxLength="34" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "dicom.dbo.VIEWProduct_type" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="VIEWProduct_type">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Наименование" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Наименование" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "dicom.dbo.VIEWProduct2" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="VIEWProduct2">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ед.из" />
+            <PropertyRef Name="Наименование" />
+            <PropertyRef Name="Тип" />
+            <PropertyRef Name="Материал" />
+            <PropertyRef Name="Цвет" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="ед.из" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Наименование" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Тип" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Материал" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Цвет" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "dicom.dbo.VIEWReception_Invoice" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="VIEWReception_Invoice">
+          <Key>
+            <PropertyRef Name="Номер накладной" />
+            <PropertyRef Name="Дата накладной" />
+            <PropertyRef Name="Наименование организации" />
+            <PropertyRef Name="НДС на товар" />
+            <PropertyRef Name="Принял накладную" />
+          </Key>
+          <Property Name="Номер накладной" Type="int" Nullable="false" />
+          <Property Name="Дата накладной" Type="datetime" Nullable="false" />
+          <Property Name="Наименование организации" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="НДС на товар" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Принял накладную" Type="nvarchar" MaxLength="62" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "dicom.dbo.VIEWRoles" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="VIEWRoles">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Наименование" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Наименование" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "dicom.dbo.VIEWShipping_Invoice" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="VIEWShipping_Invoice">
+          <Key>
+            <PropertyRef Name="Номер накладной" />
+            <PropertyRef Name="Дата накладной" />
+            <PropertyRef Name="Наименование организации" />
+            <PropertyRef Name="НДС на товар" />
+            <PropertyRef Name="Принял накладную" />
+          </Key>
+          <Property Name="Номер накладной" Type="int" Nullable="false" />
+          <Property Name="Дата накладной" Type="datetime" Nullable="false" />
+          <Property Name="Наименование организации" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="НДС на товар" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Принял накладную" Type="nvarchar" MaxLength="62" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "dicom.dbo.VIEWStorekeeper" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="VIEWStorekeeper">
+          <Key>
+            <PropertyRef Name="Логин" />
+            <PropertyRef Name="Пароль" />
+            <PropertyRef Name="Фамилия" />
+            <PropertyRef Name="Имя" />
+            <PropertyRef Name="Отчество" />
+            <PropertyRef Name="Адрес электронной почты" />
+            <PropertyRef Name="Роль" />
+          </Key>
+          <Property Name="Логин" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Пароль" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Фамилия" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Имя" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Отчество" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Адрес электронной почты" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Фото" Type="varbinary(max)" />
+          <Property Name="Роль" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "dicom.dbo.VIEWStorekeeper2" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="VIEWStorekeeper2">
+          <Key>
+            <PropertyRef Name="Логин" />
+            <PropertyRef Name="Принял накладную" />
+          </Key>
+          <Property Name="Логин" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Принял накладную" Type="nvarchar" MaxLength="62" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "dicom.dbo.VIEWVAT" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="VIEWVAT">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Наименование" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Наименование" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <Association Name="Delivery_ContractFK">
+          <End Role="Contractor" Type="Self.Contractor" Multiplicity="1" />
+          <End Role="Delivery_Contract" Type="Self.Delivery_Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contractor">
+              <PropertyRef Name="contractor_id" />
+            </Principal>
+            <Dependent Role="Delivery_Contract">
+              <PropertyRef Name="contractor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Price_Rec__contr__6D0D32F4">
+          <End Role="Contractor" Type="Self.Contractor" Multiplicity="1" />
+          <End Role="Price_Reception" Type="Self.Price_Reception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contractor">
+              <PropertyRef Name="contractor_id" />
+            </Principal>
+            <Dependent Role="Price_Reception">
+              <PropertyRef Name="contractor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__cell_id__5FB337D6">
+          <End Role="Product_Location_Cell" Type="Self.Product_Location_Cell" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product_Location_Cell">
+              <PropertyRef Name="cell_id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="cell_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__color_i__5CD6CB2B">
+          <End Role="Color_object" Type="Self.Color_object" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Color_object">
+              <PropertyRef Name="color_id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="color_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__measure__5DCAEF64">
+          <End Role="Measurement" Type="Self.Measurement" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Measurement">
+              <PropertyRef Name="measurement_unit_id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="measurement_unit_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__product__5EBF139D">
+          <End Role="Product_type" Type="Self.Product_type" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product_type">
+              <PropertyRef Name="product_type_id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="product_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reception__deliv__628FA481">
+          <End Role="Delivery_Contract" Type="Self.Delivery_Contract" Multiplicity="1" />
+          <End Role="Reception_Invoice" Type="Self.Reception_Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Delivery_Contract">
+              <PropertyRef Name="delivery_contract_id" />
+            </Principal>
+            <Dependent Role="Reception_Invoice">
+              <PropertyRef Name="delivery_contract_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reception__login__6383C8BA">
+          <End Role="Storekeeper" Type="Self.Storekeeper" Multiplicity="1" />
+          <End Role="Reception_Invoice" Type="Self.Reception_Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Storekeeper">
+              <PropertyRef Name="login_id" />
+            </Principal>
+            <Dependent Role="Reception_Invoice">
+              <PropertyRef Name="login_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reception_Specif__68487DD7">
+          <End Role="Reception_Invoice" Type="Self.Reception_Invoice" Multiplicity="1" />
+          <End Role="Reception_Specification" Type="Self.Reception_Specification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reception_Invoice">
+              <PropertyRef Name="receipt_id" />
+              <PropertyRef Name="receipt_date" />
+            </Principal>
+            <Dependent Role="Reception_Specification">
+              <PropertyRef Name="receipt_id" />
+              <PropertyRef Name="receipt_date" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Shipping___deliv__656C112C">
+          <End Role="Delivery_Contract" Type="Self.Delivery_Contract" Multiplicity="1" />
+          <End Role="Shipping_Invoice" Type="Self.Shipping_Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Delivery_Contract">
+              <PropertyRef Name="delivery_contract_id" />
+            </Principal>
+            <Dependent Role="Shipping_Invoice">
+              <PropertyRef Name="delivery_contract_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Shipping___disco__6B24EA82">
+          <End Role="Discount" Type="Self.Discount" Multiplicity="0..1" />
+          <End Role="Shipping_Specification" Type="Self.Shipping_Specification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discount">
+              <PropertyRef Name="discount_id" />
+            </Principal>
+            <Dependent Role="Shipping_Specification">
+              <PropertyRef Name="discount_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Shipping___login__66603565">
+          <End Role="Storekeeper" Type="Self.Storekeeper" Multiplicity="1" />
+          <End Role="Shipping_Invoice" Type="Self.Shipping_Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Storekeeper">
+              <PropertyRef Name="login_id" />
+            </Principal>
+            <Dependent Role="Shipping_Invoice">
+              <PropertyRef Name="login_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Shipping_Specifi__6A30C649">
+          <End Role="Shipping_Invoice" Type="Self.Shipping_Invoice" Multiplicity="1" />
+          <End Role="Shipping_Specification" Type="Self.Shipping_Specification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shipping_Invoice">
+              <PropertyRef Name="shipping_invoice_id" />
+              <PropertyRef Name="departure_date" />
+            </Principal>
+            <Dependent Role="Shipping_Specification">
+              <PropertyRef Name="shipping_invoice_id" />
+              <PropertyRef Name="departure_date" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Price_ReceptionFK">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Price_Reception" Type="Self.Price_Reception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="Price_Reception">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Price_SendingsFK">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Price_Sendings" Type="Self.Price_Sendings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="Price_Sendings">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProductFK">
+          <End Role="Materials" Type="Self.Materials" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materials">
+              <PropertyRef Name="materials_id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="materials_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Reception_InvoiceFK">
+          <End Role="VAT" Type="Self.VAT" Multiplicity="0..1" />
+          <End Role="Reception_Invoice" Type="Self.Reception_Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VAT">
+              <PropertyRef Name="vat_id" />
+            </Principal>
+            <Dependent Role="Reception_Invoice">
+              <PropertyRef Name="vat_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Reception_Specification_CASCADE">
+          <End Role="Reception_Invoice" Type="Self.Reception_Invoice" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Reception_Specification" Type="Self.Reception_Specification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reception_Invoice">
+              <PropertyRef Name="receipt_id" />
+              <PropertyRef Name="receipt_date" />
+            </Principal>
+            <Dependent Role="Reception_Specification">
+              <PropertyRef Name="receipt_id" />
+              <PropertyRef Name="receipt_date" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Reception_SpecificationFK">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Reception_Specification" Type="Self.Reception_Specification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="Reception_Specification">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Shipping_InvoiceFK">
+          <End Role="VAT" Type="Self.VAT" Multiplicity="0..1" />
+          <End Role="Shipping_Invoice" Type="Self.Shipping_Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VAT">
+              <PropertyRef Name="vat_id" />
+            </Principal>
+            <Dependent Role="Shipping_Invoice">
+              <PropertyRef Name="vat_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Shipping_Specification_CASCADE">
+          <End Role="Shipping_Invoice" Type="Self.Shipping_Invoice" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Shipping_Specification" Type="Self.Shipping_Specification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shipping_Invoice">
+              <PropertyRef Name="shipping_invoice_id" />
+              <PropertyRef Name="departure_date" />
+            </Principal>
+            <Dependent Role="Shipping_Specification">
+              <PropertyRef Name="shipping_invoice_id" />
+              <PropertyRef Name="departure_date" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Shipping_SpecificationFK">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Shipping_Specification" Type="Self.Shipping_Specification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="Shipping_Specification">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StorekeeperFK">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Storekeeper" Type="Self.Storekeeper" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="Storekeeper">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AddContractor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="legal_contractor_address" Type="nvarchar" Mode="In" />
+          <Parameter Name="account_contractor_supplier_account" Type="nvarchar" Mode="In" />
+          <Parameter Name="surname_contractor" Type="nvarchar" Mode="In" />
+          <Parameter Name="contractor_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="contractor_middle_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="name_organization_contractor" Type="nvarchar" Mode="In" />
+          <Parameter Name="contractor_phone" Type="nvarchar" Mode="In" />
+          <Parameter Name="type_contractor" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="AddDelivery_Contract" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="delivery_contract_id" Type="int" Mode="In" />
+          <Parameter Name="contractor_id" Type="int" Mode="In" />
+          <Parameter Name="contract_start_date" Type="date" Mode="In" />
+          <Parameter Name="contract_end_date" Type="date" Mode="In" />
+          <Parameter Name="contract_cost" Type="money" Mode="In" />
+          <Parameter Name="number_of_contract_instances" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AddProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="product_id" Type="nvarchar" Mode="In" />
+          <Parameter Name="measurement_unit_id" Type="int" Mode="In" />
+          <Parameter Name="product_type_id" Type="int" Mode="In" />
+          <Parameter Name="cell_id" Type="int" Mode="In" />
+          <Parameter Name="materials_id" Type="int" Mode="In" />
+          <Parameter Name="color_id" Type="nvarchar" Mode="In" />
+          <Parameter Name="name_of_product" Type="nvarchar" Mode="In" />
+          <Parameter Name="quantity_of_goods" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AddReception_Invoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vat_id" Type="int" Mode="In" />
+          <Parameter Name="delivery_contract_id" Type="int" Mode="In" />
+          <Parameter Name="login_id" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="AddReception_Specification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="product_id" Type="varchar" Mode="In" />
+          <Parameter Name="receipt_id" Type="int" Mode="In" />
+          <Parameter Name="receipt_date" Type="datetime" Mode="In" />
+          <Parameter Name="quantity_accepted_goods" Type="int" Mode="In" />
+          <Parameter Name="acceptance_price_values" Type="money" Mode="In" />
+          <Parameter Name="contractor_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AddShipping_Invoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vat_id" Type="int" Mode="In" />
+          <Parameter Name="delivery_contract_id" Type="int" Mode="In" />
+          <Parameter Name="login_id" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="AddShipping_Specification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="product_id" Type="varchar" Mode="In" />
+          <Parameter Name="shipping_invoice_id" Type="int" Mode="In" />
+          <Parameter Name="departure_date" Type="datetime" Mode="In" />
+          <Parameter Name="quantity_sent_goods" Type="int" Mode="In" />
+          <Parameter Name="shipment_price_values" Type="money" Mode="In" />
+        </Function>
+        <Function Name="AddStorekeeper" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="login_id" Type="nvarchar" Mode="In" />
+          <Parameter Name="password_id" Type="nvarchar" Mode="In" />
+          <Parameter Name="surname_stores" Type="nvarchar" Mode="In" />
+          <Parameter Name="warehouse_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="patron_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="address_ru" Type="nvarchar" Mode="In" />
+          <Parameter Name="images" Type="varbinary(max)" Mode="In" />
+          <Parameter Name="role_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="CostPrice_Reception" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Contractor" Type="int" Mode="In" />
+          <Parameter Name="Product" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="CostPrice_Sendings" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Product" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteContractor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="contractor_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteDelivery_Contract" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="delivery_contract_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="product_id" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteReception_Invoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="receipt_id" Type="int" Mode="In" />
+          <Parameter Name="receipt_date" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="DeleteReception_Specification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_price" Type="int" Mode="In" />
+          <Parameter Name="product_id" Type="nvarchar" Mode="In" />
+          <Parameter Name="receipt_id" Type="int" Mode="In" />
+          <Parameter Name="receipt_date" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="DeleteShipping_Invoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="shipping_invoice_id" Type="int" Mode="In" />
+          <Parameter Name="departure_date" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="DeleteShipping_Specification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_price" Type="int" Mode="In" />
+          <Parameter Name="product_id" Type="nvarchar" Mode="In" />
+          <Parameter Name="shipping_invoice_id" Type="int" Mode="In" />
+          <Parameter Name="departure_date" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="DeleteStorekeeper" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="login_id" Type="nvarchar" Mode="In" />
+          <Parameter Name="IsDelite" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="FilterContractor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="type_contractor" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="FilterProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="New" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetSummReception_Specification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar">
+          <Parameter Name="product_id" Type="nvarchar" Mode="In" />
+          <Parameter Name="receipt_id" Type="int" Mode="In" />
+          <Parameter Name="receipt_date" Type="datetime" Mode="In" />
+          <Parameter Name="quantity_accepted_goods" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetSummShipping_Specification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar">
+          <Parameter Name="discount_id" Type="int" Mode="In" />
+          <Parameter Name="product_id" Type="nvarchar" Mode="In" />
+          <Parameter Name="shipping_invoice_id" Type="int" Mode="In" />
+          <Parameter Name="departure_date" Type="datetime" Mode="In" />
+          <Parameter Name="quantity_sent_goods" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GraphAnalytics" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Year" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GraphAnalytics2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Year" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ProcExportData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tableName" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="ProcImportData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tableName" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="filePath" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="fileFormat" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="fieldTerminator" Type="nvarchar" Mode="In" />
+          <Parameter Name="rowTerminator" Type="nvarchar" Mode="In" />
+          <Parameter Name="firstRow" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SortrContractor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="orderby" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SortrDelivery_Contract" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="orderby" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SortrProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="orderby" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SortrReception_Invoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="orderby" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SortrShipping_Invoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="orderby" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SortrStorekeeper" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="orderby" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UPDATE_Delivery_Contract" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="UPDATE_Discount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="UpdateContractor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="contractor_id" Type="int" Mode="In" />
+          <Parameter Name="legal_contractor_address" Type="nvarchar" Mode="In" />
+          <Parameter Name="account_contractor_supplier_account" Type="nvarchar" Mode="In" />
+          <Parameter Name="surname_contractor" Type="nvarchar" Mode="In" />
+          <Parameter Name="contractor_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="contractor_middle_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="name_organization_contractor" Type="nvarchar" Mode="In" />
+          <Parameter Name="contractor_phone" Type="nvarchar" Mode="In" />
+          <Parameter Name="type_contractor" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateDelivery_Contract" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="delivery_contract_id" Type="int" Mode="In" />
+          <Parameter Name="contractor_id" Type="int" Mode="In" />
+          <Parameter Name="contract_start_date" Type="date" Mode="In" />
+          <Parameter Name="contract_end_date" Type="date" Mode="In" />
+          <Parameter Name="contract_cost" Type="money" Mode="In" />
+          <Parameter Name="number_of_contract_instances" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="product_id" Type="nvarchar" Mode="In" />
+          <Parameter Name="materials_id" Type="int" Mode="In" />
+          <Parameter Name="color_id" Type="nvarchar" Mode="In" />
+          <Parameter Name="measurement_unit_id" Type="int" Mode="In" />
+          <Parameter Name="product_type_id" Type="int" Mode="In" />
+          <Parameter Name="cell_id" Type="int" Mode="In" />
+          <Parameter Name="name_of_product" Type="nvarchar" Mode="In" />
+          <Parameter Name="quantity_of_goods" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateReception_Invoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="receipt_id" Type="int" Mode="In" />
+          <Parameter Name="vat_id" Type="int" Mode="In" />
+          <Parameter Name="delivery_contract_id" Type="int" Mode="In" />
+          <Parameter Name="login_id" Type="nvarchar" Mode="In" />
+          <Parameter Name="receipt_date" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="UpdateReception_Specification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="product_id" Type="nvarchar" Mode="In" />
+          <Parameter Name="receipt_id" Type="int" Mode="In" />
+          <Parameter Name="receipt_date" Type="datetime" Mode="In" />
+          <Parameter Name="quantity_accepted_goods" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateShipping_Invoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="shipping_invoice_id" Type="int" Mode="In" />
+          <Parameter Name="vat_id" Type="int" Mode="In" />
+          <Parameter Name="delivery_contract_id" Type="int" Mode="In" />
+          <Parameter Name="login_id" Type="nvarchar" Mode="In" />
+          <Parameter Name="departure_date" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="UpdateShipping_Specification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="product_id" Type="nvarchar" Mode="In" />
+          <Parameter Name="shipping_invoice_id" Type="int" Mode="In" />
+          <Parameter Name="departure_date" Type="datetime" Mode="In" />
+          <Parameter Name="quantity_sent_goods" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateStorekeeper" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="login_id" Type="nvarchar" Mode="In" />
+          <Parameter Name="password_id" Type="nvarchar" Mode="In" />
+          <Parameter Name="surname_stores" Type="nvarchar" Mode="In" />
+          <Parameter Name="warehouse_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="patron_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="address_ru" Type="nvarchar" Mode="In" />
+          <Parameter Name="images" Type="varbinary(max)" Mode="In" />
+          <Parameter Name="role_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ValueProduct" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Product" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="VIEWContractor_id" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="ID2" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="VIEWMail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="login" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="VIEWReception_Specification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="ID2" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="VIEWRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="login_id" Type="nvarchar" Mode="In" />
+          <Parameter Name="password" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="VIEWShipping_Specification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="ID2" Type="datetime" Mode="In" />
+        </Function>
+        <EntityContainer Name="Хранилище dicomModelContainer">
+          <EntitySet Name="Color_object" EntityType="Self.Color_object" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contractor" EntityType="Self.Contractor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Delivery_Contract" EntityType="Self.Delivery_Contract" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Discount" EntityType="Self.Discount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Materials" EntityType="Self.Materials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Measurement" EntityType="Self.Measurement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Price_Reception" EntityType="Self.Price_Reception" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Price_Sendings" EntityType="Self.Price_Sendings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_Location_Cell" EntityType="Self.Product_Location_Cell" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_type" EntityType="Self.Product_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reception_Invoice" EntityType="Self.Reception_Invoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Shipping_Invoice" EntityType="Self.Shipping_Invoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Storekeeper" EntityType="Self.Storekeeper" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VAT" EntityType="Self.VAT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reception_Specification" EntityType="Self.Reception_Specification" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Reception_Specification].[product_id] AS [product_id], 
+    [Reception_Specification].[receipt_id] AS [receipt_id], 
+    [Reception_Specification].[receipt_date] AS [receipt_date], 
+    [Reception_Specification].[quantity_accepted_goods] AS [quantity_accepted_goods]
+    FROM [dbo].[Reception_Specification] AS [Reception_Specification]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Shipping_Specification" EntityType="Self.Shipping_Specification" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Shipping_Specification].[discount_id] AS [discount_id], 
+    [Shipping_Specification].[product_id] AS [product_id], 
+    [Shipping_Specification].[shipping_invoice_id] AS [shipping_invoice_id], 
+    [Shipping_Specification].[departure_date] AS [departure_date], 
+    [Shipping_Specification].[quantity_sent_goods] AS [quantity_sent_goods]
+    FROM [dbo].[Shipping_Specification] AS [Shipping_Specification]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VIEWColor_object" EntityType="Self.VIEWColor_object" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VIEWColor_object].[ID] AS [ID], 
+    [VIEWColor_object].[Наименование] AS [Наименование]
+    FROM [dbo].[VIEWColor_object] AS [VIEWColor_object]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VIEWContractor" EntityType="Self.VIEWContractor" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VIEWContractor].[ID] AS [ID], 
+    [VIEWContractor].[Фамилия] AS [Фамилия], 
+    [VIEWContractor].[Имя] AS [Имя], 
+    [VIEWContractor].[Отчество] AS [Отчество], 
+    [VIEWContractor].[Юридический адрес] AS [Юридический адрес], 
+    [VIEWContractor].[Расчетный счет] AS [Расчетный счет], 
+    [VIEWContractor].[Наименование организации] AS [Наименование организации], 
+    [VIEWContractor].[Телефон] AS [Телефон], 
+    [VIEWContractor].[Тип контрагента] AS [Тип контрагента]
+    FROM [dbo].[VIEWContractor] AS [VIEWContractor]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VIEWDelivery_Contract" EntityType="Self.VIEWDelivery_Contract" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VIEWDelivery_Contract].[ID] AS [ID], 
+    [VIEWDelivery_Contract].[Расчетный счет] AS [Расчетный счет], 
+    [VIEWDelivery_Contract].[Наименование организации] AS [Наименование организации], 
+    [VIEWDelivery_Contract].[Заказчик/Поставщик] AS [Заказчик/Поставщик], 
+    [VIEWDelivery_Contract].[Дата начала] AS [Дата начала], 
+    [VIEWDelivery_Contract].[Дата окончания] AS [Дата окончания], 
+    [VIEWDelivery_Contract].[Стоимость договора] AS [Стоимость договора], 
+    [VIEWDelivery_Contract].[Количество экземпляров] AS [Количество экземпляров], 
+    [VIEWDelivery_Contract].[Валидность] AS [Валидность]
+    FROM [dbo].[VIEWDelivery_Contract] AS [VIEWDelivery_Contract]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VIEWDelivery_Contract_P" EntityType="Self.VIEWDelivery_Contract_P" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VIEWDelivery_Contract_P].[ID] AS [ID], 
+    [VIEWDelivery_Contract_P].[Наименование организации] AS [Наименование организации]
+    FROM [dbo].[VIEWDelivery_Contract_P] AS [VIEWDelivery_Contract_P]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VIEWDelivery_Contract_Z" EntityType="Self.VIEWDelivery_Contract_Z" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VIEWDelivery_Contract_Z].[ID] AS [ID], 
+    [VIEWDelivery_Contract_Z].[Наименование организации] AS [Наименование организации]
+    FROM [dbo].[VIEWDelivery_Contract_Z] AS [VIEWDelivery_Contract_Z]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VIEWDiscount" EntityType="Self.VIEWDiscount" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VIEWDiscount].[ID] AS [ID], 
+    [VIEWDiscount].[Наименование] AS [Наименование], 
+    [VIEWDiscount].[Значение скидки] AS [Значение скидки], 
+    [VIEWDiscount].[Начало скидки] AS [Начало скидки], 
+    [VIEWDiscount].[Окончание скидки] AS [Окончание скидки]
+    FROM [dbo].[VIEWDiscount] AS [VIEWDiscount]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VIEWMaterials" EntityType="Self.VIEWMaterials" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VIEWMaterials].[ID] AS [ID], 
+    [VIEWMaterials].[Наименование] AS [Наименование]
+    FROM [dbo].[VIEWMaterials] AS [VIEWMaterials]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VIEWMeasurement" EntityType="Self.VIEWMeasurement" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VIEWMeasurement].[ID] AS [ID], 
+    [VIEWMeasurement].[Наименование] AS [Наименование]
+    FROM [dbo].[VIEWMeasurement] AS [VIEWMeasurement]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VIEWProduct" EntityType="Self.VIEWProduct" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VIEWProduct].[ID] AS [ID], 
+    [VIEWProduct].[Наименование] AS [Наименование], 
+    [VIEWProduct].[Тип] AS [Тип], 
+    [VIEWProduct].[Материал] AS [Материал], 
+    [VIEWProduct].[Цвет] AS [Цвет], 
+    [VIEWProduct].[Количество] AS [Количество], 
+    [VIEWProduct].[ед.из] AS [ед.из], 
+    [VIEWProduct].[Секция/Ярус] AS [Секция/Ярус]
+    FROM [dbo].[VIEWProduct] AS [VIEWProduct]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VIEWProduct_Location_Cell" EntityType="Self.VIEWProduct_Location_Cell" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VIEWProduct_Location_Cell].[ID] AS [ID], 
+    [VIEWProduct_Location_Cell].[Секция/Ярус] AS [Секция/Ярус]
+    FROM [dbo].[VIEWProduct_Location_Cell] AS [VIEWProduct_Location_Cell]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VIEWProduct_type" EntityType="Self.VIEWProduct_type" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VIEWProduct_type].[ID] AS [ID], 
+    [VIEWProduct_type].[Наименование] AS [Наименование]
+    FROM [dbo].[VIEWProduct_type] AS [VIEWProduct_type]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VIEWProduct2" EntityType="Self.VIEWProduct2" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VIEWProduct2].[ID] AS [ID], 
+    [VIEWProduct2].[ед.из] AS [ед.из], 
+    [VIEWProduct2].[Наименование] AS [Наименование], 
+    [VIEWProduct2].[Тип] AS [Тип], 
+    [VIEWProduct2].[Материал] AS [Материал], 
+    [VIEWProduct2].[Цвет] AS [Цвет]
+    FROM [dbo].[VIEWProduct2] AS [VIEWProduct2]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VIEWReception_Invoice" EntityType="Self.VIEWReception_Invoice" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VIEWReception_Invoice].[Номер накладной] AS [Номер накладной], 
+    [VIEWReception_Invoice].[Дата накладной] AS [Дата накладной], 
+    [VIEWReception_Invoice].[Наименование организации] AS [Наименование организации], 
+    [VIEWReception_Invoice].[НДС на товар] AS [НДС на товар], 
+    [VIEWReception_Invoice].[Принял накладную] AS [Принял накладную]
+    FROM [dbo].[VIEWReception_Invoice] AS [VIEWReception_Invoice]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VIEWRoles" EntityType="Self.VIEWRoles" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VIEWRoles].[ID] AS [ID], 
+    [VIEWRoles].[Наименование] AS [Наименование]
+    FROM [dbo].[VIEWRoles] AS [VIEWRoles]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VIEWShipping_Invoice" EntityType="Self.VIEWShipping_Invoice" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VIEWShipping_Invoice].[Номер накладной] AS [Номер накладной], 
+    [VIEWShipping_Invoice].[Дата накладной] AS [Дата накладной], 
+    [VIEWShipping_Invoice].[Наименование организации] AS [Наименование организации], 
+    [VIEWShipping_Invoice].[НДС на товар] AS [НДС на товар], 
+    [VIEWShipping_Invoice].[Принял накладную] AS [Принял накладную]
+    FROM [dbo].[VIEWShipping_Invoice] AS [VIEWShipping_Invoice]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VIEWStorekeeper" EntityType="Self.VIEWStorekeeper" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VIEWStorekeeper].[Логин] AS [Логин], 
+    [VIEWStorekeeper].[Пароль] AS [Пароль], 
+    [VIEWStorekeeper].[Фамилия] AS [Фамилия], 
+    [VIEWStorekeeper].[Имя] AS [Имя], 
+    [VIEWStorekeeper].[Отчество] AS [Отчество], 
+    [VIEWStorekeeper].[Адрес электронной почты] AS [Адрес электронной почты], 
+    [VIEWStorekeeper].[Фото] AS [Фото], 
+    [VIEWStorekeeper].[Роль] AS [Роль]
+    FROM [dbo].[VIEWStorekeeper] AS [VIEWStorekeeper]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VIEWStorekeeper2" EntityType="Self.VIEWStorekeeper2" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VIEWStorekeeper2].[Логин] AS [Логин], 
+    [VIEWStorekeeper2].[Принял накладную] AS [Принял накладную]
+    FROM [dbo].[VIEWStorekeeper2] AS [VIEWStorekeeper2]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VIEWVAT" EntityType="Self.VIEWVAT" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VIEWVAT].[ID] AS [ID], 
+    [VIEWVAT].[Наименование] AS [Наименование]
+    FROM [dbo].[VIEWVAT] AS [VIEWVAT]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="Delivery_ContractFK" Association="Self.Delivery_ContractFK">
+            <End Role="Contractor" EntitySet="Contractor" />
+            <End Role="Delivery_Contract" EntitySet="Delivery_Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Price_Rec__contr__6D0D32F4" Association="Self.FK__Price_Rec__contr__6D0D32F4">
+            <End Role="Contractor" EntitySet="Contractor" />
+            <End Role="Price_Reception" EntitySet="Price_Reception" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__cell_id__5FB337D6" Association="Self.FK__Product__cell_id__5FB337D6">
+            <End Role="Product_Location_Cell" EntitySet="Product_Location_Cell" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__color_i__5CD6CB2B" Association="Self.FK__Product__color_i__5CD6CB2B">
+            <End Role="Color_object" EntitySet="Color_object" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__measure__5DCAEF64" Association="Self.FK__Product__measure__5DCAEF64">
+            <End Role="Measurement" EntitySet="Measurement" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__product__5EBF139D" Association="Self.FK__Product__product__5EBF139D">
+            <End Role="Product_type" EntitySet="Product_type" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reception__deliv__628FA481" Association="Self.FK__Reception__deliv__628FA481">
+            <End Role="Delivery_Contract" EntitySet="Delivery_Contract" />
+            <End Role="Reception_Invoice" EntitySet="Reception_Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reception__login__6383C8BA" Association="Self.FK__Reception__login__6383C8BA">
+            <End Role="Storekeeper" EntitySet="Storekeeper" />
+            <End Role="Reception_Invoice" EntitySet="Reception_Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reception_Specif__68487DD7" Association="Self.FK__Reception_Specif__68487DD7">
+            <End Role="Reception_Invoice" EntitySet="Reception_Invoice" />
+            <End Role="Reception_Specification" EntitySet="Reception_Specification" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Shipping___deliv__656C112C" Association="Self.FK__Shipping___deliv__656C112C">
+            <End Role="Delivery_Contract" EntitySet="Delivery_Contract" />
+            <End Role="Shipping_Invoice" EntitySet="Shipping_Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Shipping___disco__6B24EA82" Association="Self.FK__Shipping___disco__6B24EA82">
+            <End Role="Discount" EntitySet="Discount" />
+            <End Role="Shipping_Specification" EntitySet="Shipping_Specification" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Shipping___login__66603565" Association="Self.FK__Shipping___login__66603565">
+            <End Role="Storekeeper" EntitySet="Storekeeper" />
+            <End Role="Shipping_Invoice" EntitySet="Shipping_Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Shipping_Specifi__6A30C649" Association="Self.FK__Shipping_Specifi__6A30C649">
+            <End Role="Shipping_Invoice" EntitySet="Shipping_Invoice" />
+            <End Role="Shipping_Specification" EntitySet="Shipping_Specification" />
+          </AssociationSet>
+          <AssociationSet Name="Price_ReceptionFK" Association="Self.Price_ReceptionFK">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Price_Reception" EntitySet="Price_Reception" />
+          </AssociationSet>
+          <AssociationSet Name="Price_SendingsFK" Association="Self.Price_SendingsFK">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Price_Sendings" EntitySet="Price_Sendings" />
+          </AssociationSet>
+          <AssociationSet Name="ProductFK" Association="Self.ProductFK">
+            <End Role="Materials" EntitySet="Materials" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="Reception_InvoiceFK" Association="Self.Reception_InvoiceFK">
+            <End Role="VAT" EntitySet="VAT" />
+            <End Role="Reception_Invoice" EntitySet="Reception_Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="Reception_Specification_CASCADE" Association="Self.Reception_Specification_CASCADE">
+            <End Role="Reception_Invoice" EntitySet="Reception_Invoice" />
+            <End Role="Reception_Specification" EntitySet="Reception_Specification" />
+          </AssociationSet>
+          <AssociationSet Name="Reception_SpecificationFK" Association="Self.Reception_SpecificationFK">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Reception_Specification" EntitySet="Reception_Specification" />
+          </AssociationSet>
+          <AssociationSet Name="Shipping_InvoiceFK" Association="Self.Shipping_InvoiceFK">
+            <End Role="VAT" EntitySet="VAT" />
+            <End Role="Shipping_Invoice" EntitySet="Shipping_Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="Shipping_Specification_CASCADE" Association="Self.Shipping_Specification_CASCADE">
+            <End Role="Shipping_Invoice" EntitySet="Shipping_Invoice" />
+            <End Role="Shipping_Specification" EntitySet="Shipping_Specification" />
+          </AssociationSet>
+          <AssociationSet Name="Shipping_SpecificationFK" Association="Self.Shipping_SpecificationFK">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Shipping_Specification" EntitySet="Shipping_Specification" />
+          </AssociationSet>
+          <AssociationSet Name="StorekeeperFK" Association="Self.StorekeeperFK">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Storekeeper" EntitySet="Storekeeper" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dicomModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Color_object">
+          <Key>
+            <PropertyRef Name="color_id" />
+          </Key>
+          <Property Name="color_id" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="color_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Product__color_i__5CD6CB2B" FromRole="Color_object" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Contractor">
+          <Key>
+            <PropertyRef Name="contractor_id" />
+          </Key>
+          <Property Name="contractor_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="legal_contractor_address" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="account_contractor_supplier_account" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="surname_contractor" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="contractor_name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="contractor_middle_name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name_organization_contractor" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="contractor_phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="type_contractor" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Delivery_Contract" Relationship="Self.Delivery_ContractFK" FromRole="Contractor" ToRole="Delivery_Contract" />
+          <NavigationProperty Name="Price_Reception" Relationship="Self.FK__Price_Rec__contr__6D0D32F4" FromRole="Contractor" ToRole="Price_Reception" />
+        </EntityType>
+        <EntityType Name="Delivery_Contract">
+          <Key>
+            <PropertyRef Name="delivery_contract_id" />
+          </Key>
+          <Property Name="delivery_contract_id" Type="Int32" Nullable="false" />
+          <Property Name="contractor_id" Type="Int32" Nullable="false" />
+          <Property Name="contract_start_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="contract_end_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="contract_cost" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="validity" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="number_of_contract_instances" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Contractor" Relationship="Self.Delivery_ContractFK" FromRole="Delivery_Contract" ToRole="Contractor" />
+          <NavigationProperty Name="Reception_Invoice" Relationship="Self.FK__Reception__deliv__628FA481" FromRole="Delivery_Contract" ToRole="Reception_Invoice" />
+          <NavigationProperty Name="Shipping_Invoice" Relationship="Self.FK__Shipping___deliv__656C112C" FromRole="Delivery_Contract" ToRole="Shipping_Invoice" />
+        </EntityType>
+        <EntityType Name="Discount">
+          <Key>
+            <PropertyRef Name="discount_id" />
+          </Key>
+          <Property Name="discount_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="start_discounts_date" Type="DateTime" Precision="3" />
+          <Property Name="end_discounts_date" Type="DateTime" Precision="3" />
+          <Property Name="discounts_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="discount_value" Type="Single" Nullable="false" />
+          <NavigationProperty Name="Shipping_Specification" Relationship="Self.FK__Shipping___disco__6B24EA82" FromRole="Discount" ToRole="Shipping_Specification" />
+        </EntityType>
+        <EntityType Name="Materials">
+          <Key>
+            <PropertyRef Name="materials_id" />
+          </Key>
+          <Property Name="materials_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="materials_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.ProductFK" FromRole="Materials" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Measurement">
+          <Key>
+            <PropertyRef Name="measurement_unit_id" />
+          </Key>
+          <Property Name="measurement_unit_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="units_measurements_name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Product__measure__5DCAEF64" FromRole="Measurement" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Price_Reception">
+          <Key>
+            <PropertyRef Name="reception_price_id" />
+          </Key>
+          <Property Name="reception_price_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="acceptance_price_values" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="reception_price_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="product_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="contractor_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Contractor" Relationship="Self.FK__Price_Rec__contr__6D0D32F4" FromRole="Price_Reception" ToRole="Contractor" />
+          <NavigationProperty Name="Product" Relationship="Self.Price_ReceptionFK" FromRole="Price_Reception" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Price_Sendings">
+          <Key>
+            <PropertyRef Name="shipment_price_id" />
+          </Key>
+          <Property Name="shipment_price_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="shipment_price_values" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="send_price_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="product_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.Price_SendingsFK" FromRole="Price_Sendings" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="product_id" />
+          </Key>
+          <Property Name="product_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="measurement_unit_id" Type="Int32" Nullable="false" />
+          <Property Name="product_type_id" Type="Int32" Nullable="false" />
+          <Property Name="cell_id" Type="Int32" Nullable="false" />
+          <Property Name="materials_id" Type="Int32" Nullable="false" />
+          <Property Name="color_id" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name_of_product" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="quantity_of_goods" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Color_object" Relationship="Self.FK__Product__color_i__5CD6CB2B" FromRole="Product" ToRole="Color_object" />
+          <NavigationProperty Name="Materials" Relationship="Self.ProductFK" FromRole="Product" ToRole="Materials" />
+          <NavigationProperty Name="Measurement" Relationship="Self.FK__Product__measure__5DCAEF64" FromRole="Product" ToRole="Measurement" />
+          <NavigationProperty Name="Price_Reception" Relationship="Self.Price_ReceptionFK" FromRole="Product" ToRole="Price_Reception" />
+          <NavigationProperty Name="Price_Sendings" Relationship="Self.Price_SendingsFK" FromRole="Product" ToRole="Price_Sendings" />
+          <NavigationProperty Name="Product_Location_Cell" Relationship="Self.FK__Product__cell_id__5FB337D6" FromRole="Product" ToRole="Product_Location_Cell" />
+          <NavigationProperty Name="Product_type" Relationship="Self.FK__Product__product__5EBF139D" FromRole="Product" ToRole="Product_type" />
+          <NavigationProperty Name="Reception_Specification" Relationship="Self.Reception_SpecificationFK" FromRole="Product" ToRole="Reception_Specification" />
+          <NavigationProperty Name="Shipping_Specification" Relationship="Self.Shipping_SpecificationFK" FromRole="Product" ToRole="Shipping_Specification" />
+        </EntityType>
+        <EntityType Name="Product_Location_Cell">
+          <Key>
+            <PropertyRef Name="cell_id" />
+          </Key>
+          <Property Name="cell_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tier_cells" Type="Int32" Nullable="false" />
+          <Property Name="cell_section" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Product__cell_id__5FB337D6" FromRole="Product_Location_Cell" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product_type">
+          <Key>
+            <PropertyRef Name="product_type_id" />
+          </Key>
+          <Property Name="product_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="types_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Product__product__5EBF139D" FromRole="Product_type" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Reception_Invoice">
+          <Key>
+            <PropertyRef Name="receipt_id" />
+            <PropertyRef Name="receipt_date" />
+          </Key>
+          <Property Name="receipt_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="vat_id" Type="Int32" />
+          <Property Name="delivery_contract_id" Type="Int32" Nullable="false" />
+          <Property Name="login_id" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="receipt_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Delivery_Contract" Relationship="Self.FK__Reception__deliv__628FA481" FromRole="Reception_Invoice" ToRole="Delivery_Contract" />
+          <NavigationProperty Name="Storekeeper" Relationship="Self.FK__Reception__login__6383C8BA" FromRole="Reception_Invoice" ToRole="Storekeeper" />
+          <NavigationProperty Name="Reception_Specification" Relationship="Self.FK__Reception_Specif__68487DD7" FromRole="Reception_Invoice" ToRole="Reception_Specification" />
+          <NavigationProperty Name="VAT" Relationship="Self.Reception_InvoiceFK" FromRole="Reception_Invoice" ToRole="VAT" />
+          <NavigationProperty Name="Reception_Specification1" Relationship="Self.Reception_Specification_CASCADE" FromRole="Reception_Invoice" ToRole="Reception_Specification" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="Int32" Nullable="false" />
+          <Property Name="role_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Storekeeper" Relationship="Self.StorekeeperFK" FromRole="Roles" ToRole="Storekeeper" />
+        </EntityType>
+        <EntityType Name="Shipping_Invoice">
+          <Key>
+            <PropertyRef Name="shipping_invoice_id" />
+            <PropertyRef Name="departure_date" />
+          </Key>
+          <Property Name="shipping_invoice_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="vat_id" Type="Int32" />
+          <Property Name="delivery_contract_id" Type="Int32" Nullable="false" />
+          <Property Name="login_id" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="departure_date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Delivery_Contract" Relationship="Self.FK__Shipping___deliv__656C112C" FromRole="Shipping_Invoice" ToRole="Delivery_Contract" />
+          <NavigationProperty Name="Storekeeper" Relationship="Self.FK__Shipping___login__66603565" FromRole="Shipping_Invoice" ToRole="Storekeeper" />
+          <NavigationProperty Name="Shipping_Specification" Relationship="Self.FK__Shipping_Specifi__6A30C649" FromRole="Shipping_Invoice" ToRole="Shipping_Specification" />
+          <NavigationProperty Name="VAT" Relationship="Self.Shipping_InvoiceFK" FromRole="Shipping_Invoice" ToRole="VAT" />
+          <NavigationProperty Name="Shipping_Specification1" Relationship="Self.Shipping_Specification_CASCADE" FromRole="Shipping_Invoice" ToRole="Shipping_Specification" />
+        </EntityType>
+        <EntityType Name="Storekeeper">
+          <Key>
+            <PropertyRef Name="login_id" />
+          </Key>
+          <Property Name="login_id" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password_id" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="surname_stores" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="warehouse_name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="patron_name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="address_ru" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="images" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="role_id" Type="Int32" Nullable="false" />
+          <Property Name="IsDelite" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Reception_Invoice" Relationship="Self.FK__Reception__login__6383C8BA" FromRole="Storekeeper" ToRole="Reception_Invoice" />
+          <NavigationProperty Name="Roles" Relationship="Self.StorekeeperFK" FromRole="Storekeeper" ToRole="Roles" />
+          <NavigationProperty Name="Shipping_Invoice" Relationship="Self.FK__Shipping___login__66603565" FromRole="Storekeeper" ToRole="Shipping_Invoice" />
+        </EntityType>
+        <EntityType Name="VAT">
+          <Key>
+            <PropertyRef Name="vat_id" />
+          </Key>
+          <Property Name="vat_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="vat_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="vat_value" Type="Single" Nullable="false" />
+          <NavigationProperty Name="Reception_Invoice" Relationship="Self.Reception_InvoiceFK" FromRole="VAT" ToRole="Reception_Invoice" />
+          <NavigationProperty Name="Shipping_Invoice" Relationship="Self.Shipping_InvoiceFK" FromRole="VAT" ToRole="Shipping_Invoice" />
+        </EntityType>
+        <EntityType Name="Reception_Specification">
+          <Key>
+            <PropertyRef Name="product_id" />
+            <PropertyRef Name="receipt_id" />
+            <PropertyRef Name="receipt_date" />
+            <PropertyRef Name="quantity_accepted_goods" />
+          </Key>
+          <Property Name="product_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="receipt_id" Type="Int32" Nullable="false" />
+          <Property Name="receipt_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="quantity_accepted_goods" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.Reception_SpecificationFK" FromRole="Reception_Specification" ToRole="Product" />
+          <NavigationProperty Name="Reception_Invoice" Relationship="Self.FK__Reception_Specif__68487DD7" FromRole="Reception_Specification" ToRole="Reception_Invoice" />
+          <NavigationProperty Name="Reception_Invoice1" Relationship="Self.Reception_Specification_CASCADE" FromRole="Reception_Specification" ToRole="Reception_Invoice" />
+        </EntityType>
+        <EntityType Name="Shipping_Specification">
+          <Key>
+            <PropertyRef Name="product_id" />
+            <PropertyRef Name="shipping_invoice_id" />
+            <PropertyRef Name="departure_date" />
+            <PropertyRef Name="quantity_sent_goods" />
+          </Key>
+          <Property Name="discount_id" Type="Int32" />
+          <Property Name="product_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="shipping_invoice_id" Type="Int32" Nullable="false" />
+          <Property Name="departure_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="quantity_sent_goods" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Discount" Relationship="Self.FK__Shipping___disco__6B24EA82" FromRole="Shipping_Specification" ToRole="Discount" />
+          <NavigationProperty Name="Product" Relationship="Self.Shipping_SpecificationFK" FromRole="Shipping_Specification" ToRole="Product" />
+          <NavigationProperty Name="Shipping_Invoice" Relationship="Self.FK__Shipping_Specifi__6A30C649" FromRole="Shipping_Specification" ToRole="Shipping_Invoice" />
+          <NavigationProperty Name="Shipping_Invoice1" Relationship="Self.Shipping_Specification_CASCADE" FromRole="Shipping_Specification" ToRole="Shipping_Invoice" />
+        </EntityType>
+        <EntityType Name="VIEWColor_object">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Наименование" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Наименование" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VIEWContractor">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Фамилия" />
+            <PropertyRef Name="Имя" />
+            <PropertyRef Name="Отчество" />
+            <PropertyRef Name="Юридический_адрес" />
+            <PropertyRef Name="Расчетный_счет" />
+            <PropertyRef Name="Наименование_организации" />
+            <PropertyRef Name="Телефон" />
+            <PropertyRef Name="Тип_контрагента" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Фамилия" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Имя" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Отчество" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Юридический_адрес" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Расчетный_счет" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Наименование_организации" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Телефон" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Тип_контрагента" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VIEWDelivery_Contract">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Расчетный_счет" />
+            <PropertyRef Name="Наименование_организации" />
+            <PropertyRef Name="Заказчик_Поставщик" />
+            <PropertyRef Name="Дата_начала" />
+            <PropertyRef Name="Дата_окончания" />
+            <PropertyRef Name="Стоимость_договора" />
+            <PropertyRef Name="Количество_экземпляров" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Расчетный_счет" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Наименование_организации" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Заказчик_Поставщик" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Дата_начала" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Дата_окончания" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Стоимость_договора" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Количество_экземпляров" Type="Int32" Nullable="false" />
+          <Property Name="Валидность" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="VIEWDelivery_Contract_P">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Наименование_организации" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Наименование_организации" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VIEWDelivery_Contract_Z">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Наименование_организации" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Наименование_организации" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VIEWDiscount">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Наименование" />
+            <PropertyRef Name="Значение_скидки" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Наименование" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Значение_скидки" Type="Single" Nullable="false" />
+          <Property Name="Начало_скидки" Type="DateTime" Precision="3" />
+          <Property Name="Окончание_скидки" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="VIEWMaterials">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Наименование" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Наименование" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VIEWMeasurement">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Наименование" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Наименование" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VIEWProduct">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Наименование" />
+            <PropertyRef Name="Тип" />
+            <PropertyRef Name="Материал" />
+            <PropertyRef Name="Цвет" />
+            <PropertyRef Name="Количество" />
+            <PropertyRef Name="ед_из" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Наименование" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Тип" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Материал" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Цвет" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Количество" Type="Int32" Nullable="false" />
+          <Property Name="ед_из" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Секция_Ярус" Type="String" MaxLength="34" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="VIEWProduct_Location_Cell">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Секция_Ярус" Type="String" MaxLength="34" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="VIEWProduct_type">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Наименование" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Наименование" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VIEWProduct2">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ед_из" />
+            <PropertyRef Name="Наименование" />
+            <PropertyRef Name="Тип" />
+            <PropertyRef Name="Материал" />
+            <PropertyRef Name="Цвет" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ед_из" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Наименование" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Тип" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Материал" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Цвет" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VIEWReception_Invoice">
+          <Key>
+            <PropertyRef Name="Номер_накладной" />
+            <PropertyRef Name="Дата_накладной" />
+            <PropertyRef Name="Наименование_организации" />
+            <PropertyRef Name="НДС_на_товар" />
+            <PropertyRef Name="Принял_накладную" />
+          </Key>
+          <Property Name="Номер_накладной" Type="Int32" Nullable="false" />
+          <Property Name="Дата_накладной" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Наименование_организации" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="НДС_на_товар" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Принял_накладную" Type="String" MaxLength="62" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VIEWRoles">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Наименование" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Наименование" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VIEWShipping_Invoice">
+          <Key>
+            <PropertyRef Name="Номер_накладной" />
+            <PropertyRef Name="Дата_накладной" />
+            <PropertyRef Name="Наименование_организации" />
+            <PropertyRef Name="НДС_на_товар" />
+            <PropertyRef Name="Принял_накладную" />
+          </Key>
+          <Property Name="Номер_накладной" Type="Int32" Nullable="false" />
+          <Property Name="Дата_накладной" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Наименование_организации" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="НДС_на_товар" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Принял_накладную" Type="String" MaxLength="62" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VIEWStorekeeper">
+          <Key>
+            <PropertyRef Name="Логин" />
+            <PropertyRef Name="Пароль" />
+            <PropertyRef Name="Фамилия" />
+            <PropertyRef Name="Имя" />
+            <PropertyRef Name="Отчество" />
+            <PropertyRef Name="Адрес_электронной_почты" />
+            <PropertyRef Name="Роль" />
+          </Key>
+          <Property Name="Логин" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Пароль" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Фамилия" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Имя" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Отчество" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Адрес_электронной_почты" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Фото" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Роль" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VIEWStorekeeper2">
+          <Key>
+            <PropertyRef Name="Логин" />
+            <PropertyRef Name="Принял_накладную" />
+          </Key>
+          <Property Name="Логин" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Принял_накладную" Type="String" MaxLength="62" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VIEWVAT">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Наименование" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Наименование" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Product__color_i__5CD6CB2B">
+          <End Role="Color_object" Type="Self.Color_object" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Color_object">
+              <PropertyRef Name="color_id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="color_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Delivery_ContractFK">
+          <End Role="Contractor" Type="Self.Contractor" Multiplicity="1" />
+          <End Role="Delivery_Contract" Type="Self.Delivery_Contract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contractor">
+              <PropertyRef Name="contractor_id" />
+            </Principal>
+            <Dependent Role="Delivery_Contract">
+              <PropertyRef Name="contractor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Price_Rec__contr__6D0D32F4">
+          <End Role="Contractor" Type="Self.Contractor" Multiplicity="1" />
+          <End Role="Price_Reception" Type="Self.Price_Reception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contractor">
+              <PropertyRef Name="contractor_id" />
+            </Principal>
+            <Dependent Role="Price_Reception">
+              <PropertyRef Name="contractor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reception__deliv__628FA481">
+          <End Role="Delivery_Contract" Type="Self.Delivery_Contract" Multiplicity="1" />
+          <End Role="Reception_Invoice" Type="Self.Reception_Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Delivery_Contract">
+              <PropertyRef Name="delivery_contract_id" />
+            </Principal>
+            <Dependent Role="Reception_Invoice">
+              <PropertyRef Name="delivery_contract_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Shipping___deliv__656C112C">
+          <End Role="Delivery_Contract" Type="Self.Delivery_Contract" Multiplicity="1" />
+          <End Role="Shipping_Invoice" Type="Self.Shipping_Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Delivery_Contract">
+              <PropertyRef Name="delivery_contract_id" />
+            </Principal>
+            <Dependent Role="Shipping_Invoice">
+              <PropertyRef Name="delivery_contract_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Shipping___disco__6B24EA82">
+          <End Role="Discount" Type="Self.Discount" Multiplicity="0..1" />
+          <End Role="Shipping_Specification" Type="Self.Shipping_Specification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discount">
+              <PropertyRef Name="discount_id" />
+            </Principal>
+            <Dependent Role="Shipping_Specification">
+              <PropertyRef Name="discount_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProductFK">
+          <End Role="Materials" Type="Self.Materials" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materials">
+              <PropertyRef Name="materials_id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="materials_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__measure__5DCAEF64">
+          <End Role="Measurement" Type="Self.Measurement" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Measurement">
+              <PropertyRef Name="measurement_unit_id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="measurement_unit_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Price_ReceptionFK">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Price_Reception" Type="Self.Price_Reception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="Price_Reception">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Price_SendingsFK">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Price_Sendings" Type="Self.Price_Sendings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="Price_Sendings">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__cell_id__5FB337D6">
+          <End Role="Product_Location_Cell" Type="Self.Product_Location_Cell" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product_Location_Cell">
+              <PropertyRef Name="cell_id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="cell_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__product__5EBF139D">
+          <End Role="Product_type" Type="Self.Product_type" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product_type">
+              <PropertyRef Name="product_type_id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="product_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Reception_SpecificationFK">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Reception_Specification" Type="Self.Reception_Specification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="Reception_Specification">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Shipping_SpecificationFK">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Shipping_Specification" Type="Self.Shipping_Specification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="Shipping_Specification">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reception__login__6383C8BA">
+          <End Role="Storekeeper" Type="Self.Storekeeper" Multiplicity="1" />
+          <End Role="Reception_Invoice" Type="Self.Reception_Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Storekeeper">
+              <PropertyRef Name="login_id" />
+            </Principal>
+            <Dependent Role="Reception_Invoice">
+              <PropertyRef Name="login_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reception_Specif__68487DD7">
+          <End Role="Reception_Invoice" Type="Self.Reception_Invoice" Multiplicity="1" />
+          <End Role="Reception_Specification" Type="Self.Reception_Specification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reception_Invoice">
+              <PropertyRef Name="receipt_id" />
+              <PropertyRef Name="receipt_date" />
+            </Principal>
+            <Dependent Role="Reception_Specification">
+              <PropertyRef Name="receipt_id" />
+              <PropertyRef Name="receipt_date" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Reception_InvoiceFK">
+          <End Role="VAT" Type="Self.VAT" Multiplicity="0..1" />
+          <End Role="Reception_Invoice" Type="Self.Reception_Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VAT">
+              <PropertyRef Name="vat_id" />
+            </Principal>
+            <Dependent Role="Reception_Invoice">
+              <PropertyRef Name="vat_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Reception_Specification_CASCADE">
+          <End Role="Reception_Invoice" Type="Self.Reception_Invoice" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Reception_Specification" Type="Self.Reception_Specification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reception_Invoice">
+              <PropertyRef Name="receipt_id" />
+              <PropertyRef Name="receipt_date" />
+            </Principal>
+            <Dependent Role="Reception_Specification">
+              <PropertyRef Name="receipt_id" />
+              <PropertyRef Name="receipt_date" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StorekeeperFK">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Storekeeper" Type="Self.Storekeeper" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="Storekeeper">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Shipping___login__66603565">
+          <End Role="Storekeeper" Type="Self.Storekeeper" Multiplicity="1" />
+          <End Role="Shipping_Invoice" Type="Self.Shipping_Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Storekeeper">
+              <PropertyRef Name="login_id" />
+            </Principal>
+            <Dependent Role="Shipping_Invoice">
+              <PropertyRef Name="login_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Shipping_Specifi__6A30C649">
+          <End Role="Shipping_Invoice" Type="Self.Shipping_Invoice" Multiplicity="1" />
+          <End Role="Shipping_Specification" Type="Self.Shipping_Specification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shipping_Invoice">
+              <PropertyRef Name="shipping_invoice_id" />
+              <PropertyRef Name="departure_date" />
+            </Principal>
+            <Dependent Role="Shipping_Specification">
+              <PropertyRef Name="shipping_invoice_id" />
+              <PropertyRef Name="departure_date" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Shipping_InvoiceFK">
+          <End Role="VAT" Type="Self.VAT" Multiplicity="0..1" />
+          <End Role="Shipping_Invoice" Type="Self.Shipping_Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VAT">
+              <PropertyRef Name="vat_id" />
+            </Principal>
+            <Dependent Role="Shipping_Invoice">
+              <PropertyRef Name="vat_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Shipping_Specification_CASCADE">
+          <End Role="Shipping_Invoice" Type="Self.Shipping_Invoice" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Shipping_Specification" Type="Self.Shipping_Specification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shipping_Invoice">
+              <PropertyRef Name="shipping_invoice_id" />
+              <PropertyRef Name="departure_date" />
+            </Principal>
+            <Dependent Role="Shipping_Specification">
+              <PropertyRef Name="shipping_invoice_id" />
+              <PropertyRef Name="departure_date" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dicomEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Color_object" EntityType="Self.Color_object" />
+          <EntitySet Name="Contractor" EntityType="Self.Contractor" />
+          <EntitySet Name="Delivery_Contract" EntityType="Self.Delivery_Contract" />
+          <EntitySet Name="Discount" EntityType="Self.Discount" />
+          <EntitySet Name="Materials" EntityType="Self.Materials" />
+          <EntitySet Name="Measurement" EntityType="Self.Measurement" />
+          <EntitySet Name="Price_Reception" EntityType="Self.Price_Reception" />
+          <EntitySet Name="Price_Sendings" EntityType="Self.Price_Sendings" />
+          <EntitySet Name="Product" EntityType="Self.Product" />
+          <EntitySet Name="Product_Location_Cell" EntityType="Self.Product_Location_Cell" />
+          <EntitySet Name="Product_type" EntityType="Self.Product_type" />
+          <EntitySet Name="Reception_Invoice" EntityType="Self.Reception_Invoice" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" />
+          <EntitySet Name="Shipping_Invoice" EntityType="Self.Shipping_Invoice" />
+          <EntitySet Name="Storekeeper" EntityType="Self.Storekeeper" />
+          <EntitySet Name="VAT" EntityType="Self.VAT" />
+          <EntitySet Name="Reception_Specification" EntityType="Self.Reception_Specification" />
+          <EntitySet Name="Shipping_Specification" EntityType="Self.Shipping_Specification" />
+          <EntitySet Name="VIEWColor_object" EntityType="Self.VIEWColor_object" />
+          <EntitySet Name="VIEWContractor" EntityType="Self.VIEWContractor" />
+          <EntitySet Name="VIEWDelivery_Contract" EntityType="Self.VIEWDelivery_Contract" />
+          <EntitySet Name="VIEWDelivery_Contract_P" EntityType="Self.VIEWDelivery_Contract_P" />
+          <EntitySet Name="VIEWDelivery_Contract_Z" EntityType="Self.VIEWDelivery_Contract_Z" />
+          <EntitySet Name="VIEWDiscount" EntityType="Self.VIEWDiscount" />
+          <EntitySet Name="VIEWMaterials" EntityType="Self.VIEWMaterials" />
+          <EntitySet Name="VIEWMeasurement" EntityType="Self.VIEWMeasurement" />
+          <EntitySet Name="VIEWProduct" EntityType="Self.VIEWProduct" />
+          <EntitySet Name="VIEWProduct_Location_Cell" EntityType="Self.VIEWProduct_Location_Cell" />
+          <EntitySet Name="VIEWProduct_type" EntityType="Self.VIEWProduct_type" />
+          <EntitySet Name="VIEWProduct2" EntityType="Self.VIEWProduct2" />
+          <EntitySet Name="VIEWReception_Invoice" EntityType="Self.VIEWReception_Invoice" />
+          <EntitySet Name="VIEWRoles" EntityType="Self.VIEWRoles" />
+          <EntitySet Name="VIEWShipping_Invoice" EntityType="Self.VIEWShipping_Invoice" />
+          <EntitySet Name="VIEWStorekeeper" EntityType="Self.VIEWStorekeeper" />
+          <EntitySet Name="VIEWStorekeeper2" EntityType="Self.VIEWStorekeeper2" />
+          <EntitySet Name="VIEWVAT" EntityType="Self.VIEWVAT" />
+          <AssociationSet Name="FK__Product__color_i__5CD6CB2B" Association="Self.FK__Product__color_i__5CD6CB2B">
+            <End Role="Color_object" EntitySet="Color_object" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="Delivery_ContractFK" Association="Self.Delivery_ContractFK">
+            <End Role="Contractor" EntitySet="Contractor" />
+            <End Role="Delivery_Contract" EntitySet="Delivery_Contract" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Price_Rec__contr__6D0D32F4" Association="Self.FK__Price_Rec__contr__6D0D32F4">
+            <End Role="Contractor" EntitySet="Contractor" />
+            <End Role="Price_Reception" EntitySet="Price_Reception" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reception__deliv__628FA481" Association="Self.FK__Reception__deliv__628FA481">
+            <End Role="Delivery_Contract" EntitySet="Delivery_Contract" />
+            <End Role="Reception_Invoice" EntitySet="Reception_Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Shipping___deliv__656C112C" Association="Self.FK__Shipping___deliv__656C112C">
+            <End Role="Delivery_Contract" EntitySet="Delivery_Contract" />
+            <End Role="Shipping_Invoice" EntitySet="Shipping_Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Shipping___disco__6B24EA82" Association="Self.FK__Shipping___disco__6B24EA82">
+            <End Role="Discount" EntitySet="Discount" />
+            <End Role="Shipping_Specification" EntitySet="Shipping_Specification" />
+          </AssociationSet>
+          <AssociationSet Name="ProductFK" Association="Self.ProductFK">
+            <End Role="Materials" EntitySet="Materials" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__measure__5DCAEF64" Association="Self.FK__Product__measure__5DCAEF64">
+            <End Role="Measurement" EntitySet="Measurement" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="Price_ReceptionFK" Association="Self.Price_ReceptionFK">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Price_Reception" EntitySet="Price_Reception" />
+          </AssociationSet>
+          <AssociationSet Name="Price_SendingsFK" Association="Self.Price_SendingsFK">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Price_Sendings" EntitySet="Price_Sendings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__cell_id__5FB337D6" Association="Self.FK__Product__cell_id__5FB337D6">
+            <End Role="Product_Location_Cell" EntitySet="Product_Location_Cell" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__product__5EBF139D" Association="Self.FK__Product__product__5EBF139D">
+            <End Role="Product_type" EntitySet="Product_type" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="Reception_SpecificationFK" Association="Self.Reception_SpecificationFK">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Reception_Specification" EntitySet="Reception_Specification" />
+          </AssociationSet>
+          <AssociationSet Name="Shipping_SpecificationFK" Association="Self.Shipping_SpecificationFK">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Shipping_Specification" EntitySet="Shipping_Specification" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reception__login__6383C8BA" Association="Self.FK__Reception__login__6383C8BA">
+            <End Role="Storekeeper" EntitySet="Storekeeper" />
+            <End Role="Reception_Invoice" EntitySet="Reception_Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reception_Specif__68487DD7" Association="Self.FK__Reception_Specif__68487DD7">
+            <End Role="Reception_Invoice" EntitySet="Reception_Invoice" />
+            <End Role="Reception_Specification" EntitySet="Reception_Specification" />
+          </AssociationSet>
+          <AssociationSet Name="Reception_InvoiceFK" Association="Self.Reception_InvoiceFK">
+            <End Role="VAT" EntitySet="VAT" />
+            <End Role="Reception_Invoice" EntitySet="Reception_Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="Reception_Specification_CASCADE" Association="Self.Reception_Specification_CASCADE">
+            <End Role="Reception_Invoice" EntitySet="Reception_Invoice" />
+            <End Role="Reception_Specification" EntitySet="Reception_Specification" />
+          </AssociationSet>
+          <AssociationSet Name="StorekeeperFK" Association="Self.StorekeeperFK">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Storekeeper" EntitySet="Storekeeper" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Shipping___login__66603565" Association="Self.FK__Shipping___login__66603565">
+            <End Role="Storekeeper" EntitySet="Storekeeper" />
+            <End Role="Shipping_Invoice" EntitySet="Shipping_Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Shipping_Specifi__6A30C649" Association="Self.FK__Shipping_Specifi__6A30C649">
+            <End Role="Shipping_Invoice" EntitySet="Shipping_Invoice" />
+            <End Role="Shipping_Specification" EntitySet="Shipping_Specification" />
+          </AssociationSet>
+          <AssociationSet Name="Shipping_InvoiceFK" Association="Self.Shipping_InvoiceFK">
+            <End Role="VAT" EntitySet="VAT" />
+            <End Role="Shipping_Invoice" EntitySet="Shipping_Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="Shipping_Specification_CASCADE" Association="Self.Shipping_Specification_CASCADE">
+            <End Role="Shipping_Invoice" EntitySet="Shipping_Invoice" />
+            <End Role="Shipping_Specification" EntitySet="Shipping_Specification" />
+          </AssociationSet>
+          <FunctionImport Name="AddContractor">
+            <Parameter Name="legal_contractor_address" Mode="In" Type="String" />
+            <Parameter Name="account_contractor_supplier_account" Mode="In" Type="String" />
+            <Parameter Name="surname_contractor" Mode="In" Type="String" />
+            <Parameter Name="contractor_name" Mode="In" Type="String" />
+            <Parameter Name="contractor_middle_name" Mode="In" Type="String" />
+            <Parameter Name="name_organization_contractor" Mode="In" Type="String" />
+            <Parameter Name="contractor_phone" Mode="In" Type="String" />
+            <Parameter Name="type_contractor" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AddDelivery_Contract">
+            <Parameter Name="delivery_contract_id" Mode="In" Type="Int32" />
+            <Parameter Name="contractor_id" Mode="In" Type="Int32" />
+            <Parameter Name="contract_start_date" Mode="In" Type="DateTime" />
+            <Parameter Name="contract_end_date" Mode="In" Type="DateTime" />
+            <Parameter Name="contract_cost" Mode="In" Type="Decimal" />
+            <Parameter Name="number_of_contract_instances" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AddProduct">
+            <Parameter Name="product_id" Mode="In" Type="String" />
+            <Parameter Name="measurement_unit_id" Mode="In" Type="Int32" />
+            <Parameter Name="product_type_id" Mode="In" Type="Int32" />
+            <Parameter Name="cell_id" Mode="In" Type="Int32" />
+            <Parameter Name="materials_id" Mode="In" Type="Int32" />
+            <Parameter Name="color_id" Mode="In" Type="String" />
+            <Parameter Name="name_of_product" Mode="In" Type="String" />
+            <Parameter Name="quantity_of_goods" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AddReception_Invoice">
+            <Parameter Name="vat_id" Mode="In" Type="Int32" />
+            <Parameter Name="delivery_contract_id" Mode="In" Type="Int32" />
+            <Parameter Name="login_id" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AddReception_Specification">
+            <Parameter Name="product_id" Mode="In" Type="String" />
+            <Parameter Name="receipt_id" Mode="In" Type="Int32" />
+            <Parameter Name="receipt_date" Mode="In" Type="DateTime" />
+            <Parameter Name="quantity_accepted_goods" Mode="In" Type="Int32" />
+            <Parameter Name="acceptance_price_values" Mode="In" Type="Decimal" />
+            <Parameter Name="contractor_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AddShipping_Invoice">
+            <Parameter Name="vat_id" Mode="In" Type="Int32" />
+            <Parameter Name="delivery_contract_id" Mode="In" Type="Int32" />
+            <Parameter Name="login_id" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AddShipping_Specification">
+            <Parameter Name="product_id" Mode="In" Type="String" />
+            <Parameter Name="shipping_invoice_id" Mode="In" Type="Int32" />
+            <Parameter Name="departure_date" Mode="In" Type="DateTime" />
+            <Parameter Name="quantity_sent_goods" Mode="In" Type="Int32" />
+            <Parameter Name="shipment_price_values" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="AddStorekeeper">
+            <Parameter Name="login_id" Mode="In" Type="String" />
+            <Parameter Name="password_id" Mode="In" Type="String" />
+            <Parameter Name="surname_stores" Mode="In" Type="String" />
+            <Parameter Name="warehouse_name" Mode="In" Type="String" />
+            <Parameter Name="patron_name" Mode="In" Type="String" />
+            <Parameter Name="address_ru" Mode="In" Type="String" />
+            <Parameter Name="images" Mode="In" Type="Binary" />
+            <Parameter Name="role_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CostPrice_Reception" ReturnType="Collection(Decimal)">
+            <Parameter Name="Contractor" Mode="In" Type="Int32" />
+            <Parameter Name="Product" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CostPrice_Sendings" ReturnType="Collection(Decimal)">
+          <Parameter Name="Product" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteContractor">
+          <Parameter Name="contractor_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteDelivery_Contract">
+          <Parameter Name="delivery_contract_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteProduct">
+          <Parameter Name="product_id" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteReception_Invoice">
+            <Parameter Name="receipt_id" Mode="In" Type="Int32" />
+            <Parameter Name="receipt_date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteReception_Specification">
+            <Parameter Name="id_price" Mode="In" Type="Int32" />
+            <Parameter Name="product_id" Mode="In" Type="String" />
+            <Parameter Name="receipt_id" Mode="In" Type="Int32" />
+            <Parameter Name="receipt_date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteShipping_Invoice">
+            <Parameter Name="shipping_invoice_id" Mode="In" Type="Int32" />
+            <Parameter Name="departure_date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteShipping_Specification">
+            <Parameter Name="id_price" Mode="In" Type="Int32" />
+            <Parameter Name="product_id" Mode="In" Type="String" />
+            <Parameter Name="shipping_invoice_id" Mode="In" Type="Int32" />
+            <Parameter Name="departure_date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteStorekeeper">
+            <Parameter Name="login_id" Mode="In" Type="String" />
+            <Parameter Name="IsDelite" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="FilterContractor" ReturnType="Collection(dicomModel.FilterContractor_Result)">
+          <Parameter Name="type_contractor" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="FilterProduct" ReturnType="Collection(dicomModel.FilterProduct_Result)">
+          <Parameter Name="New" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GraphAnalytics" ReturnType="Collection(dicomModel.GraphAnalytics_Result)">
+          <Parameter Name="Year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GraphAnalytics2" ReturnType="Collection(dicomModel.GraphAnalytics2_Result)">
+          <Parameter Name="Year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ProcExportData">
+          <Parameter Name="tableName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ProcImportData">
+            <Parameter Name="tableName" Mode="In" Type="String" />
+            <Parameter Name="filePath" Mode="In" Type="String" />
+            <Parameter Name="fileFormat" Mode="In" Type="String" />
+            <Parameter Name="fieldTerminator" Mode="In" Type="String" />
+            <Parameter Name="rowTerminator" Mode="In" Type="String" />
+            <Parameter Name="firstRow" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SortrContractor" ReturnType="Collection(dicomModel.SortrContractor_Result)">
+          <Parameter Name="orderby" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SortrDelivery_Contract" ReturnType="Collection(dicomModel.SortrDelivery_Contract_Result)">
+          <Parameter Name="orderby" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SortrProduct" ReturnType="Collection(dicomModel.SortrProduct_Result)">
+          <Parameter Name="orderby" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SortrReception_Invoice" ReturnType="Collection(dicomModel.SortrReception_Invoice_Result)">
+          <Parameter Name="orderby" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SortrShipping_Invoice" ReturnType="Collection(dicomModel.SortrShipping_Invoice_Result)">
+          <Parameter Name="orderby" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SortrStorekeeper" ReturnType="Collection(dicomModel.SortrStorekeeper_Result)">
+          <Parameter Name="orderby" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UPDATE_Delivery_Contract" />
+          <FunctionImport Name="UPDATE_Discount" />
+          <FunctionImport Name="UpdateContractor">
+            <Parameter Name="contractor_id" Mode="In" Type="Int32" />
+            <Parameter Name="legal_contractor_address" Mode="In" Type="String" />
+            <Parameter Name="account_contractor_supplier_account" Mode="In" Type="String" />
+            <Parameter Name="surname_contractor" Mode="In" Type="String" />
+            <Parameter Name="contractor_name" Mode="In" Type="String" />
+            <Parameter Name="contractor_middle_name" Mode="In" Type="String" />
+            <Parameter Name="name_organization_contractor" Mode="In" Type="String" />
+            <Parameter Name="contractor_phone" Mode="In" Type="String" />
+            <Parameter Name="type_contractor" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateDelivery_Contract">
+            <Parameter Name="delivery_contract_id" Mode="In" Type="Int32" />
+            <Parameter Name="contractor_id" Mode="In" Type="Int32" />
+            <Parameter Name="contract_start_date" Mode="In" Type="DateTime" />
+            <Parameter Name="contract_end_date" Mode="In" Type="DateTime" />
+            <Parameter Name="contract_cost" Mode="In" Type="Decimal" />
+            <Parameter Name="number_of_contract_instances" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateProduct">
+            <Parameter Name="product_id" Mode="In" Type="String" />
+            <Parameter Name="materials_id" Mode="In" Type="Int32" />
+            <Parameter Name="color_id" Mode="In" Type="String" />
+            <Parameter Name="measurement_unit_id" Mode="In" Type="Int32" />
+            <Parameter Name="product_type_id" Mode="In" Type="Int32" />
+            <Parameter Name="cell_id" Mode="In" Type="Int32" />
+            <Parameter Name="name_of_product" Mode="In" Type="String" />
+            <Parameter Name="quantity_of_goods" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateReception_Invoice">
+            <Parameter Name="receipt_id" Mode="In" Type="Int32" />
+            <Parameter Name="vat_id" Mode="In" Type="Int32" />
+            <Parameter Name="delivery_contract_id" Mode="In" Type="Int32" />
+            <Parameter Name="login_id" Mode="In" Type="String" />
+            <Parameter Name="receipt_date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateReception_Specification">
+            <Parameter Name="product_id" Mode="In" Type="String" />
+            <Parameter Name="receipt_id" Mode="In" Type="Int32" />
+            <Parameter Name="receipt_date" Mode="In" Type="DateTime" />
+            <Parameter Name="quantity_accepted_goods" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateShipping_Invoice">
+            <Parameter Name="shipping_invoice_id" Mode="In" Type="Int32" />
+            <Parameter Name="vat_id" Mode="In" Type="Int32" />
+            <Parameter Name="delivery_contract_id" Mode="In" Type="Int32" />
+            <Parameter Name="login_id" Mode="In" Type="String" />
+            <Parameter Name="departure_date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateShipping_Specification">
+            <Parameter Name="product_id" Mode="In" Type="String" />
+            <Parameter Name="shipping_invoice_id" Mode="In" Type="Int32" />
+            <Parameter Name="departure_date" Mode="In" Type="DateTime" />
+            <Parameter Name="quantity_sent_goods" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateStorekeeper">
+            <Parameter Name="login_id" Mode="In" Type="String" />
+            <Parameter Name="password_id" Mode="In" Type="String" />
+            <Parameter Name="surname_stores" Mode="In" Type="String" />
+            <Parameter Name="warehouse_name" Mode="In" Type="String" />
+            <Parameter Name="patron_name" Mode="In" Type="String" />
+            <Parameter Name="address_ru" Mode="In" Type="String" />
+            <Parameter Name="images" Mode="In" Type="Binary" />
+            <Parameter Name="role_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VIEWContractor_id" ReturnType="Collection(Int32)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ID2" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="VIEWMail" ReturnType="Collection(String)">
+          <Parameter Name="login" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="VIEWReception_Specification" ReturnType="Collection(dicomModel.VIEWReception_Specification_Result)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ID2" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="VIEWRole" ReturnType="Collection(Int32)">
+            <Parameter Name="login_id" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="VIEWShipping_Specification" ReturnType="Collection(dicomModel.VIEWShipping_Specification_Result)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="ID2" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ValueProduct" ReturnType="Collection(Int32)">
+            <Parameter Name="Product" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="FilterContractor_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Фамилия" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Имя" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Отчество" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Юридический_адрес" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="Расчетный_счет" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="Наименование_организации" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="Телефон" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Тип_контрагента" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="FilterProduct_Result">
+          <Property Type="String" Name="ID" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Тип_товара" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Материал" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Цвет" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Наименование" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="Количество" Nullable="false" />
+          <Property Type="String" Name="ед_из_" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Секция" Nullable="false" MaxLength="3" />
+          <Property Type="Int32" Name="Ярус" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GraphAnalytics_Result">
+          <Property Type="Int32" Name="Год" Nullable="true" />
+          <Property Type="Int32" Name="Месяц" Nullable="true" />
+          <Property Type="String" Name="Название_месяца" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="Количество" Nullable="true" />
+          <Property Type="Double" Name="Сумма" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GraphAnalytics2_Result">
+          <Property Type="Int32" Name="Год" Nullable="true" />
+          <Property Type="Int32" Name="Месяц" Nullable="true" />
+          <Property Type="String" Name="Название_месяца" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="Количество" Nullable="true" />
+          <Property Type="Double" Name="Сумма" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SortrContractor_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Фамилия" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Имя" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Отчество" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Юридический_адрес" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="Расчетный_счет" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="Наименование_организации" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="Телефон" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Тип_контрагента" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="SortrDelivery_Contract_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Наименование_организации" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="Заказчик_Поставщик" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="Дата_начала" Nullable="false" />
+          <Property Type="DateTime" Name="Дата_окончания" Nullable="false" />
+          <Property Type="Decimal" Name="Стоимость_договора" Nullable="false" Precision="19" />
+          <Property Type="Int32" Name="Количество_экземпляров" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SortrProduct_Result">
+          <Property Type="String" Name="ID" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Тип_товара" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Материал" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Цвет" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Наименование" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="Количество" Nullable="false" />
+          <Property Type="String" Name="ед_из_" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Секция" Nullable="false" MaxLength="3" />
+          <Property Type="Int32" Name="Ярус" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SortrReception_Invoice_Result">
+          <Property Type="Int32" Name="Номер_накладной" Nullable="false" />
+          <Property Type="DateTime" Name="Дата_накладной" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="Номер_договора" Nullable="false" />
+          <Property Type="String" Name="НДС_на_товар" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Принял_накладную" Nullable="false" MaxLength="62" />
+        </ComplexType>
+        <ComplexType Name="SortrShipping_Invoice_Result">
+          <Property Type="Int32" Name="Номер_накладной" Nullable="false" />
+          <Property Type="DateTime" Name="Дата_накладной" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="Номер_договора" Nullable="false" />
+          <Property Type="String" Name="НДС_на_товар" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="Принял_накладную" Nullable="false" MaxLength="62" />
+        </ComplexType>
+        <ComplexType Name="SortrStorekeeper_Result">
+          <Property Type="String" Name="Логин" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="Пароль" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="Фамилия" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Имя" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Отчество" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Адрес_электронной_почты" Nullable="false" MaxLength="20" />
+          <Property Type="Binary" Name="Фото" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="VIEWReception_Specification_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="IDP" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Наименование" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="Количество" Nullable="false" />
+          <Property Type="String" Name="ед_из" Nullable="false" MaxLength="20" />
+          <Property Type="Decimal" Name="Цена_за_один_товар" Nullable="false" Precision="19" />
+          <Property Type="String" Name="Сумма" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="VIEWShipping_Specification_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="IDP" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Наименование" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="Количество" Nullable="false" />
+          <Property Type="String" Name="ед_из" Nullable="false" MaxLength="20" />
+          <Property Type="Decimal" Name="Цена_за_один_товар" Nullable="false" Precision="19" />
+          <Property Type="Single" Name="Скидка" Nullable="false" />
+          <Property Type="String" Name="Сумма" Nullable="true" MaxLength="100" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище dicomModelContainer" CdmEntityContainer="dicomEntities">
+          <EntitySetMapping Name="Color_object">
+            <EntityTypeMapping TypeName="dicomModel.Color_object">
+              <MappingFragment StoreEntitySet="Color_object">
+                <ScalarProperty Name="color_id" ColumnName="color_id" />
+                <ScalarProperty Name="color_name" ColumnName="color_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contractor">
+            <EntityTypeMapping TypeName="dicomModel.Contractor">
+              <MappingFragment StoreEntitySet="Contractor">
+                <ScalarProperty Name="contractor_id" ColumnName="contractor_id" />
+                <ScalarProperty Name="legal_contractor_address" ColumnName="legal_contractor_address" />
+                <ScalarProperty Name="account_contractor_supplier_account" ColumnName="account_contractor_supplier_account" />
+                <ScalarProperty Name="surname_contractor" ColumnName="surname_contractor" />
+                <ScalarProperty Name="contractor_name" ColumnName="contractor_name" />
+                <ScalarProperty Name="contractor_middle_name" ColumnName="contractor_middle_name" />
+                <ScalarProperty Name="name_organization_contractor" ColumnName="name_organization_contractor" />
+                <ScalarProperty Name="contractor_phone" ColumnName="contractor_phone" />
+                <ScalarProperty Name="type_contractor" ColumnName="type_contractor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Delivery_Contract">
+            <EntityTypeMapping TypeName="dicomModel.Delivery_Contract">
+              <MappingFragment StoreEntitySet="Delivery_Contract">
+                <ScalarProperty Name="delivery_contract_id" ColumnName="delivery_contract_id" />
+                <ScalarProperty Name="contractor_id" ColumnName="contractor_id" />
+                <ScalarProperty Name="contract_start_date" ColumnName="contract_start_date" />
+                <ScalarProperty Name="contract_end_date" ColumnName="contract_end_date" />
+                <ScalarProperty Name="contract_cost" ColumnName="contract_cost" />
+                <ScalarProperty Name="validity" ColumnName="validity" />
+                <ScalarProperty Name="number_of_contract_instances" ColumnName="number_of_contract_instances" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Discount">
+            <EntityTypeMapping TypeName="dicomModel.Discount">
+              <MappingFragment StoreEntitySet="Discount">
+                <ScalarProperty Name="discount_id" ColumnName="discount_id" />
+                <ScalarProperty Name="start_discounts_date" ColumnName="start_discounts_date" />
+                <ScalarProperty Name="end_discounts_date" ColumnName="end_discounts_date" />
+                <ScalarProperty Name="discounts_name" ColumnName="discounts_name" />
+                <ScalarProperty Name="discount_value" ColumnName="discount_value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Materials">
+            <EntityTypeMapping TypeName="dicomModel.Materials">
+              <MappingFragment StoreEntitySet="Materials">
+                <ScalarProperty Name="materials_id" ColumnName="materials_id" />
+                <ScalarProperty Name="materials_name" ColumnName="materials_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Measurement">
+            <EntityTypeMapping TypeName="dicomModel.Measurement">
+              <MappingFragment StoreEntitySet="Measurement">
+                <ScalarProperty Name="measurement_unit_id" ColumnName="measurement_unit_id" />
+                <ScalarProperty Name="units_measurements_name" ColumnName="units_measurements_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Price_Reception">
+            <EntityTypeMapping TypeName="dicomModel.Price_Reception">
+              <MappingFragment StoreEntitySet="Price_Reception">
+                <ScalarProperty Name="reception_price_id" ColumnName="reception_price_id" />
+                <ScalarProperty Name="acceptance_price_values" ColumnName="acceptance_price_values" />
+                <ScalarProperty Name="reception_price_date" ColumnName="reception_price_date" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="contractor_id" ColumnName="contractor_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Price_Sendings">
+            <EntityTypeMapping TypeName="dicomModel.Price_Sendings">
+              <MappingFragment StoreEntitySet="Price_Sendings">
+                <ScalarProperty Name="shipment_price_id" ColumnName="shipment_price_id" />
+                <ScalarProperty Name="shipment_price_values" ColumnName="shipment_price_values" />
+                <ScalarProperty Name="send_price_date" ColumnName="send_price_date" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="dicomModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="measurement_unit_id" ColumnName="measurement_unit_id" />
+                <ScalarProperty Name="product_type_id" ColumnName="product_type_id" />
+                <ScalarProperty Name="cell_id" ColumnName="cell_id" />
+                <ScalarProperty Name="materials_id" ColumnName="materials_id" />
+                <ScalarProperty Name="color_id" ColumnName="color_id" />
+                <ScalarProperty Name="name_of_product" ColumnName="name_of_product" />
+                <ScalarProperty Name="quantity_of_goods" ColumnName="quantity_of_goods" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_Location_Cell">
+            <EntityTypeMapping TypeName="dicomModel.Product_Location_Cell">
+              <MappingFragment StoreEntitySet="Product_Location_Cell">
+                <ScalarProperty Name="cell_id" ColumnName="cell_id" />
+                <ScalarProperty Name="tier_cells" ColumnName="tier_cells" />
+                <ScalarProperty Name="cell_section" ColumnName="cell_section" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_type">
+            <EntityTypeMapping TypeName="dicomModel.Product_type">
+              <MappingFragment StoreEntitySet="Product_type">
+                <ScalarProperty Name="product_type_id" ColumnName="product_type_id" />
+                <ScalarProperty Name="types_name" ColumnName="types_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reception_Invoice">
+            <EntityTypeMapping TypeName="dicomModel.Reception_Invoice">
+              <MappingFragment StoreEntitySet="Reception_Invoice">
+                <ScalarProperty Name="receipt_id" ColumnName="receipt_id" />
+                <ScalarProperty Name="vat_id" ColumnName="vat_id" />
+                <ScalarProperty Name="delivery_contract_id" ColumnName="delivery_contract_id" />
+                <ScalarProperty Name="login_id" ColumnName="login_id" />
+                <ScalarProperty Name="receipt_date" ColumnName="receipt_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="dicomModel.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="role_name" ColumnName="role_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shipping_Invoice">
+            <EntityTypeMapping TypeName="dicomModel.Shipping_Invoice">
+              <MappingFragment StoreEntitySet="Shipping_Invoice">
+                <ScalarProperty Name="shipping_invoice_id" ColumnName="shipping_invoice_id" />
+                <ScalarProperty Name="vat_id" ColumnName="vat_id" />
+                <ScalarProperty Name="delivery_contract_id" ColumnName="delivery_contract_id" />
+                <ScalarProperty Name="login_id" ColumnName="login_id" />
+                <ScalarProperty Name="departure_date" ColumnName="departure_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Storekeeper">
+            <EntityTypeMapping TypeName="dicomModel.Storekeeper">
+              <MappingFragment StoreEntitySet="Storekeeper">
+                <ScalarProperty Name="login_id" ColumnName="login_id" />
+                <ScalarProperty Name="password_id" ColumnName="password_id" />
+                <ScalarProperty Name="surname_stores" ColumnName="surname_stores" />
+                <ScalarProperty Name="warehouse_name" ColumnName="warehouse_name" />
+                <ScalarProperty Name="patron_name" ColumnName="patron_name" />
+                <ScalarProperty Name="address_ru" ColumnName="address_ru" />
+                <ScalarProperty Name="images" ColumnName="images" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="IsDelite" ColumnName="IsDelite" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VAT">
+            <EntityTypeMapping TypeName="dicomModel.VAT">
+              <MappingFragment StoreEntitySet="VAT">
+                <ScalarProperty Name="vat_id" ColumnName="vat_id" />
+                <ScalarProperty Name="vat_name" ColumnName="vat_name" />
+                <ScalarProperty Name="vat_value" ColumnName="vat_value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reception_Specification">
+            <EntityTypeMapping TypeName="dicomModel.Reception_Specification">
+              <MappingFragment StoreEntitySet="Reception_Specification">
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="receipt_id" ColumnName="receipt_id" />
+                <ScalarProperty Name="receipt_date" ColumnName="receipt_date" />
+                <ScalarProperty Name="quantity_accepted_goods" ColumnName="quantity_accepted_goods" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shipping_Specification">
+            <EntityTypeMapping TypeName="dicomModel.Shipping_Specification">
+              <MappingFragment StoreEntitySet="Shipping_Specification">
+                <ScalarProperty Name="discount_id" ColumnName="discount_id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="shipping_invoice_id" ColumnName="shipping_invoice_id" />
+                <ScalarProperty Name="departure_date" ColumnName="departure_date" />
+                <ScalarProperty Name="quantity_sent_goods" ColumnName="quantity_sent_goods" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VIEWColor_object">
+            <EntityTypeMapping TypeName="dicomModel.VIEWColor_object">
+              <MappingFragment StoreEntitySet="VIEWColor_object">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VIEWContractor">
+            <EntityTypeMapping TypeName="dicomModel.VIEWContractor">
+              <MappingFragment StoreEntitySet="VIEWContractor">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+                <ScalarProperty Name="Юридический_адрес" ColumnName="Юридический адрес" />
+                <ScalarProperty Name="Расчетный_счет" ColumnName="Расчетный счет" />
+                <ScalarProperty Name="Наименование_организации" ColumnName="Наименование организации" />
+                <ScalarProperty Name="Телефон" ColumnName="Телефон" />
+                <ScalarProperty Name="Тип_контрагента" ColumnName="Тип контрагента" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VIEWDelivery_Contract">
+            <EntityTypeMapping TypeName="dicomModel.VIEWDelivery_Contract">
+              <MappingFragment StoreEntitySet="VIEWDelivery_Contract">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Расчетный_счет" ColumnName="Расчетный счет" />
+                <ScalarProperty Name="Наименование_организации" ColumnName="Наименование организации" />
+                <ScalarProperty Name="Заказчик_Поставщик" ColumnName="Заказчик/Поставщик" />
+                <ScalarProperty Name="Дата_начала" ColumnName="Дата начала" />
+                <ScalarProperty Name="Дата_окончания" ColumnName="Дата окончания" />
+                <ScalarProperty Name="Стоимость_договора" ColumnName="Стоимость договора" />
+                <ScalarProperty Name="Количество_экземпляров" ColumnName="Количество экземпляров" />
+                <ScalarProperty Name="Валидность" ColumnName="Валидность" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VIEWDelivery_Contract_P">
+            <EntityTypeMapping TypeName="dicomModel.VIEWDelivery_Contract_P">
+              <MappingFragment StoreEntitySet="VIEWDelivery_Contract_P">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Наименование_организации" ColumnName="Наименование организации" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VIEWDelivery_Contract_Z">
+            <EntityTypeMapping TypeName="dicomModel.VIEWDelivery_Contract_Z">
+              <MappingFragment StoreEntitySet="VIEWDelivery_Contract_Z">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Наименование_организации" ColumnName="Наименование организации" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VIEWDiscount">
+            <EntityTypeMapping TypeName="dicomModel.VIEWDiscount">
+              <MappingFragment StoreEntitySet="VIEWDiscount">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+                <ScalarProperty Name="Значение_скидки" ColumnName="Значение скидки" />
+                <ScalarProperty Name="Начало_скидки" ColumnName="Начало скидки" />
+                <ScalarProperty Name="Окончание_скидки" ColumnName="Окончание скидки" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VIEWMaterials">
+            <EntityTypeMapping TypeName="dicomModel.VIEWMaterials">
+              <MappingFragment StoreEntitySet="VIEWMaterials">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VIEWMeasurement">
+            <EntityTypeMapping TypeName="dicomModel.VIEWMeasurement">
+              <MappingFragment StoreEntitySet="VIEWMeasurement">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VIEWProduct">
+            <EntityTypeMapping TypeName="dicomModel.VIEWProduct">
+              <MappingFragment StoreEntitySet="VIEWProduct">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+                <ScalarProperty Name="Тип" ColumnName="Тип" />
+                <ScalarProperty Name="Материал" ColumnName="Материал" />
+                <ScalarProperty Name="Цвет" ColumnName="Цвет" />
+                <ScalarProperty Name="Количество" ColumnName="Количество" />
+                <ScalarProperty Name="ед_из" ColumnName="ед.из" />
+                <ScalarProperty Name="Секция_Ярус" ColumnName="Секция/Ярус" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VIEWProduct_Location_Cell">
+            <EntityTypeMapping TypeName="dicomModel.VIEWProduct_Location_Cell">
+              <MappingFragment StoreEntitySet="VIEWProduct_Location_Cell">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Секция_Ярус" ColumnName="Секция/Ярус" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VIEWProduct_type">
+            <EntityTypeMapping TypeName="dicomModel.VIEWProduct_type">
+              <MappingFragment StoreEntitySet="VIEWProduct_type">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VIEWProduct2">
+            <EntityTypeMapping TypeName="dicomModel.VIEWProduct2">
+              <MappingFragment StoreEntitySet="VIEWProduct2">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ед_из" ColumnName="ед.из" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+                <ScalarProperty Name="Тип" ColumnName="Тип" />
+                <ScalarProperty Name="Материал" ColumnName="Материал" />
+                <ScalarProperty Name="Цвет" ColumnName="Цвет" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VIEWReception_Invoice">
+            <EntityTypeMapping TypeName="dicomModel.VIEWReception_Invoice">
+              <MappingFragment StoreEntitySet="VIEWReception_Invoice">
+                <ScalarProperty Name="Номер_накладной" ColumnName="Номер накладной" />
+                <ScalarProperty Name="Дата_накладной" ColumnName="Дата накладной" />
+                <ScalarProperty Name="Наименование_организации" ColumnName="Наименование организации" />
+                <ScalarProperty Name="НДС_на_товар" ColumnName="НДС на товар" />
+                <ScalarProperty Name="Принял_накладную" ColumnName="Принял накладную" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VIEWRoles">
+            <EntityTypeMapping TypeName="dicomModel.VIEWRoles">
+              <MappingFragment StoreEntitySet="VIEWRoles">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VIEWShipping_Invoice">
+            <EntityTypeMapping TypeName="dicomModel.VIEWShipping_Invoice">
+              <MappingFragment StoreEntitySet="VIEWShipping_Invoice">
+                <ScalarProperty Name="Номер_накладной" ColumnName="Номер накладной" />
+                <ScalarProperty Name="Дата_накладной" ColumnName="Дата накладной" />
+                <ScalarProperty Name="Наименование_организации" ColumnName="Наименование организации" />
+                <ScalarProperty Name="НДС_на_товар" ColumnName="НДС на товар" />
+                <ScalarProperty Name="Принял_накладную" ColumnName="Принял накладную" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VIEWStorekeeper">
+            <EntityTypeMapping TypeName="dicomModel.VIEWStorekeeper">
+              <MappingFragment StoreEntitySet="VIEWStorekeeper">
+                <ScalarProperty Name="Логин" ColumnName="Логин" />
+                <ScalarProperty Name="Пароль" ColumnName="Пароль" />
+                <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+                <ScalarProperty Name="Адрес_электронной_почты" ColumnName="Адрес электронной почты" />
+                <ScalarProperty Name="Фото" ColumnName="Фото" />
+                <ScalarProperty Name="Роль" ColumnName="Роль" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VIEWStorekeeper2">
+            <EntityTypeMapping TypeName="dicomModel.VIEWStorekeeper2">
+              <MappingFragment StoreEntitySet="VIEWStorekeeper2">
+                <ScalarProperty Name="Логин" ColumnName="Логин" />
+                <ScalarProperty Name="Принял_накладную" ColumnName="Принял накладную" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VIEWVAT">
+            <EntityTypeMapping TypeName="dicomModel.VIEWVAT">
+              <MappingFragment StoreEntitySet="VIEWVAT">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AddContractor" FunctionName="Хранилище dicomModel.AddContractor" />
+          <FunctionImportMapping FunctionImportName="AddDelivery_Contract" FunctionName="Хранилище dicomModel.AddDelivery_Contract" />
+          <FunctionImportMapping FunctionImportName="AddProduct" FunctionName="Хранилище dicomModel.AddProduct" />
+          <FunctionImportMapping FunctionImportName="AddReception_Invoice" FunctionName="Хранилище dicomModel.AddReception_Invoice" />
+          <FunctionImportMapping FunctionImportName="AddReception_Specification" FunctionName="Хранилище dicomModel.AddReception_Specification" />
+          <FunctionImportMapping FunctionImportName="AddShipping_Invoice" FunctionName="Хранилище dicomModel.AddShipping_Invoice" />
+          <FunctionImportMapping FunctionImportName="AddShipping_Specification" FunctionName="Хранилище dicomModel.AddShipping_Specification" />
+          <FunctionImportMapping FunctionImportName="AddStorekeeper" FunctionName="Хранилище dicomModel.AddStorekeeper" />
+          <FunctionImportMapping FunctionImportName="CostPrice_Reception" FunctionName="Хранилище dicomModel.CostPrice_Reception" />
+          <FunctionImportMapping FunctionImportName="CostPrice_Sendings" FunctionName="Хранилище dicomModel.CostPrice_Sendings" />
+          <FunctionImportMapping FunctionImportName="DeleteContractor" FunctionName="Хранилище dicomModel.DeleteContractor" />
+          <FunctionImportMapping FunctionImportName="DeleteDelivery_Contract" FunctionName="Хранилище dicomModel.DeleteDelivery_Contract" />
+          <FunctionImportMapping FunctionImportName="DeleteProduct" FunctionName="Хранилище dicomModel.DeleteProduct" />
+          <FunctionImportMapping FunctionImportName="DeleteReception_Invoice" FunctionName="Хранилище dicomModel.DeleteReception_Invoice" />
+          <FunctionImportMapping FunctionImportName="DeleteReception_Specification" FunctionName="Хранилище dicomModel.DeleteReception_Specification" />
+          <FunctionImportMapping FunctionImportName="DeleteShipping_Invoice" FunctionName="Хранилище dicomModel.DeleteShipping_Invoice" />
+          <FunctionImportMapping FunctionImportName="DeleteShipping_Specification" FunctionName="Хранилище dicomModel.DeleteShipping_Specification" />
+          <FunctionImportMapping FunctionImportName="DeleteStorekeeper" FunctionName="Хранилище dicomModel.DeleteStorekeeper" />
+          <FunctionImportMapping FunctionImportName="FilterContractor" FunctionName="Хранилище dicomModel.FilterContractor">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dicomModel.FilterContractor_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+                <ScalarProperty Name="Юридический_адрес" ColumnName="Юридический адрес" />
+                <ScalarProperty Name="Расчетный_счет" ColumnName="Расчетный счет" />
+                <ScalarProperty Name="Наименование_организации" ColumnName="Наименование организации" />
+                <ScalarProperty Name="Телефон" ColumnName="Телефон" />
+                <ScalarProperty Name="Тип_контрагента" ColumnName="Тип контрагента" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FilterProduct" FunctionName="Хранилище dicomModel.FilterProduct">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dicomModel.FilterProduct_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Тип_товара" ColumnName="Тип товара" />
+                <ScalarProperty Name="Материал" ColumnName="Материал" />
+                <ScalarProperty Name="Цвет" ColumnName="Цвет" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+                <ScalarProperty Name="Количество" ColumnName="Количество" />
+                <ScalarProperty Name="ед_из_" ColumnName="ед.из." />
+                <ScalarProperty Name="Секция" ColumnName="Секция" />
+                <ScalarProperty Name="Ярус" ColumnName="Ярус" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GraphAnalytics" FunctionName="Хранилище dicomModel.GraphAnalytics">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dicomModel.GraphAnalytics_Result">
+                <ScalarProperty Name="Год" ColumnName="Год" />
+                <ScalarProperty Name="Месяц" ColumnName="Месяц" />
+                <ScalarProperty Name="Название_месяца" ColumnName="Название месяца" />
+                <ScalarProperty Name="Количество" ColumnName="Количество" />
+                <ScalarProperty Name="Сумма" ColumnName="Сумма" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GraphAnalytics2" FunctionName="Хранилище dicomModel.GraphAnalytics2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dicomModel.GraphAnalytics2_Result">
+                <ScalarProperty Name="Год" ColumnName="Год" />
+                <ScalarProperty Name="Месяц" ColumnName="Месяц" />
+                <ScalarProperty Name="Название_месяца" ColumnName="Название месяца" />
+                <ScalarProperty Name="Количество" ColumnName="Количество" />
+                <ScalarProperty Name="Сумма" ColumnName="Сумма" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ProcExportData" FunctionName="Хранилище dicomModel.ProcExportData" />
+          <FunctionImportMapping FunctionImportName="ProcImportData" FunctionName="Хранилище dicomModel.ProcImportData" />
+          <FunctionImportMapping FunctionImportName="SortrContractor" FunctionName="Хранилище dicomModel.SortrContractor">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dicomModel.SortrContractor_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+                <ScalarProperty Name="Юридический_адрес" ColumnName="Юридический адрес" />
+                <ScalarProperty Name="Расчетный_счет" ColumnName="Расчетный счет" />
+                <ScalarProperty Name="Наименование_организации" ColumnName="Наименование организации" />
+                <ScalarProperty Name="Телефон" ColumnName="Телефон" />
+                <ScalarProperty Name="Тип_контрагента" ColumnName="Тип контрагента" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SortrDelivery_Contract" FunctionName="Хранилище dicomModel.SortrDelivery_Contract">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dicomModel.SortrDelivery_Contract_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Наименование_организации" ColumnName="Наименование организации" />
+                <ScalarProperty Name="Заказчик_Поставщик" ColumnName="Заказчик/Поставщик" />
+                <ScalarProperty Name="Дата_начала" ColumnName="Дата начала" />
+                <ScalarProperty Name="Дата_окончания" ColumnName="Дата окончания" />
+                <ScalarProperty Name="Стоимость_договора" ColumnName="Стоимость договора" />
+                <ScalarProperty Name="Количество_экземпляров" ColumnName="Количество экземпляров" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SortrProduct" FunctionName="Хранилище dicomModel.SortrProduct">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dicomModel.SortrProduct_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Тип_товара" ColumnName="Тип товара" />
+                <ScalarProperty Name="Материал" ColumnName="Материал" />
+                <ScalarProperty Name="Цвет" ColumnName="Цвет" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+                <ScalarProperty Name="Количество" ColumnName="Количество" />
+                <ScalarProperty Name="ед_из_" ColumnName="ед.из." />
+                <ScalarProperty Name="Секция" ColumnName="Секция" />
+                <ScalarProperty Name="Ярус" ColumnName="Ярус" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SortrReception_Invoice" FunctionName="Хранилище dicomModel.SortrReception_Invoice">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dicomModel.SortrReception_Invoice_Result">
+                <ScalarProperty Name="Номер_накладной" ColumnName="Номер накладной" />
+                <ScalarProperty Name="Дата_накладной" ColumnName="Дата накладной" />
+                <ScalarProperty Name="Номер_договора" ColumnName="Номер договора" />
+                <ScalarProperty Name="НДС_на_товар" ColumnName="НДС на товар" />
+                <ScalarProperty Name="Принял_накладную" ColumnName="Принял накладную" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SortrShipping_Invoice" FunctionName="Хранилище dicomModel.SortrShipping_Invoice">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dicomModel.SortrShipping_Invoice_Result">
+                <ScalarProperty Name="Номер_накладной" ColumnName="Номер накладной" />
+                <ScalarProperty Name="Дата_накладной" ColumnName="Дата накладной" />
+                <ScalarProperty Name="Номер_договора" ColumnName="Номер договора" />
+                <ScalarProperty Name="НДС_на_товар" ColumnName="НДС на товар" />
+                <ScalarProperty Name="Принял_накладную" ColumnName="Принял накладную" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SortrStorekeeper" FunctionName="Хранилище dicomModel.SortrStorekeeper">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dicomModel.SortrStorekeeper_Result">
+                <ScalarProperty Name="Логин" ColumnName="Логин" />
+                <ScalarProperty Name="Пароль" ColumnName="Пароль" />
+                <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+                <ScalarProperty Name="Адрес_электронной_почты" ColumnName="Адрес электронной почты" />
+                <ScalarProperty Name="Фото" ColumnName="Фото" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UPDATE_Delivery_Contract" FunctionName="Хранилище dicomModel.UPDATE_Delivery_Contract" />
+          <FunctionImportMapping FunctionImportName="UPDATE_Discount" FunctionName="Хранилище dicomModel.UPDATE_Discount" />
+          <FunctionImportMapping FunctionImportName="UpdateContractor" FunctionName="Хранилище dicomModel.UpdateContractor" />
+          <FunctionImportMapping FunctionImportName="UpdateDelivery_Contract" FunctionName="Хранилище dicomModel.UpdateDelivery_Contract" />
+          <FunctionImportMapping FunctionImportName="UpdateProduct" FunctionName="Хранилище dicomModel.UpdateProduct" />
+          <FunctionImportMapping FunctionImportName="UpdateReception_Invoice" FunctionName="Хранилище dicomModel.UpdateReception_Invoice" />
+          <FunctionImportMapping FunctionImportName="UpdateReception_Specification" FunctionName="Хранилище dicomModel.UpdateReception_Specification" />
+          <FunctionImportMapping FunctionImportName="UpdateShipping_Invoice" FunctionName="Хранилище dicomModel.UpdateShipping_Invoice" />
+          <FunctionImportMapping FunctionImportName="UpdateShipping_Specification" FunctionName="Хранилище dicomModel.UpdateShipping_Specification" />
+          <FunctionImportMapping FunctionImportName="UpdateStorekeeper" FunctionName="Хранилище dicomModel.UpdateStorekeeper" />
+          <FunctionImportMapping FunctionImportName="VIEWContractor_id" FunctionName="Хранилище dicomModel.VIEWContractor_id" />
+          <FunctionImportMapping FunctionImportName="VIEWMail" FunctionName="Хранилище dicomModel.VIEWMail" />
+          <FunctionImportMapping FunctionImportName="VIEWReception_Specification" FunctionName="Хранилище dicomModel.VIEWReception_Specification">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dicomModel.VIEWReception_Specification_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDP" ColumnName="IDP" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+                <ScalarProperty Name="Количество" ColumnName="Количество" />
+                <ScalarProperty Name="ед_из" ColumnName="ед.из" />
+                <ScalarProperty Name="Цена_за_один_товар" ColumnName="Цена за один товар" />
+                <ScalarProperty Name="Сумма" ColumnName="Сумма" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VIEWRole" FunctionName="Хранилище dicomModel.VIEWRole" />
+          <FunctionImportMapping FunctionImportName="VIEWShipping_Specification" FunctionName="Хранилище dicomModel.VIEWShipping_Specification">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="dicomModel.VIEWShipping_Specification_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDP" ColumnName="IDP" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+                <ScalarProperty Name="Количество" ColumnName="Количество" />
+                <ScalarProperty Name="ед_из" ColumnName="ед.из" />
+                <ScalarProperty Name="Цена_за_один_товар" ColumnName="Цена за один товар" />
+                <ScalarProperty Name="Скидка" ColumnName="Скидка" />
+                <ScalarProperty Name="Сумма" ColumnName="Сумма" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ValueProduct" FunctionName="Хранилище dicomModel.ValueProduct" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

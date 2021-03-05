@@ -1,0 +1,569 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище dicomModelContainer" CdmEntityContainer="dicomEntities">
+    <EntitySetMapping Name="Color_object">
+      <EntityTypeMapping TypeName="dicomModel.Color_object">
+        <MappingFragment StoreEntitySet="Color_object">
+          <ScalarProperty Name="color_id" ColumnName="color_id" />
+          <ScalarProperty Name="color_name" ColumnName="color_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contractor">
+      <EntityTypeMapping TypeName="dicomModel.Contractor">
+        <MappingFragment StoreEntitySet="Contractor">
+          <ScalarProperty Name="contractor_id" ColumnName="contractor_id" />
+          <ScalarProperty Name="legal_contractor_address" ColumnName="legal_contractor_address" />
+          <ScalarProperty Name="account_contractor_supplier_account" ColumnName="account_contractor_supplier_account" />
+          <ScalarProperty Name="surname_contractor" ColumnName="surname_contractor" />
+          <ScalarProperty Name="contractor_name" ColumnName="contractor_name" />
+          <ScalarProperty Name="contractor_middle_name" ColumnName="contractor_middle_name" />
+          <ScalarProperty Name="name_organization_contractor" ColumnName="name_organization_contractor" />
+          <ScalarProperty Name="contractor_phone" ColumnName="contractor_phone" />
+          <ScalarProperty Name="type_contractor" ColumnName="type_contractor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Delivery_Contract">
+      <EntityTypeMapping TypeName="dicomModel.Delivery_Contract">
+        <MappingFragment StoreEntitySet="Delivery_Contract">
+          <ScalarProperty Name="delivery_contract_id" ColumnName="delivery_contract_id" />
+          <ScalarProperty Name="contractor_id" ColumnName="contractor_id" />
+          <ScalarProperty Name="contract_start_date" ColumnName="contract_start_date" />
+          <ScalarProperty Name="contract_end_date" ColumnName="contract_end_date" />
+          <ScalarProperty Name="contract_cost" ColumnName="contract_cost" />
+          <ScalarProperty Name="validity" ColumnName="validity" />
+          <ScalarProperty Name="number_of_contract_instances" ColumnName="number_of_contract_instances" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Discount">
+      <EntityTypeMapping TypeName="dicomModel.Discount">
+        <MappingFragment StoreEntitySet="Discount">
+          <ScalarProperty Name="discount_id" ColumnName="discount_id" />
+          <ScalarProperty Name="start_discounts_date" ColumnName="start_discounts_date" />
+          <ScalarProperty Name="end_discounts_date" ColumnName="end_discounts_date" />
+          <ScalarProperty Name="discounts_name" ColumnName="discounts_name" />
+          <ScalarProperty Name="discount_value" ColumnName="discount_value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Materials">
+      <EntityTypeMapping TypeName="dicomModel.Materials">
+        <MappingFragment StoreEntitySet="Materials">
+          <ScalarProperty Name="materials_id" ColumnName="materials_id" />
+          <ScalarProperty Name="materials_name" ColumnName="materials_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Measurement">
+      <EntityTypeMapping TypeName="dicomModel.Measurement">
+        <MappingFragment StoreEntitySet="Measurement">
+          <ScalarProperty Name="measurement_unit_id" ColumnName="measurement_unit_id" />
+          <ScalarProperty Name="units_measurements_name" ColumnName="units_measurements_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Price_Reception">
+      <EntityTypeMapping TypeName="dicomModel.Price_Reception">
+        <MappingFragment StoreEntitySet="Price_Reception">
+          <ScalarProperty Name="reception_price_id" ColumnName="reception_price_id" />
+          <ScalarProperty Name="acceptance_price_values" ColumnName="acceptance_price_values" />
+          <ScalarProperty Name="reception_price_date" ColumnName="reception_price_date" />
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="contractor_id" ColumnName="contractor_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Price_Sendings">
+      <EntityTypeMapping TypeName="dicomModel.Price_Sendings">
+        <MappingFragment StoreEntitySet="Price_Sendings">
+          <ScalarProperty Name="shipment_price_id" ColumnName="shipment_price_id" />
+          <ScalarProperty Name="shipment_price_values" ColumnName="shipment_price_values" />
+          <ScalarProperty Name="send_price_date" ColumnName="send_price_date" />
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Product">
+      <EntityTypeMapping TypeName="dicomModel.Product">
+        <MappingFragment StoreEntitySet="Product">
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="measurement_unit_id" ColumnName="measurement_unit_id" />
+          <ScalarProperty Name="product_type_id" ColumnName="product_type_id" />
+          <ScalarProperty Name="cell_id" ColumnName="cell_id" />
+          <ScalarProperty Name="materials_id" ColumnName="materials_id" />
+          <ScalarProperty Name="color_id" ColumnName="color_id" />
+          <ScalarProperty Name="name_of_product" ColumnName="name_of_product" />
+          <ScalarProperty Name="quantity_of_goods" ColumnName="quantity_of_goods" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Product_Location_Cell">
+      <EntityTypeMapping TypeName="dicomModel.Product_Location_Cell">
+        <MappingFragment StoreEntitySet="Product_Location_Cell">
+          <ScalarProperty Name="cell_id" ColumnName="cell_id" />
+          <ScalarProperty Name="tier_cells" ColumnName="tier_cells" />
+          <ScalarProperty Name="cell_section" ColumnName="cell_section" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Product_type">
+      <EntityTypeMapping TypeName="dicomModel.Product_type">
+        <MappingFragment StoreEntitySet="Product_type">
+          <ScalarProperty Name="product_type_id" ColumnName="product_type_id" />
+          <ScalarProperty Name="types_name" ColumnName="types_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reception_Invoice">
+      <EntityTypeMapping TypeName="dicomModel.Reception_Invoice">
+        <MappingFragment StoreEntitySet="Reception_Invoice">
+          <ScalarProperty Name="receipt_id" ColumnName="receipt_id" />
+          <ScalarProperty Name="vat_id" ColumnName="vat_id" />
+          <ScalarProperty Name="delivery_contract_id" ColumnName="delivery_contract_id" />
+          <ScalarProperty Name="login_id" ColumnName="login_id" />
+          <ScalarProperty Name="receipt_date" ColumnName="receipt_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="dicomModel.Roles">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="role_id" ColumnName="role_id" />
+          <ScalarProperty Name="role_name" ColumnName="role_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Shipping_Invoice">
+      <EntityTypeMapping TypeName="dicomModel.Shipping_Invoice">
+        <MappingFragment StoreEntitySet="Shipping_Invoice">
+          <ScalarProperty Name="shipping_invoice_id" ColumnName="shipping_invoice_id" />
+          <ScalarProperty Name="vat_id" ColumnName="vat_id" />
+          <ScalarProperty Name="delivery_contract_id" ColumnName="delivery_contract_id" />
+          <ScalarProperty Name="login_id" ColumnName="login_id" />
+          <ScalarProperty Name="departure_date" ColumnName="departure_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Storekeeper">
+      <EntityTypeMapping TypeName="dicomModel.Storekeeper">
+        <MappingFragment StoreEntitySet="Storekeeper">
+          <ScalarProperty Name="login_id" ColumnName="login_id" />
+          <ScalarProperty Name="password_id" ColumnName="password_id" />
+          <ScalarProperty Name="surname_stores" ColumnName="surname_stores" />
+          <ScalarProperty Name="warehouse_name" ColumnName="warehouse_name" />
+          <ScalarProperty Name="patron_name" ColumnName="patron_name" />
+          <ScalarProperty Name="address_ru" ColumnName="address_ru" />
+          <ScalarProperty Name="images" ColumnName="images" />
+          <ScalarProperty Name="role_id" ColumnName="role_id" />
+          <ScalarProperty Name="IsDelite" ColumnName="IsDelite" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VAT">
+      <EntityTypeMapping TypeName="dicomModel.VAT">
+        <MappingFragment StoreEntitySet="VAT">
+          <ScalarProperty Name="vat_id" ColumnName="vat_id" />
+          <ScalarProperty Name="vat_name" ColumnName="vat_name" />
+          <ScalarProperty Name="vat_value" ColumnName="vat_value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reception_Specification">
+      <EntityTypeMapping TypeName="dicomModel.Reception_Specification">
+        <MappingFragment StoreEntitySet="Reception_Specification">
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="receipt_id" ColumnName="receipt_id" />
+          <ScalarProperty Name="receipt_date" ColumnName="receipt_date" />
+          <ScalarProperty Name="quantity_accepted_goods" ColumnName="quantity_accepted_goods" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Shipping_Specification">
+      <EntityTypeMapping TypeName="dicomModel.Shipping_Specification">
+        <MappingFragment StoreEntitySet="Shipping_Specification">
+          <ScalarProperty Name="discount_id" ColumnName="discount_id" />
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="shipping_invoice_id" ColumnName="shipping_invoice_id" />
+          <ScalarProperty Name="departure_date" ColumnName="departure_date" />
+          <ScalarProperty Name="quantity_sent_goods" ColumnName="quantity_sent_goods" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VIEWColor_object">
+      <EntityTypeMapping TypeName="dicomModel.VIEWColor_object">
+        <MappingFragment StoreEntitySet="VIEWColor_object">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VIEWContractor">
+      <EntityTypeMapping TypeName="dicomModel.VIEWContractor">
+        <MappingFragment StoreEntitySet="VIEWContractor">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+          <ScalarProperty Name="Имя" ColumnName="Имя" />
+          <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+          <ScalarProperty Name="Юридический_адрес" ColumnName="Юридический адрес" />
+          <ScalarProperty Name="Расчетный_счет" ColumnName="Расчетный счет" />
+          <ScalarProperty Name="Наименование_организации" ColumnName="Наименование организации" />
+          <ScalarProperty Name="Телефон" ColumnName="Телефон" />
+          <ScalarProperty Name="Тип_контрагента" ColumnName="Тип контрагента" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VIEWDelivery_Contract">
+      <EntityTypeMapping TypeName="dicomModel.VIEWDelivery_Contract">
+        <MappingFragment StoreEntitySet="VIEWDelivery_Contract">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Расчетный_счет" ColumnName="Расчетный счет" />
+          <ScalarProperty Name="Наименование_организации" ColumnName="Наименование организации" />
+          <ScalarProperty Name="Заказчик_Поставщик" ColumnName="Заказчик/Поставщик" />
+          <ScalarProperty Name="Дата_начала" ColumnName="Дата начала" />
+          <ScalarProperty Name="Дата_окончания" ColumnName="Дата окончания" />
+          <ScalarProperty Name="Стоимость_договора" ColumnName="Стоимость договора" />
+          <ScalarProperty Name="Количество_экземпляров" ColumnName="Количество экземпляров" />
+          <ScalarProperty Name="Валидность" ColumnName="Валидность" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VIEWDelivery_Contract_P">
+      <EntityTypeMapping TypeName="dicomModel.VIEWDelivery_Contract_P">
+        <MappingFragment StoreEntitySet="VIEWDelivery_Contract_P">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Наименование_организации" ColumnName="Наименование организации" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VIEWDelivery_Contract_Z">
+      <EntityTypeMapping TypeName="dicomModel.VIEWDelivery_Contract_Z">
+        <MappingFragment StoreEntitySet="VIEWDelivery_Contract_Z">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Наименование_организации" ColumnName="Наименование организации" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VIEWDiscount">
+      <EntityTypeMapping TypeName="dicomModel.VIEWDiscount">
+        <MappingFragment StoreEntitySet="VIEWDiscount">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+          <ScalarProperty Name="Значение_скидки" ColumnName="Значение скидки" />
+          <ScalarProperty Name="Начало_скидки" ColumnName="Начало скидки" />
+          <ScalarProperty Name="Окончание_скидки" ColumnName="Окончание скидки" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VIEWMaterials">
+      <EntityTypeMapping TypeName="dicomModel.VIEWMaterials">
+        <MappingFragment StoreEntitySet="VIEWMaterials">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VIEWMeasurement">
+      <EntityTypeMapping TypeName="dicomModel.VIEWMeasurement">
+        <MappingFragment StoreEntitySet="VIEWMeasurement">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VIEWProduct">
+      <EntityTypeMapping TypeName="dicomModel.VIEWProduct">
+        <MappingFragment StoreEntitySet="VIEWProduct">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+          <ScalarProperty Name="Тип" ColumnName="Тип" />
+          <ScalarProperty Name="Материал" ColumnName="Материал" />
+          <ScalarProperty Name="Цвет" ColumnName="Цвет" />
+          <ScalarProperty Name="Количество" ColumnName="Количество" />
+          <ScalarProperty Name="ед_из" ColumnName="ед.из" />
+          <ScalarProperty Name="Секция_Ярус" ColumnName="Секция/Ярус" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VIEWProduct_Location_Cell">
+      <EntityTypeMapping TypeName="dicomModel.VIEWProduct_Location_Cell">
+        <MappingFragment StoreEntitySet="VIEWProduct_Location_Cell">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Секция_Ярус" ColumnName="Секция/Ярус" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VIEWProduct_type">
+      <EntityTypeMapping TypeName="dicomModel.VIEWProduct_type">
+        <MappingFragment StoreEntitySet="VIEWProduct_type">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VIEWProduct2">
+      <EntityTypeMapping TypeName="dicomModel.VIEWProduct2">
+        <MappingFragment StoreEntitySet="VIEWProduct2">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ед_из" ColumnName="ед.из" />
+          <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+          <ScalarProperty Name="Тип" ColumnName="Тип" />
+          <ScalarProperty Name="Материал" ColumnName="Материал" />
+          <ScalarProperty Name="Цвет" ColumnName="Цвет" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VIEWReception_Invoice">
+      <EntityTypeMapping TypeName="dicomModel.VIEWReception_Invoice">
+        <MappingFragment StoreEntitySet="VIEWReception_Invoice">
+          <ScalarProperty Name="Номер_накладной" ColumnName="Номер накладной" />
+          <ScalarProperty Name="Дата_накладной" ColumnName="Дата накладной" />
+          <ScalarProperty Name="Наименование_организации" ColumnName="Наименование организации" />
+          <ScalarProperty Name="НДС_на_товар" ColumnName="НДС на товар" />
+          <ScalarProperty Name="Принял_накладную" ColumnName="Принял накладную" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VIEWRoles">
+      <EntityTypeMapping TypeName="dicomModel.VIEWRoles">
+        <MappingFragment StoreEntitySet="VIEWRoles">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VIEWShipping_Invoice">
+      <EntityTypeMapping TypeName="dicomModel.VIEWShipping_Invoice">
+        <MappingFragment StoreEntitySet="VIEWShipping_Invoice">
+          <ScalarProperty Name="Номер_накладной" ColumnName="Номер накладной" />
+          <ScalarProperty Name="Дата_накладной" ColumnName="Дата накладной" />
+          <ScalarProperty Name="Наименование_организации" ColumnName="Наименование организации" />
+          <ScalarProperty Name="НДС_на_товар" ColumnName="НДС на товар" />
+          <ScalarProperty Name="Принял_накладную" ColumnName="Принял накладную" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VIEWStorekeeper">
+      <EntityTypeMapping TypeName="dicomModel.VIEWStorekeeper">
+        <MappingFragment StoreEntitySet="VIEWStorekeeper">
+          <ScalarProperty Name="Логин" ColumnName="Логин" />
+          <ScalarProperty Name="Пароль" ColumnName="Пароль" />
+          <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+          <ScalarProperty Name="Имя" ColumnName="Имя" />
+          <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+          <ScalarProperty Name="Адрес_электронной_почты" ColumnName="Адрес электронной почты" />
+          <ScalarProperty Name="Фото" ColumnName="Фото" />
+          <ScalarProperty Name="Роль" ColumnName="Роль" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VIEWStorekeeper2">
+      <EntityTypeMapping TypeName="dicomModel.VIEWStorekeeper2">
+        <MappingFragment StoreEntitySet="VIEWStorekeeper2">
+          <ScalarProperty Name="Логин" ColumnName="Логин" />
+          <ScalarProperty Name="Принял_накладную" ColumnName="Принял накладную" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VIEWVAT">
+      <EntityTypeMapping TypeName="dicomModel.VIEWVAT">
+        <MappingFragment StoreEntitySet="VIEWVAT">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="AddContractor" FunctionName="Хранилище dicomModel.AddContractor" />
+    <FunctionImportMapping FunctionImportName="AddDelivery_Contract" FunctionName="Хранилище dicomModel.AddDelivery_Contract" />
+    <FunctionImportMapping FunctionImportName="AddProduct" FunctionName="Хранилище dicomModel.AddProduct" />
+    <FunctionImportMapping FunctionImportName="AddReception_Invoice" FunctionName="Хранилище dicomModel.AddReception_Invoice" />
+    <FunctionImportMapping FunctionImportName="AddReception_Specification" FunctionName="Хранилище dicomModel.AddReception_Specification" />
+    <FunctionImportMapping FunctionImportName="AddShipping_Invoice" FunctionName="Хранилище dicomModel.AddShipping_Invoice" />
+    <FunctionImportMapping FunctionImportName="AddShipping_Specification" FunctionName="Хранилище dicomModel.AddShipping_Specification" />
+    <FunctionImportMapping FunctionImportName="AddStorekeeper" FunctionName="Хранилище dicomModel.AddStorekeeper" />
+    <FunctionImportMapping FunctionImportName="CostPrice_Reception" FunctionName="Хранилище dicomModel.CostPrice_Reception" />
+    <FunctionImportMapping FunctionImportName="CostPrice_Sendings" FunctionName="Хранилище dicomModel.CostPrice_Sendings" />
+    <FunctionImportMapping FunctionImportName="DeleteContractor" FunctionName="Хранилище dicomModel.DeleteContractor" />
+    <FunctionImportMapping FunctionImportName="DeleteDelivery_Contract" FunctionName="Хранилище dicomModel.DeleteDelivery_Contract" />
+    <FunctionImportMapping FunctionImportName="DeleteProduct" FunctionName="Хранилище dicomModel.DeleteProduct" />
+    <FunctionImportMapping FunctionImportName="DeleteReception_Invoice" FunctionName="Хранилище dicomModel.DeleteReception_Invoice" />
+    <FunctionImportMapping FunctionImportName="DeleteReception_Specification" FunctionName="Хранилище dicomModel.DeleteReception_Specification" />
+    <FunctionImportMapping FunctionImportName="DeleteShipping_Invoice" FunctionName="Хранилище dicomModel.DeleteShipping_Invoice" />
+    <FunctionImportMapping FunctionImportName="DeleteShipping_Specification" FunctionName="Хранилище dicomModel.DeleteShipping_Specification" />
+    <FunctionImportMapping FunctionImportName="DeleteStorekeeper" FunctionName="Хранилище dicomModel.DeleteStorekeeper" />
+    <FunctionImportMapping FunctionImportName="FilterContractor" FunctionName="Хранилище dicomModel.FilterContractor">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dicomModel.FilterContractor_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+          <ScalarProperty Name="Имя" ColumnName="Имя" />
+          <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+          <ScalarProperty Name="Юридический_адрес" ColumnName="Юридический адрес" />
+          <ScalarProperty Name="Расчетный_счет" ColumnName="Расчетный счет" />
+          <ScalarProperty Name="Наименование_организации" ColumnName="Наименование организации" />
+          <ScalarProperty Name="Телефон" ColumnName="Телефон" />
+          <ScalarProperty Name="Тип_контрагента" ColumnName="Тип контрагента" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="FilterProduct" FunctionName="Хранилище dicomModel.FilterProduct">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dicomModel.FilterProduct_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Тип_товара" ColumnName="Тип товара" />
+          <ScalarProperty Name="Материал" ColumnName="Материал" />
+          <ScalarProperty Name="Цвет" ColumnName="Цвет" />
+          <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+          <ScalarProperty Name="Количество" ColumnName="Количество" />
+          <ScalarProperty Name="ед_из_" ColumnName="ед.из." />
+          <ScalarProperty Name="Секция" ColumnName="Секция" />
+          <ScalarProperty Name="Ярус" ColumnName="Ярус" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GraphAnalytics" FunctionName="Хранилище dicomModel.GraphAnalytics">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dicomModel.GraphAnalytics_Result">
+          <ScalarProperty Name="Год" ColumnName="Год" />
+          <ScalarProperty Name="Месяц" ColumnName="Месяц" />
+          <ScalarProperty Name="Название_месяца" ColumnName="Название месяца" />
+          <ScalarProperty Name="Количество" ColumnName="Количество" />
+          <ScalarProperty Name="Сумма" ColumnName="Сумма" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GraphAnalytics2" FunctionName="Хранилище dicomModel.GraphAnalytics2">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dicomModel.GraphAnalytics2_Result">
+          <ScalarProperty Name="Год" ColumnName="Год" />
+          <ScalarProperty Name="Месяц" ColumnName="Месяц" />
+          <ScalarProperty Name="Название_месяца" ColumnName="Название месяца" />
+          <ScalarProperty Name="Количество" ColumnName="Количество" />
+          <ScalarProperty Name="Сумма" ColumnName="Сумма" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ProcExportData" FunctionName="Хранилище dicomModel.ProcExportData" />
+    <FunctionImportMapping FunctionImportName="ProcImportData" FunctionName="Хранилище dicomModel.ProcImportData" />
+    <FunctionImportMapping FunctionImportName="SortrContractor" FunctionName="Хранилище dicomModel.SortrContractor">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dicomModel.SortrContractor_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+          <ScalarProperty Name="Имя" ColumnName="Имя" />
+          <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+          <ScalarProperty Name="Юридический_адрес" ColumnName="Юридический адрес" />
+          <ScalarProperty Name="Расчетный_счет" ColumnName="Расчетный счет" />
+          <ScalarProperty Name="Наименование_организации" ColumnName="Наименование организации" />
+          <ScalarProperty Name="Телефон" ColumnName="Телефон" />
+          <ScalarProperty Name="Тип_контрагента" ColumnName="Тип контрагента" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SortrDelivery_Contract" FunctionName="Хранилище dicomModel.SortrDelivery_Contract">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dicomModel.SortrDelivery_Contract_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Наименование_организации" ColumnName="Наименование организации" />
+          <ScalarProperty Name="Заказчик_Поставщик" ColumnName="Заказчик/Поставщик" />
+          <ScalarProperty Name="Дата_начала" ColumnName="Дата начала" />
+          <ScalarProperty Name="Дата_окончания" ColumnName="Дата окончания" />
+          <ScalarProperty Name="Стоимость_договора" ColumnName="Стоимость договора" />
+          <ScalarProperty Name="Количество_экземпляров" ColumnName="Количество экземпляров" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SortrProduct" FunctionName="Хранилище dicomModel.SortrProduct">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dicomModel.SortrProduct_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Тип_товара" ColumnName="Тип товара" />
+          <ScalarProperty Name="Материал" ColumnName="Материал" />
+          <ScalarProperty Name="Цвет" ColumnName="Цвет" />
+          <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+          <ScalarProperty Name="Количество" ColumnName="Количество" />
+          <ScalarProperty Name="ед_из_" ColumnName="ед.из." />
+          <ScalarProperty Name="Секция" ColumnName="Секция" />
+          <ScalarProperty Name="Ярус" ColumnName="Ярус" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SortrReception_Invoice" FunctionName="Хранилище dicomModel.SortrReception_Invoice">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dicomModel.SortrReception_Invoice_Result">
+          <ScalarProperty Name="Номер_накладной" ColumnName="Номер накладной" />
+          <ScalarProperty Name="Дата_накладной" ColumnName="Дата накладной" />
+          <ScalarProperty Name="Номер_договора" ColumnName="Номер договора" />
+          <ScalarProperty Name="НДС_на_товар" ColumnName="НДС на товар" />
+          <ScalarProperty Name="Принял_накладную" ColumnName="Принял накладную" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SortrShipping_Invoice" FunctionName="Хранилище dicomModel.SortrShipping_Invoice">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dicomModel.SortrShipping_Invoice_Result">
+          <ScalarProperty Name="Номер_накладной" ColumnName="Номер накладной" />
+          <ScalarProperty Name="Дата_накладной" ColumnName="Дата накладной" />
+          <ScalarProperty Name="Номер_договора" ColumnName="Номер договора" />
+          <ScalarProperty Name="НДС_на_товар" ColumnName="НДС на товар" />
+          <ScalarProperty Name="Принял_накладную" ColumnName="Принял накладную" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SortrStorekeeper" FunctionName="Хранилище dicomModel.SortrStorekeeper">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dicomModel.SortrStorekeeper_Result">
+          <ScalarProperty Name="Логин" ColumnName="Логин" />
+          <ScalarProperty Name="Пароль" ColumnName="Пароль" />
+          <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+          <ScalarProperty Name="Имя" ColumnName="Имя" />
+          <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+          <ScalarProperty Name="Адрес_электронной_почты" ColumnName="Адрес электронной почты" />
+          <ScalarProperty Name="Фото" ColumnName="Фото" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="UPDATE_Delivery_Contract" FunctionName="Хранилище dicomModel.UPDATE_Delivery_Contract" />
+    <FunctionImportMapping FunctionImportName="UPDATE_Discount" FunctionName="Хранилище dicomModel.UPDATE_Discount" />
+    <FunctionImportMapping FunctionImportName="UpdateContractor" FunctionName="Хранилище dicomModel.UpdateContractor" />
+    <FunctionImportMapping FunctionImportName="UpdateDelivery_Contract" FunctionName="Хранилище dicomModel.UpdateDelivery_Contract" />
+    <FunctionImportMapping FunctionImportName="UpdateProduct" FunctionName="Хранилище dicomModel.UpdateProduct" />
+    <FunctionImportMapping FunctionImportName="UpdateReception_Invoice" FunctionName="Хранилище dicomModel.UpdateReception_Invoice" />
+    <FunctionImportMapping FunctionImportName="UpdateReception_Specification" FunctionName="Хранилище dicomModel.UpdateReception_Specification" />
+    <FunctionImportMapping FunctionImportName="UpdateShipping_Invoice" FunctionName="Хранилище dicomModel.UpdateShipping_Invoice" />
+    <FunctionImportMapping FunctionImportName="UpdateShipping_Specification" FunctionName="Хранилище dicomModel.UpdateShipping_Specification" />
+    <FunctionImportMapping FunctionImportName="UpdateStorekeeper" FunctionName="Хранилище dicomModel.UpdateStorekeeper" />
+    <FunctionImportMapping FunctionImportName="VIEWContractor_id" FunctionName="Хранилище dicomModel.VIEWContractor_id" />
+    <FunctionImportMapping FunctionImportName="VIEWMail" FunctionName="Хранилище dicomModel.VIEWMail" />
+    <FunctionImportMapping FunctionImportName="VIEWReception_Specification" FunctionName="Хранилище dicomModel.VIEWReception_Specification">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dicomModel.VIEWReception_Specification_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="IDP" ColumnName="IDP" />
+          <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+          <ScalarProperty Name="Количество" ColumnName="Количество" />
+          <ScalarProperty Name="ед_из" ColumnName="ед.из" />
+          <ScalarProperty Name="Цена_за_один_товар" ColumnName="Цена за один товар" />
+          <ScalarProperty Name="Сумма" ColumnName="Сумма" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="VIEWRole" FunctionName="Хранилище dicomModel.VIEWRole" />
+    <FunctionImportMapping FunctionImportName="VIEWShipping_Specification" FunctionName="Хранилище dicomModel.VIEWShipping_Specification">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="dicomModel.VIEWShipping_Specification_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="IDP" ColumnName="IDP" />
+          <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+          <ScalarProperty Name="Количество" ColumnName="Количество" />
+          <ScalarProperty Name="ед_из" ColumnName="ед.из" />
+          <ScalarProperty Name="Цена_за_один_товар" ColumnName="Цена за один товар" />
+          <ScalarProperty Name="Скидка" ColumnName="Скидка" />
+          <ScalarProperty Name="Сумма" ColumnName="Сумма" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ValueProduct" FunctionName="Хранилище dicomModel.ValueProduct" />
+  </EntityContainerMapping>
+</Mapping>
